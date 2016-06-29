@@ -1,0 +1,22 @@
+mixin question_table(question, answer_index)
+  table.n.question-table(id="#{question.id}_table")
+    thead
+      tr.answer-header
+        td(colspan="#{question.choices.length}")
+          
+          div.question-left= question.choices.left
+          div.question-right= question.choices.right
+
+    tbody
+      tr.answer-buttons
+        if(answers_num === 7)
+          - var answers = ["とても","","やや","どちらでもない","やや","","とても" ];
+        else
+          - var answers = ["とても","やや","どちらでもない","やや","とても" ];
+
+        each answer,index in answers
+          td
+            - var checked_bool = answer_index != null && answer_index == index;
+            input.answer-input(id="#{question.id}_#{index}" type="radio" name="#{question.id}" value="#{index}" checked=checked_bool)
+            label.answer-button(for="#{question.id}_#{index}")= answer
+

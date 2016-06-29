@@ -1,0 +1,66 @@
+extends /template/sub_layout
+
+
+block variables
+  - title =  kanji +" -  Kanji Database";
+  - description = "About the kanji " + kanji;
+  - body_id = "bg-plane";
+
+block sub-content
+
+  p
+    a(href="/characters/kanjis" ) Go back to Kanji list
+
+
+  div.bigkanji-outer
+    div.bigkanji-container
+      h1.bigkanji
+        div.child #{kanji}
+
+      ul.bigkanji-subs.bigkanji-meanings
+        - var unit = Math.PI / (meanings.length + 1);
+        each meaning,meaning_index in meanings
+          - var theta = (meaning_index + 1) * unit - Math.PI ; 
+          - var x = Math.cos(theta) * 20;
+          - var y = Math.sin(theta) * 20;
+          li.bigkanji-sub.bigkanji-meaning(style="left:#{x}rem;top:#{y}rem;")
+            div.child= meaning
+
+      ul.bigkanji-subs.bigkanji-sounds
+        
+        - var unit = Math.PI / (romaji_sounds.length + 1);
+        each romaji_sound,romaji_index in romaji_sounds
+          - var theta = (romaji_index + 1) * unit ;
+          - var x = Math.cos(theta) * 20;
+          - var y = Math.sin(theta) * 20;
+
+          li.bigkanji-sub.bigkanji-sound(style="left:#{x}rem;top:#{y}rem;")
+            a(href="/characters/kanjis/sounds/#{encodeURIComponent(sounds[romaji_index])}")
+              div.child= romaji_sound
+
+    h2 Words
+    ul
+      each word in include_words
+        li
+          a(href="/characters/words/#{encodeURIComponent(word._id)}")= word._id
+          //a tag
+
+  if user && user.haveRight("kanji-edit")
+
+    hr
+    h2 意味と読みを編集する: 「#{kanji}」
+    form(method="POST" action="/characters/kanjis/#{encodeURIComponent(kanji)}") 
+      h2 意味
+      p 意味を、アルファベットで、改行区切りで入力してください
+      textarea(rows="5" name="meanings") #{meanings.join('\n')}
+
+      h2 読み
+      p 漢字の音を、ひらがなで、改行区切りで入力してください
+      textarea(rows="5" name="sounds") #{sounds.join('\n')}
+
+      h2 この字を含む単語
+      p 漢字の熟語を、改行区切りで入力してください
+      textarea(rows="5" name="include_words") #{include_words && _.map(include_words,function(word){return word._id}).join('\n')}
+
+      button(type="submit") 漢字を投稿
+

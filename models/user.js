@@ -9,7 +9,7 @@ var UserSchema = module.exports = new mongoose.Schema({
   
   oauth_info:{
 
-  }
+  },
 
   my_japaname:{ type:Number, ref:"" },
 

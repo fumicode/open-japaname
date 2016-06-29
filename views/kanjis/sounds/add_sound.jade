@@ -1,0 +1,31 @@
+extends /template/sub_layout
+
+block variables
+  - title = "Add kanji for sound" + sound || ""; 
+  - description = title;
+  - body_id = "bg-plane";
+
+block sub-content
+
+  p
+    a(href="/characters/kanjis" ) Go back to Kanji list
+  p
+    a(href="/characters/kanjis/sounds" ) Go back to Kanji sound list
+
+
+  h1 読みを追加する
+
+  form(method="POST" action="/characters/kanjis/sounds") 
+    h2 読み
+    p よみをひらがなで入力してください
+    input(type="text" name="sound") 
+
+    h2 漢字リスト
+    p この読みの漢字を、改行区切りで入力してください
+    textarea(rows="5" name="kanjis")
+
+        
+
+    button(type="submit") 漢字を投稿
+
+

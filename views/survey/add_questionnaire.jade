@@ -1,0 +1,16 @@
+
+extends /template/survey_layout
+
+block sub-content
+  h1 アンケートを追加する。
+
+  form(action="/survey/questionnaires/" method="POST")
+    p kanji-list
+      input(type="text" name="kanji_list")
+
+    p question_set_id
+      input(type="text" name="question_set_id")
+
+    input(type="submit" name="question_set")
+
+

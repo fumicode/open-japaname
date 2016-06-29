@@ -1,0 +1,31 @@
+extends /template/sub_layout
+
+block variables
+  - title = "Words List";
+  - description = "Registered Words list";
+  - body_id = "bg-plane";
+
+
+block sub-content
+  h1 Kanjis List 
+
+  
+  if user && user.haveRight("kanji-edit")
+    p
+      a.button(href="/characters/words/add_word" title="熟語を追加") 熟語を追加
+
+  table
+    tr
+      th word 
+      th meanings
+      th sounds
+      th link
+
+    each word in words
+      tr
+        td= word._id
+        td= word.meanings
+        td= word.romaji_sounds
+        td
+          a(href="/characters/words/#{word._id}") Go to word page.
+          

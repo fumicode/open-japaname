@@ -1,0 +1,22 @@
+extends /template/sub_layout
+
+block append variables
+  - title = "ATEJI history - ATEJIs you've seen recently.";
+  - description = "ATEJIs you've seen recently.";
+  - body_id= "bg-selected";
+
+block sub-content
+  h1 ATEJI history
+  p ATEJIs you've seen recently.
+
+  if ateji_history
+    ul.ateji_history
+      each ateji in ateji_history.reverse()
+        li 
+          a(href="/#{ateji._id}")
+            |#{ateji.original_name} - #{ateji.ateji_name}
+
+  div(style="height:400px")
+
+
+

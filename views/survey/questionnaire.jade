@@ -1,0 +1,27 @@
+extends /template/survey_layout
+
+block header
+  p 
+    a(href="/survey/questionnaires") &laquo; アンケート一覧
+    | &gt; 漢字の印象
+  
+    a(href="#{url}/answers") 回答一覧
+    // / あたりちゃんと作らないとだめ   or strict mode
+
+
+  h1.h2#questionnaire-title.text-center= questionnaire.title
+
+block sub-content
+  include /survey/include/question_table
+  form(method="POST", action="/survey/questionnaires/#{questionnaire._id}/answers")
+    
+
+    each question in questionnaire.question_set.questions
+      h3.n.text-center.question-title(id="#{question.id}_title") #{question.choices.left}←→#{question.choices.right}
+      +question_table(question, null)
+
+    div#questionnaire-submit
+      input(type="submit" value="送信")
+
+  div(style="height:30rem")
+

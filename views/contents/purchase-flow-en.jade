@@ -1,0 +1,43 @@
+extends /template/sub_layout
+
+block variables
+  - title =  'Flow to purchase';
+  - description = 'This page describes the flow of purchasing Shodo (Japanese Calligraphy) artwork data.';
+
+block sub-content
+  h1 Flow of purchase
+
+  h2 Get your Shodo (Japanese Calligraphy) artwork by professional.
+
+  p.text-right
+    a.btn.btn-success(href="/contents/purchase-flow") in Japanese (日本語版)
+
+  div.purchase-flow-diagram
+  ol.purchase-flow-list
+    li.purchase-flow-item Select ATEJI
+    li.purchase-flow-item Select Font Style
+    li.purchase-flow-item Enter Credit Card Information (using WebPay )
+    li.purchase-flow-item Get your Shodo artwork within 3 bussiness day
+  
+  h2 1. Select ATEJI
+  img.not-too-big.img-center.img-responsive(src="/images/example-atejis-candidates.jpg" alt="selected screen")
+  p Enter your name and you can get candidates of your ATEJI.Select your charactors and push DONE! button. Bookmark or share your name on SNS and review your ATEJI later
+
+  h2 2. Select font and direction
+  div.row
+    img.not-too-big.img-center.col-xs-6(src="/images/example-select-font.png" alt="example of selecting font")
+    img.img-center.col-xs-6(src="/images/example-select-direction.png" alt="example of selecting direction")
+  |Select font style from Ninja, Kawaii or Samurai style. Also chose the direction to write. Then you will have made your request. Very easy.
+
+  h2 3. Enter credit card infomation
+  p PRICE: <del>\2,400yen</del><ins>\600yen</ins>
+  img.not-too-big.img-center.img-responsive(src="/images/example-webpay.png" alt="exapmle of webpay form")
+  p Push Request button, then billing and contact information will be required. Enter entire information and push confirmation button to confirm your request. Finally, push purchase button and your request will be received by Shodo artist (Japanese Calligraphist). The current price is 600 yen (about $5 )
+
+
+  h2 4.Get your Shodo artwork image by Email or on Mypage
+
+  a(href="/contents/example-of-catherine" target="_blank")
+    img.example-catherine.not-too-big.img-center.img-responsive(src="/images/example-catherine.jpg" alt="華咲凛の例")
+  p You can get your Shodo artwork within 3 days by email.You can also download your artwork in your mypage.
+

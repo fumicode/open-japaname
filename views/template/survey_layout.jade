@@ -1,0 +1,22 @@
+extends /template/basic_layout
+
+block append variables
+  - body_id = "bg-white";
+  - body_class = "a ";
+
+block content 
+  header#questionnaire-header
+    div#questionnaire-header-container
+      block header
+  div#questionnaire-header-spacer
+
+  div#questionnaire-body
+
+    include /template/flash_messages
+    +flash_messages(notice_message,success_message,alert_message,err_message)
+
+    div
+      block sub-content
+
+
+

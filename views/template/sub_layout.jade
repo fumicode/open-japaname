@@ -1,0 +1,24 @@
+extends /template/basic_layout
+
+block append variables
+  - body_id = "normal";
+  - body_class = (body_class || "") + " topbar-margin";
+
+block content 
+  include /template/topbar
+  +topbar(true, true, original_name)
+
+
+  div(style="height:2rem;")
+
+  include /template/flash_messages
+  +flash_messages(notice_message,success_message,alert_message,err_message)
+
+  div
+    block sub-content
+
+block footer
+  include /include/footer.jade
+
+
+block append body-end-scripts

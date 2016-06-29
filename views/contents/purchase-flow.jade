@@ -1,0 +1,40 @@
+extends /template/sub_layout
+
+block variables
+  - title =  'ご購入までの流れ';
+  - description = 'このページでは、ご購入までの流れを説明しています。';
+
+
+block sub-content
+ 
+  h1 書道データご購入までの流れ
+  p.text-right
+    a.btn.btn-success(href="/contents/purchase-flow-en") in English (英語版)
+
+  ol#purchase-flow-diagram
+    li#purchase-flow-diagram-item 当て字
+    li#purchase-flow-diagram-item 書体・向きを選択
+    li#purchase-flow-diagram-item クレジットカード情報を入力<wbr>(WebPay 使用)
+    li#purchase-flow-diagram-item 書道画像を<wbr>営業日以内にお届け
+  
+  h2 1. 当て字
+  img.not-too-big.img-center.img-responsive(src="/images/example-atejis-candidates.jpg" alt="selected 画面の例")
+  p お名前を英語つづり、ひらがな・カタカナ、またはローマ字で入力すると当て字の候補があらわれます。その中からお好きな字を選んで DONEボタンを押すと、当て字を決定できます。お気に入りに登録や、SNS でシェアすれば、後から当て字を見ることができます。
+
+  h2 2. 書体・向きを選択
+  div.row
+    img.not-too-big.img-center.col-xs-6(src="/images/example-select-font.png" alt="example of selecting font")
+    img.img-center.col-xs-6(src="/images/example-select-direction.png" alt="example of selecting direction")
+  p 書体を、Ninja( 楷書体 )、Kawaii（ゆる書体）、Samurai（どっしり書体）から選びます。また、文字の向きを縦書きか横書きか選ぶことができます。
+  h2 3. クレジットカード情報を入力<wbr>(WebPay 使用)
+  img.not-too-big.img-center.img-responsive(src="/images/example-webpay.png" alt="exapmle of webpay form")
+  p Request ボタンを押すと、クレジットカード情報の入力と、E アドレスの入力が求められます。最後に情報を確認し購入ボタンを押すと、決済手続きが完了し、書道家にリクエストが送信されます。現在の価格は 600 円 (+ 消費税 ) になっています。
+
+
+  h2 4. 書道画像を<wbr>3営業日以内にお届け
+
+  a(href="/contents/example-of-catherine" target="_blank")
+    img.example-catherine.not-too-big.img-center.img-responsive(src="/images/example-catherine.jpg" alt="華咲凛の例")
+
+  p 3営業日以内に書道画像データをEメールにてお送りします。ログインしている場合、マイページから画像をダウンロードできるようになります。
+

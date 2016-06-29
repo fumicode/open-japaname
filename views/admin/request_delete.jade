@@ -1,0 +1,35 @@
+extends /template/sub_layout
+
+block variables
+  - title = "delete shodo_request"
+  - description = 'リクエスト削除' 
+  - body_id= 'bg-plane'
+
+block sub-content
+
+  p
+    a(href="/admin") 管理ページへ戻る
+  p
+    a(href="/admin/requests/#{shodo_request._id}") リクエスト一覧ページへ戻る
+
+  h1 本当に リクエストを削除しますか？
+
+  table.table
+    thead
+      tr
+        th フォント
+        th 横書き・縦書き
+        th 当て字
+        th ユーザーID
+        th 進捗状況
+    tbody
+      tr(id="#{shodo_request._id}")
+        td= shodo_request.font
+        td= shodo_request.direction
+        td= shodo_request.purchase_ateji.ateji_name
+        td= shodo_request.user.name
+        td= shodo_request.progress
+
+  form(action="./?_method=delete" method="POST")
+    input(type="submit" value="リクエストを削除")
+

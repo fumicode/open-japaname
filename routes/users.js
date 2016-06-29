@@ -12,7 +12,7 @@ var User = mongoose.model("User");
 users_router.get('/', function(req, res, next) {
 
   co(function*(){
-    var users = yield User.find().populate("ateji_id").exec();
+    var users = yield User.find().populate("my_japaname").exec();
     res.render("admin/users",{
       users
     });

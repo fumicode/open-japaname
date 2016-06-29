@@ -7,7 +7,7 @@ var Word = mongoose.model("Word");
 var _ = require("underscore");
 var atejilib = require("../core/atejilib");
 
-var authModule = require("../authentication/authModule.js");
+var authModule = require("../auth/authModule.js");
 var convertLinesToArray = require('../util/router_helper').convertLinesToArray;
 var co = require("co");
 

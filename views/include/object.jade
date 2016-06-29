@@ -1,0 +1,19 @@
+mixin show_object(object, stack)
+  if stack === 0 
+    |#{JSON.stringify(object)}
+  else 
+    ul
+      each key in Object.keys(object)
+        //if object.hasOwnProperty(key)
+        li
+          b= key
+          | : 
+          -var value = object[key];
+          if typeof value === "object" && value !== undefined && value !== null
+            //|#{JSON.stringify(value)}
+            +show_object(value, stack -1 )
+          else if typeof value === "function"
+            em function
+          else
+            em= value
+            

@@ -1,0 +1,30 @@
+extends /template/survey_layout
+
+block header
+  p 漢字の印象 -
+    a(href="/admin/users/#{quest_answer.answerer._id}")= quest_answer.answerer.name
+    |さんの
+    a(href="/survey/questionnaires/#{quest_answer.questionnaire}") #{quest_answer.questionnaire.title }このアンケートへの
+    |回答 (作成日:#{quest_answer._id.getTimestamp()})
+  h1.h2#questionnaire-title.text-center= questionnaire.title
+
+
+
+block sub-content
+  include /survey/include/question_table
+
+  form(method="POST", action="/survey/questionnaires/#{questionnaire._id}/answers/#{quest_answer._id}?_method=put")
+    each answer in quest_answer.answers
+      -var question = answer.question;
+      h3.n.text-center.question-title(id="#{question.id}_title") #{question.choices.left}←→#{question.choices.right}
+      if answer.value === null
+        p(style="color:red") 答えを選択してください。 
+      +question_table(question, answer.value)
+
+    div#questionnaire-submit
+      input(type="submit" value="回答を編集")
+
+
+  div(style="height:30rem")
+
+

@@ -1,0 +1,47 @@
+extends /template/sub_layout
+
+block append variables
+  - title =  "User Information ";
+  - description = 'User Information '
+  - body_id= 'bg-selected'
+
+
+block sub-content
+
+
+  ul
+    li
+      a(href="/mypage" )
+        |Go back to mypage.
+
+  h1 Edit User Information
+  
+  p Log-in method is "#{user.userinfo.method}"
+
+
+  div(style="height:100px")
+  h2 Email
+  form(action="/mypage/user_info/email" method="post")
+    input(type="text" name="email" placeholder="Enter email address" value=
+    "#{user.userinfo.email}")
+    input(type="text" name="confirm_email" placeholder="Re-Enter email address")
+    input(type="submit" value="Change Email")
+
+  div(style="height:100px") 
+  h2 Password
+  form(action="/mypage/user_info/password" method="post")
+    input(type="password" name="current_password" placeholder="Enter current password")
+    br
+    input(type="password" name="password" placeholder="Enter new password")
+    input(type="password" name="confirm_password" placeholder="Re-Enter new password")
+
+    input(type="submit" value="Change Password")
+      
+  div(style="height:100px")
+
+  h2 Payment information
+  p
+    a(href="/mypage/payment_info") enter payment information
+  
+  div(style="height:100px")
+

@@ -1,0 +1,146 @@
+extends /template/sub_layout
+
+block append variables
+  - title = "ATEJI candidates of " + original_name;
+  - description = "ATEJI candidates of "+ original_name +". You can select your Kanji from many candidates which fits your sound by meanings or shape of kanji.";
+  - tweet =  "ATEJI candidates of " + original_name;
+  - share_url = url;
+  - body_id = "bg-candidates";
+
+block sub-content
+  form(id="selected-form" method="POST" action="/names")
+    input(type="hidden" name="original_name" value="#{original_name}")
+    input#selected_ateji(type="hidden" name="ateji"  value="")
+
+
+  div#kanji-selected-wrapper
+    div#kanji-selected-container
+      div#kanji-selected-box
+        p#kanji-selected
+          span
+            
+        p#japanese-sound
+      div#kanji-button-container
+        p
+          button.gonext &raquo;Go Next!
+  div#kanji-selected-container-margin
+
+
+  div#ateji-cands-container
+    include ./include/candidates_table.jade
+
+    each name_obj in name_objs
+      +ateji_cands(name_obj)
+
+    p.text-center.h2
+      button#ateji-bottom-button &raquo;Go Next!
+    
+    script(type="text/javascript" ).
+      (function(){
+        var form = document.getElementById("selected-form");
+        var container = document.getElementById("kanji-selected-container");
+        var bottom_button = document.getElementById("ateji-bottom-button");
+        bottom_button.onclick = container.onclick = function(){
+          form.submit();
+        };
+      }());
+
+    h4 Your Katakana カタカナ
+
+    p.kana-string 
+      each name_obj in name_objs
+        | #{name_obj.katakana}  
+
+    h4 Your Hiragana ひらがな
+
+    p.kana-string 
+      each name_obj in name_objs
+        | #{name_obj.hiragana}  
+
+
+
+block append body-end-scripts
+  script(src="/javascripts/myscript.js")
+
+  // なぜかいきなりトップにもどるスクロール我発生する謎のバグ
+  // Bitters いれたらなったきがする。ガチで意味分からん。むかつく。
+  //
+
+  script.
+    //    //see-another ボタン
+    //    $(function(){
+    //      var curtain = $('#hide-curtain');
+    //
+    //      curtain.click(function(){
+    //        curtain.hide();
+    //      });
+    //
+    //    });
+
+
+    //topbar delete
+
+    $(function(){
+
+      $topbar = $("#topbar");
+      $kanjiSelected = $("#kanji-selected-wrapper");
+      $body = $("body");
+
+      $(window).scroll(function () {
+        var scrolltop = $(window).scrollTop(); 
+        
+        if(scrolltop > 0) {
+          //トップバーを消す
+          $topbar.hide();
+          $kanjiSelected.addClass("notopbar");
+
+        } else {
+          //トップバーを復活
+          $topbar.show();
+          $kanjiSelected.removeClass("notopbar");
+        }
+      });
+    });
+
+
+    //sticky name
+    /* 無駄な切り替えはしないことにした
+    *
+    $(function(){
+      var box    = $("#kanji-selected-container");
+      var cands = $("#ateji-cands");
+
+      var boxTop = box.offset().top;
+      var topbarHeight = 50;
+
+      $(window).scroll(function () {
+        console.log("scroll");
+        var scrolltop = $(window).scrollTop(); 
+        
+        
+        console.log("----scrolltop" + scrolltop);
+        console.log("----topbarHeight" + topbarHeight);
+        console.log("----boxTop" + boxTop);
+
+        if(scrolltop + topbarHeight > boxTop) {
+          console.log("scrolled");
+          
+          box.addClass("fixed");
+          cands.css("margin-top" , box.height());
+          console.log(box.height());
+         
+
+
+        } else {
+
+          console.log("not scrolled");
+          
+          box.removeClass("fixed"); 
+          cands.css("margin-top" , 0);
+         
+        }
+      });
+    });
+    */
+
+

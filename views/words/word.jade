@@ -1,0 +1,52 @@
+extends /template/sub_layout
+
+
+block variables
+  - title =  word +" -  Word Database";
+  - description = "About the Word" + word;
+  - body_id = "bg-plane";
+
+block sub-content
+
+  p
+    a(href="/characters/words" ) Go back to Word list
+
+
+  h1 Word "#{word}"
+
+  h2 meanings
+  ul
+    each meaning,meaning_index in meanings
+      li= meaning
+
+  h2 sound
+  ul
+    each romaji_sound,romaji_index in romaji_sounds
+      li= romaji_sound
+
+  h2 Used kanji
+  ul
+    each kanji in used_kanjis
+      li
+        a(href="/characters/kanjis/#{encodeURIComponent(kanji)}") #{kanji}
+
+
+
+        
+        
+
+  if user && user.haveRight("kanji-edit")
+
+    hr
+    h2 意味と読みを編集する: 「#{word}」
+    form(method="POST" action="/characters/words/#{encodeURIComponent(word)}") 
+      h2 意味
+      p 意味を、アルファベットで、改行区切りで入力してください
+      textarea(rows="5" name="meanings") #{meanings.join('\n')}
+
+      h2 読み
+      p 漢字の音を、ひらがなで、改行区切りで入力してください
+      textarea(rows="5" name="sounds") #{sounds.join('\n')}
+
+      button(type="submit") 漢字を投稿
+

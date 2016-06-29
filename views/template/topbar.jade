@@ -1,0 +1,51 @@
+mixin topbar(logo_hanko, search_box, original_name) 
+  div#topbar 
+    div#topbar-container
+      //トップなどではオフにする
+      //if logo_hanko 
+      div#ateji-logo-hanko(style="height:4rem;")
+        if logo_hanko
+          a(href="/")
+            img(src="/images/ateji-hanko-topbar.png" alt="ateji hanko logo") 
+
+
+      //検索
+      div#topbar-ateji-search(style="height:4rem")
+        if search_box
+          include /include/ateji_search
+          +ateji_search(original_name || "" )
+
+      //右上のユーザー
+      div#user-info
+        if debugging
+          |debug mode
+        if user
+          a(href="/mypage") #{user.name }
+          span(style="font-size:0.7em") 様
+
+        else
+          a(href="/auth/login")
+            |Guest
+
+
+
+  script(type="text/javascript ").
+    function ready_func (){
+      //読み込み後ならjqueryつかってよし
+      var $topbar = $("#topbar");
+      var $searchbox = $("#topbar").find("#original_name");
+
+      $searchbox.focus(function(){
+        $topbar.addClass("searching");
+      })
+      .blur(function(){
+        $topbar.removeClass("searching");
+      });
+    }
+    if( window.addEventListener ){
+      window.addEventListener('load', ready_func);
+    }else if( window.attachEvent ){
+      window.attachEvent('onload', ready_func);
+    }
+
+

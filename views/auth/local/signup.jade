@@ -1,0 +1,41 @@
+extends /template/sub_layout
+
+
+block variables
+  - title = "signup page"; 
+  - description = "Let's login to Ateji World" ;
+
+block sub-content
+  p.text-center.h2(style="margin-bottom:100px") Signup
+
+
+  form.form-inline(method="post" action="/auth/local/signup")
+
+
+    if ateji_name && ateji_id
+      p Your ATEJI name: #{ateji_name}
+      input#ateji_id(type="hidden" name="ateji_id" value="#{ateji_id}") 
+      input#use_ateji_id(type="checkbox" name="use_ateji_id" value="use" checked) 
+      label(for="use_ateji_id") Use this Ateji for me (can change later)
+      br
+
+    input#email.form-control.input-lg(type="text" name="email" placeholder="Your Email")
+    br
+    input#password.form-control.input-lg(type="password" name="password" placeholder="password")
+    br
+    input#password.form-control.input-lg(type="password" name="confirm_password" placeholder="password confirmation")
+    br
+
+    button.input-lg.btn.btn-default(type="submit") Signup 
+    br
+
+    | Do you already have a account?
+    a(href="/auth/local/login") login here
+
+    //
+      | Do you want to login with SNS?
+      a(href="/auth/facebook/login") Facebook Login
+
+                
+              
+

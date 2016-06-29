@@ -6,7 +6,7 @@ var Kanji = mongoose.model("Kanji");
 var atejilib = require("../core/atejilib");
 var _ = require("underscore");
 
-var authModule = require("../authentication/authModule.js");
+var authModule = require("../auth/authModule.js");
 
 var convertLinesToArray = require('../util/router_helper').convertLinesToArray;
 

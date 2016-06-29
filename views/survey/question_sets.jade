@@ -1,0 +1,24 @@
+extends /template/survey_layout
+
+block sub-content
+  h1 質問セット一覧 
+  table(style="table-layout:auto")
+    thead
+      tr 
+        th id
+        th name
+        td #question
+        td questions
+    tbody
+      each question_set in question_sets
+        tr 
+          th=question_set._id
+          td=question_set.title
+          td=question_set.questions.length
+          td
+            ul
+              each question in question_set.questions
+                li #{question.choices.left} <-> #{question.choices.right}
+
+
+

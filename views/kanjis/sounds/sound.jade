@@ -1,0 +1,50 @@
+extends /template/sub_layout
+
+block variables
+  - title = "Kanji sound" + sound; 
+  - description = "List of kanjis which has  sound" + sound;
+  - body_id = "bg-plane";
+
+block sub-content
+
+  p
+    a(href="/characters/kanjis" ) Go back to Kanji list
+  p
+    a(href="/characters/kanjis/sounds" ) Go back to Kanji sound list
+
+  h2 Sound "#{romaji_sound}"
+
+  table
+    tr
+      th kanji
+      th meanings
+      th sounds
+      th link
+
+    each kanji in kanjis
+      tr
+        td= kanji._id
+        td= kanji.meanings
+        td= kanji.romaji_sounds
+        td
+          a(href="/characters/kanjis/#{kanji._id}") Go to kanji page.
+          
+
+  if user && user.haveRight("kanji-edit")
+    h2 読み「#{sound}」に対する漢字を追加する
+
+    form(method="POST" action="/characters/kanjis/sounds/#{encodeURIComponent(sound)}") 
+      input(type="hidden" name="sound") 
+
+      h3 漢字リスト
+      p この読みの漢字を、改行区切りで入力してください
+      textarea(rows="5" name="kanjis")
+        if kanjis
+          each kanji in kanjis || []
+            |#{kanji._id+"\n"}
+
+          
+
+      button(type="submit") 漢字を投稿
+
+

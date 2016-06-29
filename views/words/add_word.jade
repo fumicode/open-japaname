@@ -1,0 +1,26 @@
+extends /template/sub_layout
+
+block variables
+  - title = "熟語を追加"  ;
+  - description = "熟語の読みと意味を追加します";
+  - body_id = "bg-plane";
+
+block sub-content
+
+  a(href="/characters/words" ) Go back to word list
+  h1 熟語を追加する
+
+  form(method="POST" action="/characters/words/") 
+    h2 熟語
+    input(type="text" name="word") 
+    h2 意味
+    p 意味を、アルファベットで、改行区切りで入力してください
+    textarea(rows="5" name="meanings") 
+
+    h2 読み
+    p 漢字の音を、ひらがなで、改行区切りで入力してください
+    textarea(rows="5" name="sounds") 
+
+    button(type="submit") 熟語を投稿
+
+

@@ -1,0 +1,94 @@
+extends /template/sub_layout
+
+block append variables
+  - title = ateji_name +" --- make ateji icon"; 
+  - tweet = 'Got a new japanese name "'+ ateji_name +'" from my name "'+ original_name +'" on ';
+  - hashtag = "ATEJI";
+
+
+block append head-end
+  link(rel='stylesheet', href='/stylesheets/webfont.css') 
+
+block body-begin-scripts
+  script.
+    window.fbAsyncInit = function() {
+      FB.init({ appId      : '1724484991112261', xfbml      : true, version    : 'v2.4' });
+
+      FB.getLoginStatus(function(response) {
+        if (response.status === 'connected') {
+          console.log('Logged in.');
+
+
+          FB.api('/'+response.authResponse.userID+'/picture', 'get', {height:300,redirect:0,type:"square"}, function(res){
+            console.log(res);
+
+            icon_url = res.data.url;
+            draw_icon(icon_url);
+
+          });
+          
+        }
+        else {
+          alert("please login on facebook");
+          FB.login(function(response){
+            if (response.authResponse) {
+              console.log('Welcome!  Fetching your information.... ');
+              FB.api('/'+response.authResponse.userID+'/picture', 'get', {height:300,redirect:0,type:"square"}, function(res){
+                console.log(res);
+
+                icon_url = res.data.url;
+                draw_icon(icon_url);
+
+              });
+
+            } else {
+              console.log('User cancelled login or did not fully authorize.');
+            }
+          });
+        }
+
+      });
+    }; (function(d, s, id){ var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) {return;} js = d.createElement(s); js.id = id; js.src = "//connect.facebook.net/en_US/sdk.js"; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk')); </script>
+
+block sub-content
+  div.text-center
+    h2 Thank you #{ateji.ateji_name}! Here it is your  ATEJI facebook icon !
+    img#user-icon(width=300 height=300)
+    img#new-icon(width=300 height=300)
+
+
+
+block append body-end-scripts
+  script(type="text/javascript" src="/underscore/underscore-min.js")
+  script(type="text/javascript" src="/javascripts/imageProcessing.js")
+  script(type="text/javascript").
+
+    function draw_icon(icon_url){
+      var fontname = "honokamin";
+      loadFont(fontname).then(function(){
+        draw(icon_url,fontname);
+      }).catch(function(){
+        //しょうがなくかく
+        draw(icon_url,fontname);
+      });
+    }
+
+    function draw(icon_url, fontname){
+      var canvas = document.createElement("canvas");
+      canvas.width = 300;
+      canvas.height = 300;
+
+      var name = "#{ateji.ateji_name}";
+      var image = new Image();
+      image.crossOrigin = 'Anonymous';
+      image.src = icon_url; 
+      image.onload = function(data){
+        compositeIconName(canvas, image, name, fontname)
+        .then(function(canvas){
+          $("#new-icon").attr("src", canvas.toDataURL());
+          $("#user-icon").attr("src", icon_url);
+        });
+      }
+
+    }
+

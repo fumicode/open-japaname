@@ -5,46 +5,17 @@ var _ = require('underscore');
 
 var co = require("co");
 
-var history = require('../util/history');
-var showHistory    = history.showHistory;
-
 
 // load up the user model
 var mongoose = require("mongoose");
 var User = mongoose.model("User");
 var Ateji = mongoose.model("Ateji");
-var ShodoRequest = mongoose.model("ShodoRequest");
 
-var webpay = require("../util/webpay_setup")();
 
 
 mypage_router.get('/', function(req, res, next) {
   console.log("mypage dayo" );
-
-  co(function*(){
-    var shodo_requests = yield ShodoRequest
-      .find({user:req.user._id})//自分が送ったリクエスト
-      .populate("purchase_ateji")
-      .populate("user")
-      .exec();
-    
-    //ヒストリーの当て字一覧をとってくる
-    
-    var ateji_history_id = showHistory(req.session);
-    //ここなんとかしたい
-
-    var ateji_history = yield _.map(ateji_history_id, function(ateji_id){
-      return Ateji.findById(ateji_id).exec(); //promise が帰ってくる
-    });
-
-    res.render("mypage", {
-      requests:shodo_requests,
-      ateji_history:ateji_history
-    });
-
-  }).catch((err)=>{
-    next(err);
-  });
+  res.render("mypage");
 
 });
 

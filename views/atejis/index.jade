@@ -1,0 +1,24 @@
+extends /layout
+
+block content
+  h1= hiragana
+
+  form(method="get" action="/atejis/")
+    input(type="text" name="hiragana_str"  value="#{hiragana}")
+
+  div(style="font-size:30px")
+    each candidate,cand_index in atejis
+      hr
+      table
+        tr 
+          each kanji in candidate
+            td= kanji.kana
+        tr
+          each kanji,kanji_index in candidate
+            td 
+              select(name="ateji_select_#{cand_index}_#{kanji_index}" size="3" style="font-size:30px")
+                each ateji,ateji_index in kanji.ateji
+                  if ateji
+                    option(selected="selected")= ateji 
+                  else
+                    option= ateji 

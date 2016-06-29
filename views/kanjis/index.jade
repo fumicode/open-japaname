@@ -1,0 +1,33 @@
+extends /template/sub_layout
+
+block variables
+  - title = "Kanji List";
+  - description = "Registered kanjis list";
+  - body_id = "bg-plane";
+
+block sub-content
+
+  h1 Kanjis List 
+
+  if user && user.haveRight("kanji-edit")
+    p
+      a.button(href="/characters/kanjis/add_kanji" title="漢字を追加")  漢字を追加
+  p
+    a(href="/characters/kanjis/sounds" title="を追加") Go to sound list
+
+
+  table
+    tr
+      th kanji
+      th meanings
+      th sounds
+      th link
+
+    each kanji in kanjis
+      tr
+        td= kanji._id
+        td= kanji.meanings
+        td= kanji.romaji_sounds
+        td
+          a(href="/characters/kanjis/#{kanji._id}") Go to kanji page.
+          

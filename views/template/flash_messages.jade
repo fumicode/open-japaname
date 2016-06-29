@@ -1,0 +1,9 @@
+mixin flash_messages(notice_message,success_message,alert_message,err_message)
+  if notice_message && notice_message.length > 0
+    div.flash-notice !{notice_message}
+  if success_message && success_message.length > 0
+    div.flash-success !{success_message}
+  if alert_message && alert_message.length > 0
+    div.flash-alert !{alert_message}
+  if err_message && err_message.length > 0
+    div.flash-error !{err_message}

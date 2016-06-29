@@ -11,12 +11,7 @@ var User = mongoose.model("User");
 
 user_router.get('/', function(req, res, next) {
   co(function*(){
-
     var the_user = req.the_user; //fetched in upper directory
-    var requests = yield ShodoRequest.find({user:the_user._id})
-      .populate("purchase_ateji")
-      .populate("user")
-      .exec();
 
     res.render("admin/user",{
       the_user,
@@ -26,44 +21,43 @@ user_router.get('/', function(req, res, next) {
   }).catch(function(err){
     next(err);
   });
+
 });
 
 
 user_router.put('/',function(req,res,next){
-  console.log("ok");
-
-  req.checkBody({
-    /*
-    'email': {
-      notEmpty: true,
-      isEmail: {
-        errorMessage: 'Invalid Email'
-      }
-    },
-    'password': {
-      optional: true, // won't validate if field is empty
-      isLength: {
-        options: [6, 20] // pass options to the validator with the options property as an array
-      },
-      errorMessage:  'Invalid Password. Password should not be empty'+
-        ' and the length should be 6-20.'// Error message for the parameter
-    },
-    */
-  });
-
-  var errors = req.validationErrors();
-
-  console.log(5);
-  if (errors && errors.length > 0) {
-    console.log("errors");
-    console.log(errors);
-
-    req.flash("info", "some format error" +JSON.stringify( errors));
-    res.render("admin/user");
-    return;
-  }
-
   co(function*(){
+    req.checkBody({
+      /*
+      'email': {
+        notEmpty: true,
+        isEmail: {
+          errorMessage: 'Invalid Email'
+        }
+      },
+      'password': {
+        optional: true, // won't validate if field is empty
+        isLength: {
+          options: [6, 20] // pass options to the validator with the options property as an array
+        },
+        errorMessage:  'Invalid Password. Password should not be empty'+
+          ' and the length should be 6-20.'// Error message for the parameter
+      },
+      */
+    });
+
+    var errors = req.validationErrors();
+
+    console.log(5);
+    if (errors && errors.length > 0) {
+      console.log("errors");
+      console.log(errors);
+
+      req.flash("info", "some format error" +JSON.stringify( errors));
+      res.render("admin/user");
+      return;
+    }
+
     if(req.body.email){
       req.the_user.userinfo.email = req.body.email;
     }
@@ -89,12 +83,9 @@ user_router.put('/',function(req,res,next){
 
     req.flash("info","ユーザーの情報を編集しました.");
     res.redirect("./" + saved_user._id);
-
   }).catch((err)=>{
     next(err);
   });
-
-
 });
 
 user_router.get('/delete',function(req,res,next){

@@ -1,0 +1,46 @@
+extends /template/sub_layout
+
+
+block sub-content
+  h2 Are you interested in Japanese Charactors?
+  h4 Contents of ateji.jp
+  //
+    div.row
+      div.col-sm-6
+        ul
+          li
+            a(href="") 3 kinds of charactor set
+            ul
+              li
+                a(href="") Kanji
+              li
+                a(href="") Hiragana
+              li
+                a(href="") Katakana
+
+          li
+            a(href="") Sounds of Japanese
+          li
+            a(href="") Why there are many candidates for my name?
+      
+
+      div.col-sm-6
+        ul
+          li
+            a(href="") Why there are many candidates for my name?
+          li
+            a(href="") Difference between Chinese Charactor
+          li
+            a(href="") History
+            ul
+              li
+                a(href="") Old kana
+
+  ul
+    each page in page_list
+      li
+        a(href="/contents/#{page}")=page
+
+
+
+

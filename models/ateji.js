@@ -2,25 +2,27 @@ var atejilib = require("../core/atejilib.js");
 var mongoose = require('mongoose');
 var _ = require("underscore");
 
+
 ///////////////////////////////////////////////////////////////
 //                        Ateji Schema
 ///////////////////////////////////////////////////////////////
 
+var AtemojiSchema = new mongoose.Schema({
+  kana: String,
+  kanji: String
+},{_id:false});
+
+
 var AtejiSchema = module.exports = new mongoose.Schema({
-  _id:Number,
-    //9桁の数字
-  original_name:String,
-  atejis:[{
-    kana: String,
-    kanji: String,
-  }]
+  //_id : ObjectId //あてもじsのハッシュ値にするワンチャンある。いまんとこはいいか
+  
+  atemojis:[AtemojiSchema]
 });
 
-
-AtejiSchema.virtual('ateji_name').get(function () {
+AtejiSchema.virtual('string').get(function () {
   var this_ateji = this;
-  
-  var reduced = _.reduce(this_ateji.atejis, function(memo,obj){
+
+  var reduced = _(this_ateji.atemojis).reduce(function(memo,obj){
     memo += obj.kanji;
     return memo;
   },"");
@@ -32,7 +34,7 @@ AtejiSchema.virtual('ateji_name').get(function () {
 AtejiSchema.virtual('furigana').get(function () {
   var this_ateji = this;
   
-  var reduced = _.reduce(this_ateji.atejis, function(memo,obj){
+  var reduced = _(this_ateji.atemojis).reduce(function(memo,obj){
     memo += obj.kana;
     return memo;
   },"");
@@ -42,35 +44,21 @@ AtejiSchema.virtual('furigana').get(function () {
 
 
 //カタカナとしてどう読むかもほしいよね。
-
-
-AtejiSchema.virtual('atejis_populated').get(function () {
+AtejiSchema.virtual('populated_atemojis').get(function () {
   var this_ateji = this;
-  var populated = [];
 
-  _(this_ateji.atejis).each(function(ateji){
-    ateji.meanings = atejilib.meaningsOfKanji(ateji.kanji).meanings; 
-    ateji.romaji_kana = atejilib.hiraganaToRomaji(ateji.kana);
+  var populated_atemojis = _(this_ateji.atemojis).map(function(atemoji){
+    return {
+      kanji: atemoji.kanji,
+      kana:  atemoji.kana,
+      meanings:atejilib.meaningsOfKanji(atemoji.kanji).meanings,
+      romaji_kana:atejilib.hiraganaToRomaji(atemoji.kana)
+    }
   });
+  console.log("populated atemojis");
+  console.log(populated_atemojis);
 
-  return this_ateji.atejis;
+  return populated_atemojis;
 });
 
 
-
-//id をふる仕組みを
-
-
-/* 下記を参考に。
-KanjiSchema.post("update", function(doc){
-  console.log("post update");
-  atejilib.loadKanjiDB();//一分だけ更新とかできたらいいんだけど。
-});
-
-KanjiSchema.post("save", function(doc){
-  console.log("post save");
-  atejilib.loadKanjiDB();//一分だけ更新とかできたらいいんだけど。
-
-});
-
-*/

@@ -1,5 +1,30 @@
-extends layout
+extends /template/basic_layout
+
+block variables 
+- body_id = "page_index";
 
 block content
-  h1= title
-  p Welcome to #{title}
+  include /template/topbar
+  +topbar(false,false)
+
+  div
+    div
+      div(style="height:200px;")
+      h1(style="text-align:center;") Get your <wbr>japaname
+
+      include /include/ateji_search.jade
+      div(style="height:5rem;font-size:2.5rem")
+        +ateji_search(null,null,null,true)
+
+      p.text-center(style="opacity:0.7")
+        br
+        |Accepts 
+        strong Alphabet
+        |, 
+        strong ひらがな
+        |, 
+        strong カタカナ
+
+
+  div(style="height:200px;")
+

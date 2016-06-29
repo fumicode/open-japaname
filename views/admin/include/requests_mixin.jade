@@ -1,0 +1,26 @@
+mixin request_row(request)
+  tr(id="#{request._id}")
+
+    td= request.font
+    td= request.direction
+    td
+      a(href="/#{request.purchase_ateji._id}")= request.purchase_ateji.ateji_name
+    td 
+      a(href="/admin/users/#{request.user._id}")= request.user.name
+    td= request.progress
+    td
+      a.button(href="/admin/requests/#{request._id}") リクエストページへ
+
+mixin requests_table(requests)
+  table.table
+    thead
+      tr
+        th フォント
+        th 横書き・縦書き
+        th 当て字
+        th ユーザーID
+        th 進捗状況
+        th アクション
+    tbody
+      each request in requests
+        +request_row(request)

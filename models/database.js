@@ -14,13 +14,17 @@ mongoose.connection.on('connected', function () {
 });
 
 
-var UserSchema  = require("./user.js");
+var UserSchema = require("./user.js");
+var JapanameSchema = require("./japaname.js");
 var AtejiSchema = require("./ateji.js");
+var KanaSchema = require("./kana.js");
 var KanjiSchema = require("./kanji.js");
 var WordSchema  = require("./word.js");
 
 mongoose.model("User",UserSchema);
+mongoose.model("Japaname",JapanameSchema);
 mongoose.model("Ateji",AtejiSchema);
+mongoose.model("Kana",KanaSchema);
 mongoose.model("Kanji",KanjiSchema);
 mongoose.model("Word",WordSchema);
 

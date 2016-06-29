@@ -10,17 +10,10 @@ router.get('/', function(req, res, next) {
 
 
 /* ateji short url */
-router.get('/:ateji_id([0-9]+)', function(req, res, next) {
-
-  var ateji_id = req.params.ateji_id;
-  if(/\d+/.test(ateji_id)){
-    req.url =  "/atejis/saved/" + ateji_id;
-  }
-  else{
-  }
-
-  next();
-  
+router.get('/:japaname_id([0-9\-]+)', function(req, res, next) {
+  var japaname_id = req.params.japaname_id;
+  req.url =  "/names/" + japaname_id;
+  return next();
 });
 
 module.exports = router;

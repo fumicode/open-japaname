@@ -1,0 +1,20 @@
+extends /template/basic_layout
+
+
+block append variables
+  - body_class = "no-topbar-margin";
+
+block content
+  div(style="margin-top:100px")
+  each atemoji in japaname.names[0].ateji.atemojis
+    div.text-center(style="font-size:150px; line-height:1; ") #{atemoji.kanji}
+
+
+  div(style="margin-top:50px")
+  -var share_url = "http://japaname.jp/"  + japaname.code
+  div.text-center(style="")=share_url  
+
+  div(style="margin-top:50px")
+  div.text-center
+    img(src="http://chart.apis.google.com/chart?cht=qr&chs=150x150&chl=#{share_url}")
+

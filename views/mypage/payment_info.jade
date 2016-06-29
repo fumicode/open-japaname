@@ -1,0 +1,38 @@
+extends /template/sub_layout
+
+block variables
+
+  - title =  "payment info";
+  - description = "enter payment info";
+  - body_id= 'bg-selected'
+    
+
+
+block sub-content
+  ul 
+    li
+      a(href="/mypage") Back to mypage
+
+  h1 Credit card information
+
+  if webpay_response && webpay_response.activeCard
+    table
+      tbody
+        tr
+          th Card Number
+          th Card Name
+          th Card Type
+        tr
+          td ****-****-****-#{webpay_response.activeCard.last4}
+          td #{webpay_response.activeCard.name}
+          td #{webpay_response.activeCard.type}
+
+  h2 Enter payment information
+  form(action="/mypage/payment_info" method="POST")
+    if redirect_url
+      input(type="hidden" name="redirect_url" value="#{redirect_url}")
+      
+    p.text-center
+      script(src="https://checkout.webpay.jp/v3/" class="webpay-button" data-key="#{webpay_public_key}" data-lang="ja" data-text="Enter payment information" data-submit-text="Use this card for payment" data-token-name="webpay_token")
+
+

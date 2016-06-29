@@ -1,0 +1,33 @@
+extends /template/sub_layout
+
+
+block variables
+  - title = "Kanji sounds"; 
+  - description = "List of kanji sounds";
+  - body_id = "bg-plane";
+
+block sub-content
+
+  p
+    a(href="/characters/kanjis" ) Go back to Kanji list
+
+  h1 Kanji sound list
+
+  if user && user.haveRight("kanji-edit")
+    a.button(href="/characters/kanjis/sounds/add_sound") 新しい音を追加
+
+  table
+    thead
+      tr
+        th sound
+        th kanjis
+        th link
+    tbody
+      each sound_obj in sounds
+        tr
+          td #{sound_obj.romaji_sound}
+          td #{sound_obj.kanjis}
+          td 
+            a(href="/characters/kanjis/sounds/#{encodeURIComponent(sound_obj.sound)}") Go to sound page
+
+

@@ -1,0 +1,17 @@
+mixin ateji_search(original_name,  placeholder, button, focus)
+  form.ateji-search.center(role="search" method="get" action="/names/candidates/")
+    input(id="original_name" name="original_name" type="search" placeholder="#{placeholder || 'Enter Your Name'}" value ="#{original_name || ''}")
+
+    button(type="submit") #{button || "Get ATEJI!"}
+
+
+  if focus
+    script(type="text/javascript").
+      window.onload = function(){
+        document.getElementById("original_name").focus();
+        //it's in the ateji_search
+      }
+
+
+
+

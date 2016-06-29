@@ -1,0 +1,18 @@
+extends /template/survey_layout
+
+block sub-content
+  h1 アンケート一覧
+  table
+    each questionnaire in questionnaires
+      tr
+        th
+          h2= questionnaire.title 
+        td
+          ul
+            each question in questionnaire.question_set.questions.slice(0,3)
+              li #{question.choices.left} - #{question.choices.right}
+        td
+          a(href="/survey/questionnaires/#{questionnaire._id}") アンケートページへ
+
+  h1
+    a(href="/survey/questionnaires/addnew") アンケート追加

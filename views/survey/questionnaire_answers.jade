@@ -1,0 +1,45 @@
+extends /template/survey_layout
+
+block sub-content
+  h2 アンケートに対する回答者一覧
+  ul
+    each answer in answers
+      li
+        a(href="/survey/questionnaires/#{questionnaire_id}/answers/#{answer._id}")= answer._id +" "+ answer.answerer.name +" ("+answer.answers.length +")"
+
+
+  h2 アンケートの集計結果
+  div.qAnswer
+    table.qAnswer__table
+      tr.qAnswer__index
+        td.qAnswer__adjective--left あたたかい
+        td.qAnswer__scaleBox--left 
+          div.qAnswer__scale--left(style="width:80%")
+        td.qAnswer__scaleBox--right 
+          div.qAnswer__scale--right(style="width:0%") 
+        td.qAnswer__adjective--right つめたい
+
+      tr.qAnswer__index
+        td.qAnswer__adjective--left あたたかい
+        td.qAnswer__scaleBox--left
+          div.qAnswer__scale--left(style="width:0%") 
+        td.qAnswer__scaleBox--right
+          div.qAnswer__scale--right(style="width:20%") 
+        td.qAnswer__adjective--right つめたい
+
+      tr.qAnswer__index
+        td.qAnswer__adjective--left あたたかい
+        td.qAnswer__scaleBox--left
+          div.qAnswer__scale--left(style="width:0%") 
+        td.qAnswer__scaleBox--right
+          div.qAnswer__scale--right(style="width:30%") 
+        td.qAnswer__adjective--right つめたい
+
+      tr.qAnswer__index
+        td.qAnswer__adjective--left あたたかい
+        td.qAnswer__scaleBox--left
+          div.qAnswer__scale--left(style="width:50%") 
+        td.qAnswer__scaleBox--right
+          div.qAnswer__scale--right(style="width:0%") 
+        td.qAnswer__adjective--right つめたい
+

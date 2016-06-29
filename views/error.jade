@@ -1,6 +1,19 @@
-extends layout
+extends /template/sub_layout
 
-block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+block sub-content
+
+  h1 ERROR PAGE
+  h2= error_code
+
+  div
+    p.h3 !{error_message}
+    if(error)
+      p -----error-----
+      pre !{error}
+
+      pre !{error && error.stack}
+    else
+      p 
+      p 
+
+

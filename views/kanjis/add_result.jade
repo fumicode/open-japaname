@@ -1,0 +1,54 @@
+extends /template/sub_layout
+
+
+block variables
+  - title = "Result of kanji adding operation";
+  - description = title;
+  - body_id = "bg-plane";
+
+block sub-content
+
+  h1 漢字が追加されました
+
+  p
+    a(href="/characters/kanjis/sounds/#{encodeURIComponent(sound)}") #{sound}
+    |のページへ
+
+  p.text-right
+    a.button(href="/characters/kanjis/add_kanji" )  新しい漢字を追加
+
+  p.text-right
+    a.button(href="/characters/kanjis/sounds/add_sound" )  新しい音を追加
+
+  h2 今回の音#{sound} に対する変更
+  table
+    tr
+      th 変化
+      th kanji
+      th meanings
+      th sounds
+      th link
+
+    each kanji_change in kanjis_changes
+      - var kanji = kanji_change.kanji;
+      - var change = kanji_change.change;
+
+      tr
+        td 
+          if Object.keys(change).length == 0
+            p 変更はありません
+          else
+            if change.add_kanji
+              p=("漢字を追加:" + change.add_kanji)
+            if change.add_kanji
+              p=("読みを追加:" + change.add_sound)
+
+            
+
+
+        td= kanji._id
+        td= kanji.meanings
+        td= kanji.sounds
+        td
+          a(href="/characters/kanjis/#{kanji._id}") Go to kanji page.
+          

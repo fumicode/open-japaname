@@ -1,0 +1,33 @@
+mixin ateji_box(atejis)
+  div#ateji-scroller
+    div#ateji-block
+      table#ateji-table.table
+        tr#kanji-row
+          th Kanji
+          each ateji,index in atejis
+            if index == atejis.length-1
+              td.stamp #{ateji.kanji} 
+            else
+              td #{ateji.kanji} 
+        tr#kana-row
+          th Sound
+          each ateji in atejis
+            td #{ateji.romaji_kana}
+
+
+        tr#meanings-row
+          th Meanings
+          each ateji in atejis
+            td 
+              each meaning in ateji.meanings
+                | #{meaning}
+                br
+
+        //
+          tr.hiragana
+            th Hiragana
+            td(colspan="#{atejis.length}") #{hiragana}
+          tr.katakana
+            th Katakana
+            td(colspan="#{atejis.length}") #{katakana}
+

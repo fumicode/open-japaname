@@ -1,0 +1,62 @@
+extends /template/sub_layout
+
+block variables
+  - title = "request"
+  - description = 'shodo request' ;
+
+block sub-content
+  ul 
+    li
+      a(href="/admin")管理ページに戻る
+    li
+      a(href="/admin/requests")リクエスト一覧ページに戻る
+
+  h1 #{shodo_request.purchase_ateji.ateji_name} さんの書道リクエスト 
+
+
+  table.table
+    tbody
+      tr
+        th フォント
+        td= shodo_request.font
+      tr
+        th 方向
+        td= shodo_request.direction
+      tr
+        th 当て字
+        td
+          a(href="/#{shodo_request.purchase_ateji._id}") 
+            |#{shodo_request.purchase_ateji.ateji_name}
+      tr
+        th ユーザー様
+        td
+          a(href="/admin/users/#{shodo_request.user._id}")
+            |#{shodo_request.user.name}
+
+      tr
+        th 進捗状況
+        td= shodo_request.progress
+
+
+  h2 画像をアップロードしてリクエストを終了させる
+
+  form(method="POST" action="/admin/requests/#{shodo_request._id}/result")
+    input(type="file" name="result_image" size="30")
+    input(type="submit" value="send image")
+  hr
+
+  
+  if shodo_request.progress === "doing"
+    form(method="post" action="/admin/requests/#{shodo_request._id}/progress?_method=put")
+      input(type="hidden" name="progress" value="done")
+      input(type="submit" value="finish request")
+
+  else if shodo_request.progress === "done"
+    form(method="post" action="/admin/requests/#{shodo_request._id}/progress?_method=put")
+      input(type="hidden" name="progress" value="doing")
+      input(type="submit" value="not yet")
+
+  hr
+  a.button(href="/admin/requests/#{shodo_request._id}/delete") リクエストを削除
+
+

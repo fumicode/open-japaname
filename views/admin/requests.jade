@@ -1,0 +1,28 @@
+extends /template/sub_layout
+
+
+block variables
+  - title = "masa page"
+
+  - description = 'masa page' ;
+
+block sub-content
+  ul 
+    li
+      a(href="/admin")管理ページに戻る
+
+  h1 書道リクエスト一覧
+
+  h2 未処理のリクエスト
+
+  //p= JSON.stringify(requests)
+
+  include /admin/include/requests_mixin
+  +requests_table(doing_requests)
+
+
+  h2 処理済みのリクエスト
+
+  +requests_table(done_requests) 
+
+

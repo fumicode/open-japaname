@@ -1,0 +1,26 @@
+extends /template/sub_layout
+
+block variables
+  - title = "漢字を追加"  ;
+  - description = "漢字の読みと意味を追加します";
+  - body_id = "bg-plane";
+
+block sub-content
+
+  a(href="/characters/kanjis" ) Go back to Kanji list
+  h1 漢字を追加する
+
+  form(method="POST" action="/characters/kanjis/") 
+    h2 漢字
+    input(type="text" name="kanji") 
+    h2 意味
+    p 意味を、アルファベットで、改行区切りで入力してください
+    textarea(rows="5" name="meanings") 
+
+    h2 読み
+    p 漢字の音を、ひらがなで、改行区切りで入力してください
+    textarea(rows="5" name="sounds") 
+
+    button(type="submit") 漢字を投稿
+
+

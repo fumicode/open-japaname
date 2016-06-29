@@ -1,0 +1,89 @@
+extends /template/sub_layout
+
+block append variables
+  - name = japaname.names[0]
+  - title = name.ateji.string +" --- japaname of " + name.original;
+
+  - tweet = 'Got a new japanese name "'+ name.ateji.string +'" from my name "'+ name.original+'" on ';
+  - hashtag = "japaname";
+  - description = tweet + " " +  share_url + " #" + hashtag;
+  - body_id= "bg-selected";
+  - og_image = ""; //!!!!open graph image is required
+
+block append head-end
+  //link(rel='stylesheet', href='/stylesheets/webfont.css') 
+
+block sub-content
+  div.text-center
+
+
+    include /include/ateji_box
+    div#ateji-column-wrapper
+      div#ateji-column
+        h2 japaname of <wbr><strong style="text-transform:capitalize;color:red;">#{name.original}</strong>
+        mixin ateji_box(name.ateji.populated_atemojis)
+
+  div(style="height:3rem;")
+  div
+    include /include/sharebox.jade
+    +sharebox(tweet, share_url, hashtag)
+
+  div(style="height:2rem;")
+    a(href="/names/#{japaname.code}/risumaru") 
+      りすまるをプリント
+
+
+  div#login-ads
+    h1 Log-in and Save your japaname
+    a.button(href="/auth/login")  Log in!
+
+
+block append body-end-scripts
+  script(type="text/javascript" src="/underscore/underscore-min.js")
+  script(type="text/javascript" src="/javascripts/imageProcessing.js")
+  script(type="text/javascript").
+    //returns promise
+
+    $(function(){
+      var fontname = "honokamin";
+
+      loadFont(fontname).then(function(){
+        draw();
+      }).catch(function(){
+        //しょうがなくかく
+        draw();
+      });
+
+      function draw(){
+        (function(){
+
+          var canvas = document.createElement("canvas");
+          canvas.width = 300;
+          canvas.height = 300;
+          var name = "#{name.ateji.string}";
+
+          textOnItem(canvas, name, fontname, "rgb(0,0,0)", "/images/tee-thumbnail.png",90,160)
+          .then(function(){
+            $("#tee-thumbnail").attr("src", canvas.toDataURL());
+          });
+        }());
+
+
+        (function(){
+          var canvas = document.createElement("canvas");
+          canvas.width = 300;
+          canvas.height = 300;
+          var name = "#{name.ateji.string}";
+
+          textOnItem(canvas, name, fontname,  "rgb(255,255,255)", "/images/yunomi-thumbnail.png",100,130)
+          .then(function(){
+            $("#yunomi-thumbnail").attr("src", canvas.toDataURL());
+          });
+
+        }());
+      }
+    });
+
+
+
+

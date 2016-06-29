@@ -1,0 +1,36 @@
+extends /template/sub_layout
+
+
+block variables
+  - title = "users"
+  - description = 'lists of users' 
+  - body_id= 'bg-plane'
+
+block sub-content
+
+  p
+    a(href="/admin" ) 管理ページへ戻る
+  h1 
+    ユーザー一覧
+
+  table.table
+    thead
+      tr
+        th 認証方法
+        th メールアドレス
+        th 名前
+        th 権限
+        th 登録当て字
+        th Webpay登録有無
+        th link
+    tbody
+      each user in users
+        tr(id="#{user._id}")
+          td= user.userinfo.method
+          td= user.userinfo.email
+          td= user.name
+          td= user.authorities.join(', ')
+          td= user.ateji_id && user.ateji_id .ateji_name || "none"
+          td= !!user.webpay_cus_code
+          td
+            a.button(href="/admin/users/#{user._id}") ユーザーページへ
