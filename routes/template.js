@@ -12,6 +12,7 @@ var co = require("co");
 
 _router.get("/",(req,res,next)=>{
 
+
   var obj = {
     "hoge":"fuga"
   };

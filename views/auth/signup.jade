@@ -1,0 +1,11 @@
+extends /layout
+block header
+
+block content
+  h1 signup
+  form(method="post" action="/auth/signup/")
+    p email address: 
+      input(name="username" type="text")
+    p password:
+      input(name="password" type="text")
+    input(type="submit" value="signup")

@@ -1,8 +1,72 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
+
+/************************** atejis_candidates  ***************************/
+.addsarea{
+
+  background: lightgray;
+  padding:5px;
+
 }
 
-a {
-  color: #00B7FF;
+
+.item-name{
+
+  border-right:solid 1px;
+  margin-right:-1px;
 }
+
+.item-value h4{
+}
+
+.item-value{
+  border-left:solid 1px;
+  min-height:100px;
+}
+
+
+
+.item-value p{
+  
+}
+
+/*
+#kanji-selected-box.fixed{
+  z-index:500;
+  position:fixed;
+    top:0px;
+  
+  margin:0;
+  background:white;
+
+}
+*/
+
+.kanji-selected{
+  font-family:serif;
+  font-size:90px;
+
+  margin:0;
+
+
+
+}
+.btn.deside{
+  display:block;
+
+  font-family:serif;
+  font-size:90px;
+}
+
+
+/**********************  kanjis ************************/
+
+
+#bigkanji {
+  font-size:200px;
+  font-family:serif;
+
+}
+
+
+
+

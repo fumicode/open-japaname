@@ -5,9 +5,7 @@ block append variables
   - description = 'mypage'
   - body_id= 'bg-selected'
 
-
 block sub-content
-
   if user.haveRight("admin")
     p
       a.button(href="/admin") 管理者ページにいく
@@ -16,21 +14,16 @@ block sub-content
     p
       a.button(href="/characters/kanjis") 漢字ページにいく
 
-  if user.haveRight("survey-respondent")
-    p あなたは被験者アンケートに答えることができます。
-    p
-      a.button(href="/survey/questionnaires") アンケート一覧
-
-  if user.ateji_id
+  if user.my_japaname
     h1.text-center
       nobr
         |Mypage of 
         wbr
         strong(style="text-transform:capitalize;color:red;")
-          |#{user.ateji_id.original_name}
+          |#{user.my_japaname.names[0].original}
 
     include /include/ateji_box
-    mixin ateji_box(user.ateji_id.atejis_populated)
+    mixin ateji_box(user.my_japaname.names[0].ateji.atemojis)
 
     p.text-center
       a.button(href="/mypage/ateji" ) Go to ATEJI page
@@ -47,38 +40,15 @@ block sub-content
     include /include/ateji_search
     +ateji_search
 
-      
-  if requests && requests.length
-    h2 Shodo requests you've sent
-
-    table.table
-      thead
-        tr
-          th font
-          th direction
-          th ateji
-          th progress
-      tbody
-        each request in requests.reverse()
-          tr(id="#{request._id}")
-
-            td= request.font
-            td= request.direction
-            td= request.purchase_ateji.ateji_name 
-            td= request.progress
-
-  if ateji_history && ateji_history.length
-    h2 ATEJIs you've seen recently.
-    ul#ateji_history
-      each ateji in ateji_history.reverse()
-        li 
-          a(href="/#{ateji._id}")
-            |#{ateji.original_name} - #{ateji.ateji_name}
-
-
-  div#yukikaki-ads
-    a(href="/market/artists/yukikaki")
-      img.img-responsive(src="/images/ad-yukikaki.jpg" alt="Yuki-kaki ")
+  if purchases 
+    h1 Purchased items
+    ul
+      each purchase in purchases
+        if(!purchase.closed)
+          li
+            |#{purchase.artwork_name} -
+            |#{purchase.japaname.code} -
+            |￥#{purchase.price}
 
 
   div(style="height:100px")
@@ -88,26 +58,12 @@ block sub-content
       a(href="/mypage/payment_info") Enter payment information
     li
       a(href="/mypage/user_info") Edit user information.
-  
   div(style="height:100px")
 
-  //
-    h1.text-center  
-
-    p user.userinfo.method #{user.userinfo.method}
-    p user.name #{user.name}
-
-    p mail address is #{user.userinfo.email}
-
-    p user.userinfo.id #{user.userinfo.id}
-
-    p user.userinfo.name #{user.userinfo.name}
-
-    p user.userinfo.email is #{user.userinfo.email}
 
   p
     strong
-      a(href="/auth/local/logout")  logout
+      a(href="/auth/logout/")  logout
     
   div(style="height:100px")
 

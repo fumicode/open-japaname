@@ -11,11 +11,20 @@ var mongoose = require("mongoose");
 var User = mongoose.model("User");
 var Ateji = mongoose.model("Ateji");
 
+var Purchase = mongoose.model("Purchase");
 
 
 mypage_router.get('/', function(req, res, next) {
-  console.log("mypage dayo" );
-  res.render("mypage");
+  co(function*(){
+    var purchases = yield Purchase.find({buyer:req.user._id}).populate("japaname").exec();
+
+    console.log("mypage dayo" );
+    console.log(purchases);
+    res.render("mypage", {purchases});
+
+  }).catch((err)=>{
+    next(err);
+  });
 
 });
 

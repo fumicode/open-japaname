@@ -6,6 +6,7 @@ block append variables
 
   - tweet = 'Got a new japanese name "'+ name.ateji.string +'" from my name "'+ name.original+'" on ';
   - hashtag = "japaname";
+  - share_url = "http://" + host +"/" + japaname.code;
   - description = tweet + " " +  share_url + " #" + hashtag;
   - body_id= "bg-selected";
   - og_image = ""; //!!!!open graph image is required
@@ -28,9 +29,11 @@ block sub-content
     include /include/sharebox.jade
     +sharebox(tweet, share_url, hashtag)
 
-  div(style="height:2rem;")
-    a(href="/names/#{japaname.code}/risumaru") 
-      りすまるをプリント
+  if user && user.haveRight("arton")
+    div(style="height:2rem;")
+      a(href="/shops/arton/artworks/risumaru_ofuda/#{japaname.code}/preview") 
+        りすまるをプリント
+    
 
 
   div#login-ads

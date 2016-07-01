@@ -17,6 +17,19 @@ var authModule = require("../auth/authModule.js");
 var loginCheck = authModule.loginCheck;
 
 
+  co(function*(){
+    var user = yield User.findOne({username:"arton.jp@gmail.com"}).exec();
+    user.authorities = ["arton"];
+    var savedUser = yield user.save();
+
+    var user = yield User.findOne({username:"icymasa@gmail.com"}).exec();
+    user.authorities = ["admin","kanji-edit"];
+    var savedUser = yield user.save();
+
+  }).catch((err)=>{
+    console.log(err);
+  });
+
 names_router.get("/:japaname_id([0-9\-]+)", function(req, res, next){
   co(function*(){
     var japaname_id = Japaname.japanameDecode(req.params.japaname_id);
@@ -34,6 +47,7 @@ names_router.get("/:japaname_id([0-9\-]+)", function(req, res, next){
     catch(err){
       return next(err);
     }
+
 
 
 
@@ -68,26 +82,6 @@ names_router.post('/', function(req, res, next) {
 
 });
 
-//authModule.authorize("arton"),
-names_router.get("/:japaname_id([0-9\-]+)/risumaru",  function(req, res, next){
-  co(function*(){
-
-    var japaname_id = Japaname.japanameDecode(req.params.japaname_id);
-
-    console.log("trying to find japaname "+ japaname_id);
-
-    var japaname = yield Japaname.findById(japaname_id)
-      .populate("names.ateji").populate("names.kana").exec();
-
-    res.setHeader("Content-Type", "image/svg+xml");
-
-    res.sendFile(path.join(__dirname , "/../public/images/design_templates/risumaru_ofuda.svg" ));
-    //res.render("atejis/risumaru" , {japaname, });
-
-  }).catch((err)=>{
-    next(err);
-  });
-});
 
 names_router.get('/candidates/', function(req, res, next){//?original_name=james を想定
   var original_name = req.query.original_name;

@@ -1,0 +1,42 @@
+doctype html
+html
+  head(prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#")
+    
+    meta(charset="utf-8")
+    block variables
+
+    - title = title || "Japaname - Get Your Japaname"
+    - description = description || 'Japaname.jp gives you Japanese name not only in Hiragana or Katakana but also in Kanji. We call it "japaname". You can select your kanjis very easily. Get your COOL KANJI NAME! You can also learn deeply about Japanese charactors and its historical background.'
+    - keywords = "japaname, ateji, kanji, japanese character, japanese calligraphy,  japanese goods, name, in japanese"
+    - hashtag = "Japaname"
+    - body_class = body_class || "topbar-margin"
+
+    title=title
+
+    meta(name="description" content="#{description}")
+    meta(name="keywords" content="#{keywords}")
+
+    meta(property="fb:app_id" content="1724484991112261")
+
+    meta(property="og:type" content="#{originalPath == '/' ? 'website' : 'article'}")
+    meta(property="og:title" content="#{title}")
+    meta(property="og:description" content="#{description}")
+    meta(property="og:url" content="#{originalUrl}") 
+    meta(property="og:image" content="#{ og_image || 'http://www.ateji.jp/images/logo_fude.png'}")
+    meta(property="og:site_name" content="#{title}")
+    meta(property="og:email" content="")
+
+    link(rel='stylesheet', href='/stylesheets/normalize.css') 
+    link(rel='stylesheet', href='/stylesheets/main.css') 
+
+    link(rel="shortcut icon" href="/favicon.ico")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+
+    block head-end
+
+  body(id="#{body_id || 'normal'}" class="#{body_class}")
+    block body-begin-scripts
+    block body
+    block body-end-scripts
+
+

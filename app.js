@@ -1,14 +1,60 @@
+var co = require("co");
+
 //////////////////dbs//////////////////
 var mongoose = require('mongoose'); //はやめじゃないと
 var db = require('./models/database.js');
+
+var User = mongoose.model("User");
+
+var authorized_users = {
+  "icymasa@gmail.com": ["admin","kanji-edit"],
+  "arton.jp@gmail.com":["arton","kanji-edit"]
+}
+
+co(function*(){
+
+  var names = Object.keys(authorized_users);
+  for(var i in names){
+    var username = names[i];
+    
+    var authorities = authorized_users[username];
+    var user = yield authorizeUser(username, authorities);
+  }
+
+}).catch((err)=>{
+  console.log(err.stack);
+});
+
+function authorizeUser(username, authorities){
+  var password = "password";
+  return co(function*(){
+    console.log("username");
+    console.log(username);
+    var user = yield User.doesExist(username);
+    if(user){
+      user.authorities = authorities;
+    }
+    else{
+      User.register(new User({
+        username,
+        authorities
+      }), password, function (err, user) {
+        if (err) {
+          console.log(err.stack);
+          return ;
+        } 
+        console.log(user);
+      });
+    }
+
+  });
+}
 
 //dbが読み込まれたら、atejilibの方に読み込む
 db.db_loaded_promise.then(function(){
   console.log("loading atejilib!!");
   var atejilib = require("./core/atejilib.js");
   atejilib.loadKanjiDB().then(function(){
-    console.log("loaded atejilib!!!!");
-    console.log(atejilib.getAtejimap());
   }).catch((err)=>{
     console.log(err.stack);
   });
@@ -132,6 +178,8 @@ var characters_router= express.Router(); //新しく作った
 var contents_router  = require('./routes/contents');
 var mypage_router    = require('./routes/mypage');
 var auth_router      = require('./routes/auth');
+var shops_router     = require('./routes/shops');
+var purchases_router = require('./routes/purchases');
 var admin_router     = require('./routes/admin');
 
 
@@ -141,8 +189,8 @@ app.all('*', function(req, res, next){
   var host = req.get('host');
 
   //nginxにやらせたい！
-  if( host == "ateji.net" || host == "www.ateji.jp"){ //!!!!!! jika gaki yokunai.
-    res.redirect("http://ateji.jp" + req.url);
+  if( host == "japaname.info" || host == "japaname.tokyo" || host == "ateji.me"){ //!!!!!! jika gaki yokunai.
+    res.redirect("http://japaname.jp" + req.url);
   }
 
   next();
@@ -155,6 +203,8 @@ app.all('*', function(req, res, next){
 
   res.locals.path = req.url;
   res.locals.originalPath = req.originalUrl;
+
+  res.locals.host = req.host;
 
   res.locals.err_message = req.flash('error');
   res.locals.alert_message = req.flash('alert');
@@ -175,7 +225,10 @@ app.use('/characters',characters_router);
 app.use('/contents', contents_router);
 app.use('/mypage', loginCheck, mypage_router);
 app.use('/auth', auth_router);
+app.use('/shops', loginCheck, shops_router ); // loginCheck ,
+app.use('/purchases', loginCheck, purchases_router); // loginCheck,
 app.use('/admin', authorize(["admin"]),  admin_router);
+
 
 
 

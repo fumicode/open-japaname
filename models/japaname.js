@@ -21,23 +21,27 @@ var JapanameSchema = module.exports = new Schema({
 JapanameSchema.plugin(autoIncrement.plugin,{model:"Japaname"});
 
 // 0 => 00-0000-0000
+
+var sta  = JapanameSchema.statics;
+
 JapanameSchema.statics.japanameEncode = function (id_num){
   if(!typeof id_num === "number"){
     throw new Error("id_num has to be a number");
   }
-  var digit10 = ("00000" + "00000" + id_num).slice(-10);
-  var url_id  = insertStr(insertStr(digit10,6,'-'),2,'-'); 00-0000-0000
-  return url_id;
+
+  var digit = 6;
+  var zeros = repeat("0",digit);
+  var zero_num = (zeros + id_num).slice(-digit);
+  var code = insertDigitSpliter(zero_num, 4, "-");
+
+  return code;
 }
 
-function insertStr(str, index, insert) {
-  return str.slice(0, index) + insert + str.slice(index, str.length);
-}
 
 
 // 0 => 00-0000-0000
 JapanameSchema.statics.japanameDecode = function (url_str){
-  if(!JapanameSchema.statics.isJapanameCode(url_str)){
+  if(!sta.isJapanameCode(url_str)){
     throw new Error(url_str + " is not a Japaname Code");
   }
 
@@ -59,6 +63,11 @@ JapanameSchema.statics.isJapanameCode = function (url_str){
   return /[0-9\-]+/.test(url_str); 
 }
 
+JapanameSchema.statics.findByCode = function(japaname_code){
+  var japaname_id = sta.japanameDecode(japaname_code);
+
+  return this.findById(japaname_id);
+}
 
 
 /*
@@ -142,7 +151,7 @@ JapanameSchema.statics.createNew = function(names){
 
 
 JapanameSchema.virtual("code").get(function(){
-  return JapanameSchema.statics.japanameEncode(this._id);
+  return sta.japanameEncode(this._id);
 });
 
 
@@ -151,3 +160,34 @@ JapanameSchema.virtual("code").get(function(){
 
 
 
+function insertDigitSpliter(str, split_digit, spliter){
+
+  var split_point = str.length;
+
+  while(split_point > 0){
+    split_point -= split_digit;
+
+    if(!(split_point > 0)){
+      break;
+    }
+
+    str = insertStr(str,split_point, spliter);
+  }
+
+  return str;
+}
+
+
+function repeat(str, num){
+  var repeated= "";
+
+  for(var i = 0; i < num ; i++){
+    repeated += str;
+  }
+
+  return repeated;
+}
+
+function insertStr(str, index, insert) {
+  return str.slice(0, index) + insert + str.slice(index, str.length);
+}

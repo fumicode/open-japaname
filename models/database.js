@@ -20,6 +20,7 @@ var AtejiSchema = require("./ateji.js");
 var KanaSchema = require("./kana.js");
 var KanjiSchema = require("./kanji.js");
 var WordSchema  = require("./word.js");
+var PurchaseSchema  = require("./purchase.js");
 
 mongoose.model("User",UserSchema);
 mongoose.model("Japaname",JapanameSchema);
@@ -27,6 +28,7 @@ mongoose.model("Ateji",AtejiSchema);
 mongoose.model("Kana",KanaSchema);
 mongoose.model("Kanji",KanjiSchema);
 mongoose.model("Word",WordSchema);
+mongoose.model("Purchase",PurchaseSchema);
 
 db_obj.db_loaded_promise = Promise.resolve("loaded DB");
 

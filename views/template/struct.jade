@@ -1,15 +1,14 @@
 doctype html
 html
   head(prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#")
-
     meta( charset="utf-8" )
     block variables
 
-    - title = title || "ATEJI - Get Your Japanese Name"
-    - description = description || "ATEJI gives you Japanese name not only in Hiragana or Katakana but also in Kanji. You can select your kanjis very easily. Get your COOL KANJI NAME! You can also learn deeply about Japanese charactors and its historical background.";
-    - keywords = "ateji, kanji,Japanese Charactor, Japanese Calligraphy,  Japanese Goods, name, in japanese, 外国人のおみやげ, 当て字,外人の名前,日本語化";
-    - hashtag = "ATEJI";
-    - body_class = body_class || "topbar-margin";
+    - title = title || "Japaname.jp - Get Your Japaname"
+    - description = description || "Japaname.jp gives you Japanese name not only in Hiragana or Katakana but also in Kanji. We call it "japaname". You can select your kanjis very easily. Get your COOL KANJI NAME! You can also learn deeply about Japanese charactors and its historical background."
+    - keywords = "japaname, ateji, kanji, japanese character, japanese calligraphy,  japanese goods, name, in japanese"
+    - hashtag = "Japaname"
+    - body_class = body_class || "topbar-margin"
 
     title #{title}
 
@@ -25,12 +24,9 @@ html
     meta(property="og:description" content="#{description}")
     meta(property="og:url" content="#{originalUrl}") 
     meta(property="og:image" content="#{ og_image || 'http://www.ateji.jp/images/logo_fude.png'}")
-    meta(property="og:site_name" content="ATEJI - Get Your Japanese Name")
+    meta(property="og:site_name" content="#{title}")
     meta(property="og:email" content="")
 
-    //link(rel='stylesheet', href='/bootstrap/dist/css/bootstrap.min.css')
-    //link(rel='stylesheet', href='/stylesheets/style.css')
-    //いずれやりたい。gulpでつなげるの。
     link(rel='stylesheet', href='/stylesheets/normalize.css') 
     link(rel='stylesheet', href='/stylesheets/main.css') 
 

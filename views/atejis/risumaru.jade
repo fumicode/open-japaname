@@ -1,20 +1,37 @@
-extends /template/basic_layout
+extends /template/simple_struct
 
+block body
+  svg(id="ofuda_svg" style="width:500px; height:900px;border:red 5px solid;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink") 
 
-block append variables
-  - body_class = "no-topbar-margin";
+block append body-end-scripts
+  script(src="/javascripts/jquery.min.js" type="text/javascript")
+  script(type="text/javascript" src="/javascripts/snap.svg-min.js")
+  script(type="text/javascript").
+    var variables = {
+      japaname_string:"#{japaname.names[0].ateji.string}",
+      japaname_code:  "#{japaname.code}",
+      japaname_url:   "#{japaname.code}",
+      original_name:  "#{japaname.names[0].original}",
+    };
 
-block content
-  div(style="margin-top:100px")
-  each atemoji in japaname.names[0].ateji.atemojis
-    div.text-center(style="font-size:150px; line-height:1; ") #{atemoji.kanji}
+    (function(container){
+      var paper = Snap(500,900).remove();
+      Snap.ajax("/images/design_templates/risumaru_ofuda.svg",// {key: "value"}, //省略可
+        function(request){
+          var svg = Snap(request.responseXML.documentElement)
+            .attr({width:"100%", height:"100%"});
+          console.log(svg);
 
+          
+          Object.keys(variables).forEach(function(fieldName){
+            var fieldValue = variables[fieldName];
+            var element = svg.paper.select("#"+ fieldName);
+            element.attr("text", fieldValue);
+          });
 
-  div(style="margin-top:50px")
-  -var share_url = "http://japaname.jp/"  + japaname.code
-  div.text-center(style="")=share_url  
-
-  div(style="margin-top:50px")
-  div.text-center
-    img(src="http://chart.apis.google.com/chart?cht=qr&chs=150x150&chl=#{share_url}")
+          paper.append(svg);
+        });
+      
+      paper.prependTo(container);
+    })($("#ofuda_svg")[0]);
 
