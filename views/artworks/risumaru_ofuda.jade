@@ -3,13 +3,19 @@ extends /template/simple_struct
 block body
 
   - var artwork_name  = "risumaru_ofuda"
-  - var artwork_width = 50; //mm
-  - var artwork_height = 90;
+  - if(preview){
+  -  artwork_width = 50; //mm
+  -  var artwork_height = artwork_width / 5*9;
+  - }else{
+  -  var artwork_height = artwork_width / 5*9;
+  - }
 
   if(preview)
-    h1 プレビュー #{artwork_name} #{japaname.code}
+    h1 プレビュー #{artwork_name} #{japaname.code} 
 
-  svg(id="artwork_svg" style="width:#{artwork_width}mm; height:#{artwork_height}mm;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink") 
+  
+  div(style="text-align:center ;")
+    svg(id="artwork_svg" style="margin:0 auto; width:#{artwork_width}mm; height:#{artwork_height}mm;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink") 
 
   if(preview)
     div
