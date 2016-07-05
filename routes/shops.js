@@ -22,7 +22,6 @@ shops_router.get("/:shopname/artworks/:artwork_name/:japaname_code",(req,res,nex
 
     if(shopname == "arton"){  //haveRight = authModule.authorize("arton")
       var ofuda = "risumaru_ofuda";
-      // var ino   = "risumaru_ino"; var shika = "risumaru_shika"; var chou  = "risumaru_chou"; 
 
       if(artwork_name === ofuda){
 
@@ -82,14 +81,16 @@ shops_router.get("/:shopname/artworks/:artwork_name/:japaname_code/preview",(req
         }
 
         var purchase = yield Purchase
-          .findOne({ buyer:req.user._id, artwork_name:ofuda, japaname_id:japaname.id})
+          .findOne({ buyer:req.user._id, artwork_name:ofuda, japaname:japaname.id})
           .exec();
 
+        console.log(purchase);
+
         if(purchase){ //すでに購入していた
-          return res.redirect(path.join(req.url , "../"));
+          return res.redirect(path.join(req.baseUrl, req.url , "../"));
         }
         else{
-          return res.render("artworks/risumaru_ofuda" , {japaname, preview:true});
+          return res.render("artworks/" + ofuda, {japaname, preview:true});
         }
       }
       else{

@@ -7,7 +7,7 @@ var db = require('./models/database.js');
 var User = mongoose.model("User");
 
 var authorized_users = {
-  "icymasa@gmail.com": ["admin","kanji-edit"],
+  "icymasa@gmail.com": ["admin","kanji-edit", "arton"],
   "arton.jp@gmail.com":["arton","kanji-edit"]
 }
 
