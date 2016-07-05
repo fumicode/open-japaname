@@ -7,8 +7,8 @@ var db = require('./models/database.js');
 var User = mongoose.model("User");
 
 var authorized_users = {
-  "icymasa@gmail.com": ["admin","kanji-edit", "arton"],
-  "arton.jp@gmail.com":["arton","kanji-edit"]
+  "icymasa@gmail.com" : ["admin","kanji-edit", "arton"],
+  "arton.jp@gmail.com": ["arton","kanji-edit"]
 }
 
 function authorizeUser(username, authorities){
@@ -177,7 +177,7 @@ app.all('*', function(req, res, next){
 
   //nginxにやらせたい！
   if( host == "japaname.info" || host == "japaname.tokyo" || host == "ateji.me"){ //!!!!!! jika gaki yokunai.
-    res.redirect("http://japaname.jp" + req.url);
+    return res.redirect("http://japaname.jp" + req.url);
   }
 
   next();

@@ -8,7 +8,7 @@ block append variables
   - hashtag = "japaname";
   - share_url = "http://" + "japaname.jp" +"/" + japaname.code;
   - description = tweet + " " +  share_url + " #" + hashtag;
-  - body_id= "bg-selected";
+  - body_id= "bg-white";
   - og_image = ""; //!!!!open graph image is required
 
 block append head-end
@@ -19,26 +19,31 @@ block sub-content
 
 
     include /include/ateji_box
-    div#ateji-column-wrapper
-      div#ateji-column
-        h2 japaname of <wbr><strong style="text-transform:capitalize;color:red;">#{name.original}</strong>
-        mixin ateji_box(name.ateji.populated_atemojis)
+    h2 japaname of <wbr><strong style="text-transform:capitalize;color:red;">#{name.original}</strong><br>
+      | Japaname Code : #{japaname.code}
+    mixin ateji_box(name.ateji.populated_atemojis)
 
   div(style="height:3rem;")
   div
     include /include/sharebox.jade
-    +sharebox(tweet, share_url, hashtag)
+    if !(user && user.haveRight("arton"))
+      +sharebox(tweet, share_url, hashtag)
 
   if user && user.haveRight("arton")
     div(style="height:2rem;")
-      a(href="/shops/arton/artworks/risumaru_ofuda/#{japaname.code}/preview") 
-        りすまるをプリント
+
+    each artwork in artworks
+      a(href="/shops/arton/artworks/#{artwork.artwork_name}/#{japaname.code}/preview") 
+        img(src="/images/artworks/#{artwork.artwork_name}.svg" alt="#{artwork.artwork_name}" style="width:50mm;height:90mm")
+        | #{artwork.jp_name}
+        
     
 
 
-  div#login-ads
-    h1 Log-in and Save your japaname
-    a.button(href="/auth/login")  Log in!
+  if !user 
+    div#login-ads
+      h1 Log-in and Save your japaname
+      a.button(href="/auth/login")  Log in!
 
 
 block append body-end-scripts

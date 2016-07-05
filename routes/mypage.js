@@ -16,7 +16,9 @@ var Purchase = mongoose.model("Purchase");
 
 mypage_router.get('/', function(req, res, next) {
   co(function*(){
-    var purchases = yield Purchase.find({buyer:req.user._id}).populate("japaname").exec();
+    var purchases = yield Purchase.find({buyer:req.user._id})
+      .populate("japaname").exec();
+
 
     console.log("mypage dayo" );
     console.log(purchases);

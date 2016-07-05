@@ -11,6 +11,7 @@ var mongoose = require("mongoose");
 var Japaname = mongoose.model("Japaname");
 var Purchase = mongoose.model("Purchase");
 
+var artworks = require("../models/artworks.js");
 
 shops_router.get("/:shopname/artworks/:artwork_name/:japaname_code",(req,res,next)=>{
   co(function*(){
@@ -21,9 +22,8 @@ shops_router.get("/:shopname/artworks/:artwork_name/:japaname_code",(req,res,nex
     var artwork_width =  req.query.artwork_width || 310;
 
     if(shopname == "arton"){  //haveRight = authModule.authorize("arton")
-      var ofuda = "risumaru_ofuda";
 
-      if(artwork_name === ofuda){
+      if(artworks.doesExist(artwork_name)){
 
         var japaname = yield Japaname.findByCode(japaname_code)
           .populate("names.ateji").populate("names.kana").exec();
@@ -34,14 +34,14 @@ shops_router.get("/:shopname/artworks/:artwork_name/:japaname_code",(req,res,nex
 
         var purchaseExists = yield Purchase.doesExist({
           user_id:req.user._id,
-          artwork_name:ofuda,
+          artwork_name:artwork_name,
           japaname_id:japaname.id
         });
 console.log("artwork");
 console.log(artwork_width);
 
         if(purchaseExists){ //すでに購入していた
-          return res.render("artworks/" + artwork_name, {japaname, artwork_width});
+          return res.render("artworks" , {japaname, artwork_width, artwork_name});
         }
         else{
           return res.redirect(path.join(req.baseUrl , req.url , "/preview"));
@@ -68,10 +68,9 @@ shops_router.get("/:shopname/artworks/:artwork_name/:japaname_code/preview",(req
     var japaname_code = req.params.japaname_code;
 
     if(shopname == "arton"){  //haveRight = authModule.authorize("arton")
-      var ofuda = "risumaru_ofuda";
       // var ino   = "risumaru_ino"; var shika = "risumaru_shika"; var chou  = "risumaru_chou"; 
 
-      if(artwork_name === ofuda){
+      if(artworks.doesExist(artwork_name)){
 
         var japaname = yield Japaname.findByCode(japaname_code)
           .populate("names.ateji").populate("names.kana").exec();
@@ -81,7 +80,7 @@ shops_router.get("/:shopname/artworks/:artwork_name/:japaname_code/preview",(req
         }
 
         var purchase = yield Purchase
-          .findOne({ buyer:req.user._id, artwork_name:ofuda, japaname:japaname.id})
+          .findOne({ buyer:req.user._id, artwork_name, japaname:japaname.id})
           .exec();
 
         console.log(purchase);
@@ -90,7 +89,7 @@ shops_router.get("/:shopname/artworks/:artwork_name/:japaname_code/preview",(req
           return res.redirect(path.join(req.baseUrl, req.url , "../"));
         }
         else{
-          return res.render("artworks/" + ofuda, {japaname, preview:true});
+          return res.render("artworks" , {japaname, preview:true, artwork_name});
         }
       }
       else{

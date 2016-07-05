@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 var _ = require("underscore");
 var co = require("co");
 
+var artworks = require("../models/artworks.js");
 
 var PurchaseSchema = module.exports = new Schema({
   //_id :ObjectId
@@ -45,7 +46,9 @@ PurchaseSchema.statics.createNew = function(params){
       throw new Error("price is invalid");
     }
 
-    if(artwork_name != "risumaru_ofuda"){
+
+
+    if(!artworks.doesExist(artwork_name)){
 
       throw new Error("item "+artwork_name+" not found.");
     }

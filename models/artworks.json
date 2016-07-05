@@ -1,0 +1,13 @@
+{
+  "risumaru_ofuda":{ 
+    "artwork_name" :"risumaru_ofuda",
+    "ratio" : 1.8
+  },
+
+  "risumaru_ume":{ 
+    "artwork_name" :"risumaru_ume",
+    "ratio" : 1.42
+  }
+
+}
+

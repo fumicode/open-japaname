@@ -4,7 +4,10 @@ var purchases_router = module.exports = express.Router();
 var _ = require("underscore");
 var co = require("co");
 var mongoose = require("mongoose");
+var Japaname = mongoose.model("Japaname");
 var Purchase = mongoose.model("Purchase");
+
+var artworks = require("../models/artworks.js");
 
 
 
@@ -15,32 +18,31 @@ purchases_router.get("/:artwork_name/:japaname_code",(req,res,next)=>{
 
 
     ///////////////////////////validation///////////////////////////
-    if(artwork_name !== "risumaru_ofuda"){
-      next();
+    if(!artworks.doesExist(artwork_name)){
+      return next();
     }
 
     var japaname = yield Japaname.findByCode(japaname_code).exec();
 
     if(!japaname){
-      next(); //not found
+      return next(); //not found
     }
 
     //check if puchase exists or not
     var purchase = yield Purchase
-      .findOne({buyer:req.user._id, artwork_name, japaname_code}).exec();
+      .findOne({buyer:req.user._id, artwork_name, japaname:japaname.id}).exec();
 
 
-    //purchase doesn't exist
+    //購入してない場合、買ってね
     if(!purchase){
       return res.redirect("/shops/arton/artworks/"+artwork_name+"/"+japaname_code+"/preview");
     }
 
-
-    //購入済
+    //購入してる場合、どうぞ
     return res.redirect("/shops/arton/artworks/"+artwork_name+"/"+japaname_code+"/");
 
   }).catch((err)=>{
-    next(err)
+    return next(err)
   });
 });
 
@@ -64,8 +66,8 @@ purchases_router.post("/:artwork_name/:japaname_code",(req,res,next)=>{
       return res.redirect("/shops/arton/artworks/"+artwork_name+"/"+japaname_code+"/");
     }
 
-    if(artwork_name !== "risumaru_ofuda"){
-      next();
+    if(!artworks.doesExist(artwork_name)){
+      return next();
     }
 
     YAEHATA_PRICE = 300;
@@ -84,14 +86,14 @@ purchases_router.post("/:artwork_name/:japaname_code",(req,res,next)=>{
     console.log(result);
 
     if(result){
-      res.redirect("/shops/arton/artworks/"+artwork_name+"/"+japaname_code+"/");
+      return res.redirect("/shops/arton/artworks/"+artwork_name+"/"+japaname_code+"/");
     }
     else{
-      next();
+      return next();
     }
 
 
   }).catch((err)=>{
-    next(err)
+    return next(err)
   });
 });

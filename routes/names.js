@@ -16,19 +16,11 @@ var Japaname = mongoose.model("Japaname");
 var authModule = require("../auth/authModule.js");
 var loginCheck = authModule.loginCheck;
 
+var artworks = require("../models/artworks.js");
 
-  co(function*(){
-    var user = yield User.findOne({username:"arton.jp@gmail.com"}).exec();
-    user.authorities = ["arton"];
-    var savedUser = yield user.save();
+console.log("artworks");
+console.log(artworks);
 
-    var user = yield User.findOne({username:"icymasa@gmail.com"}).exec();
-    user.authorities = ["admin","kanji-edit"];
-    var savedUser = yield user.save();
-
-  }).catch((err)=>{
-    console.log(err);
-  });
 
 names_router.get("/:japaname_id([0-9\-]+)", function(req, res, next){
   co(function*(){
@@ -49,15 +41,15 @@ names_router.get("/:japaname_id([0-9\-]+)", function(req, res, next){
     }
 
 
-
-
-    console.log(japaname.names[0].original);
-    console.log(japaname.names[0].ateji.string);
-    console.log(japaname.names[0].ateji.populated_atemojis);
+    var artworks_list = artworks.getList(); 
+    console.log(artworks);
+    console.log(artworks_list);
 
     res.render("atejis/selected", {
-      japaname:japaname
+      japaname,
+      artworks:artworks_list,
     });
+
   }).catch((err)=>{
     next(err);
   });
@@ -90,17 +82,20 @@ names_router.get('/candidates/', function(req, res, next){//?original_name=james
     res.redirect("/");
   }
 
-  res.redirect(req.baseUrl + "/candidates/" + encodeURIComponent(original_name));
-
 
   //数字が入力されたらidだと思って結果ページにそのままいく
-  if(isNumber(original_name)){
+  if(Japaname.isJapanameCode(original_name)){
+    var japaname_code = original_name;
 
-    var ateji_id = original_name;
-    res.redirect("/" + ateji_id);
+    japaname_code = Japaname.japanameEncode(Japaname.japanameDecode(japaname_code));
+
+    res.redirect("/" + japaname_code);
+
     return;
   }
 
+
+  res.redirect(req.baseUrl + "/candidates/" + encodeURIComponent(original_name));
 });
 
 function isNumber(num_str){

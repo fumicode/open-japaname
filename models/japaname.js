@@ -155,6 +155,10 @@ JapanameSchema.virtual("code").get(function(){
 });
 
 
+JapanameSchema.virtual("string").get(function(){
+  return this.names[0].ateji.string;
+});
+
 
 
 

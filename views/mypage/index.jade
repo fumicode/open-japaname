@@ -46,9 +46,11 @@ block sub-content
       each purchase in purchases
         if(!purchase.closed)
           li
-            |#{purchase.artwork_name} -
-            |#{purchase.japaname.code} -
-            |￥#{purchase.price}
+            a(href="/shops/arton/artworks/#{purchase.artwork_name}/#{purchase.japaname.code}")
+              |#{purchase.artwork_name} -
+              |#{purchase.japaname.code} -
+              |#{purchase.japaname.string} -
+              |￥#{purchase.price}
 
 
   div(style="height:100px")
