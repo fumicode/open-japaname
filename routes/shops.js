@@ -18,7 +18,7 @@ shops_router.get("/:shopname/artworks/:artwork_name/:japaname_code",(req,res,nex
     var artwork_name = req.params.artwork_name;
     var japaname_code = req.params.japaname_code;
 
-    var artwork_width =  req.query.artwork_width || 50;
+    var artwork_width =  req.query.artwork_width || 310;
 
     if(shopname == "arton"){  //haveRight = authModule.authorize("arton")
       var ofuda = "risumaru_ofuda";

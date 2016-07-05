@@ -11,20 +11,6 @@ var authorized_users = {
   "arton.jp@gmail.com":["arton","kanji-edit"]
 }
 
-co(function*(){
-
-  var names = Object.keys(authorized_users);
-  for(var i in names){
-    var username = names[i];
-    
-    var authorities = authorized_users[username];
-    var user = yield authorizeUser(username, authorities);
-  }
-
-}).catch((err)=>{
-  console.log(err.stack);
-});
-
 function authorizeUser(username, authorities){
   var password = "password";
   return co(function*(){
@@ -32,6 +18,7 @@ function authorizeUser(username, authorities){
     console.log(username);
     var user = yield User.doesExist(username);
     if(user){
+
       user.authorities = authorities;
     }
     else{
