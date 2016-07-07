@@ -8,7 +8,6 @@
 	.st2{fill:none;}
 	.st3{stroke:#000000;stroke-width:0.2155;stroke-miterlimit:10;}
 	.st4{fill:#FFFFFF;stroke:#FFFFFF;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-	.st5{font-family:'ArialMT';}
 	.st6{font-size:5.6031px;}
 	.st7{font-size:6.9116px;}
 	.st8{font-family:'ro-shino-std';}
@@ -843,12 +842,11 @@
 		</g>
 	</g>
 </g>
-<text id="japaname_url" transform="matrix(1 0 0 1 -470.9469 660.6295)" class="st5 st6"></text>
-<text transform="matrix(1 0 0 1 -449.3974 444.1444)" class="st5 st7"></text>
 <g id="variables">
 	<text id="japaname_string" transform="matrix(1 0 0 1 -408.5502 463.6665)" class="st8 st9">舞医家流</text>
-	<text id="japaname_code" transform="matrix(1 0 0 1 -408.5502 445.6298)" class="st5 st6" text-anchor="middle">00-0042</text>
-	<text id="original_name" transform="matrix(1 0 0 1 -408.5502 597.3333)" class="st10 st8" text-anchor="middle">michael</text>
+	<text id="japaname_code" transform="matrix(1 0 0 1 -408.5502 445.6298)" class="st6" text-anchor="middle">00-0042</text>
+	<text id="original_name" transform="matrix(1 0 0 1 -408.5502 597.3333)" class="st10 " text-anchor="middle">michael</text>
 	<rect id="qrcode_container" x="-472.4" y="613.2" class="st1" width="41.2" height="41.2"/>
+  <text id="japaname_url" transform="matrix(1 0 0 1 -470.9469 660.6295)" class="st6">http://japaname.jp/00-0042</text>
 </g>
 </svg>
