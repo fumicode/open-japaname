@@ -419,7 +419,7 @@ div#topbar {
           margin-right: 0; } }
     div#topbar div#topbar-container #ateji-logo-hanko img {
       display: block;
-      width: 4rem;
+      width: auto;
       height: 4rem; }
     div#topbar div#topbar-container #user-info {
       overflow: hidden;
@@ -923,6 +923,7 @@ div#ateji-scroller {
     div#ateji-scroller div#ateji-block table#ateji-table {
       width: auto;
       margin: 0;
+      font-family: "ro-nikkatsu-sei-kai-std", serif;
       /*
         @include media($tablet-breakpoint){
           tr#kanji-row td{

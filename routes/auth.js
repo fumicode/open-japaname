@@ -11,19 +11,16 @@ var co = require("co");
 
 
 
-auth_router.get("/signup",(req,res,next)=>{
-  res.render("auth/signup");
+auth_router.get("/",(req,res,next)=>{
+  res.render("auth/login_signup");
 });
 
-auth_router.get("/login",(req,res,next)=>{
-  res.render("auth/login");
-});
 
 auth_router.post("/signup", function (req, res, next) {
   co(function*(){
     var username =  req.body.username;
     var password =  req.body.password;
-    var re_password =  req.body.re_password;
+    var re_password =  req.body.confirm_password;
 
     console.log("signing up username " + username);
     console.log("password " + password);
@@ -33,14 +30,14 @@ auth_router.post("/signup", function (req, res, next) {
       var message =  "user exist! error!";
       console.log(message);
       req.flash("error", message);
-      return res.redirect(req.url);
+      return res.redirect(req.baseUrl + "#signup");
     }
 
     if(password !== re_password){
       var message =  "password not same";
       console.log(message);
       req.flash("error", message);
-      return res.redirect(req.url);
+      return res.redirect(req.baseUrl + "#signup");
     }
 
     //needs validataion
@@ -51,7 +48,7 @@ auth_router.post("/signup", function (req, res, next) {
     }), password, function (err, user) {
       if (err) {
         req.flash("error","couldn't add try once");
-        return res.redirect(req.baseUrl + "/signup/");
+        return res.redirect(req.baseUrl + "#signup");
       } 
 
       authenticate_and_redirect_mypage(username,password,req,res);
@@ -63,14 +60,14 @@ auth_router.post("/signup", function (req, res, next) {
   });
 });
 
-auth_router.post("/login/", function(req,res,next){
+auth_router.post("/login", function(req,res,next){
   var username = req.body.username;
   var password = req.body.password;
 
   authenticate_and_redirect_mypage(username,password,req,res);
 });
 
-auth_router.get('/logout/', function(req,res){
+auth_router.get('/logout', function(req,res){
   req.logout();
   res.redirect("/");
 });
@@ -78,15 +75,21 @@ auth_router.get('/logout/', function(req,res){
 
 
 function authenticate_and_redirect_mypage(username,password,req,res,next){
+
+  console.log("here1 " + username + " " + password);
   User.authenticate()(username,password,function(err,user,options){
+    
+      console.log("here2");
     if (err) return next(err);
     if (user === false) {
 
+      console.log("here");
       //!!!! いずれいれる！！
       //req.flash("error", "Enter same password twice.");
-      return res.redirect(req.baseUrl + "/signup/");
+      return res.redirect(req.baseUrl + "#signup");
     } 
     else {
+      console.log("here3");
       req.login(user, function (err) {
         return res.redirect("/mypage/");
       });

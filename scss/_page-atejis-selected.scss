@@ -68,6 +68,8 @@ div#ateji-scroller{
       width:auto;
       margin:0; //
 
+      font-family:$kanji-font-family;
+
       @include media($medium-screen-up){ //thを表示させるため
         margin-left:-8rem;
       }

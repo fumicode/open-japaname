@@ -6,6 +6,7 @@ mixin topbar(logo_hanko, search_box, original_name)
       div#ateji-logo-hanko(style="height:4rem;")
         if logo_hanko
           a(href="/")
+            img(src="/images/japaname_logo_1024.png" alt="Go to top")
 
 
       //検索
@@ -23,7 +24,7 @@ mixin topbar(logo_hanko, search_box, original_name)
           span(style="font-size:0.7em") 様
 
         else
-          a(href="/auth/login")
+          a(href="/auth")
             |Guest
 
 
