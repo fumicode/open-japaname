@@ -11,6 +11,7 @@
       Object.keys(variables).forEach(function(fieldName){
         var fieldValue = variables[fieldName];
         var element = svg.paper.select("#"+ fieldName);
+	console.log(fieldValue);
         if(element)
           element.attr("text", fieldValue);
       });
