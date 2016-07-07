@@ -594,6 +594,7 @@ atejilib.toJapaneseSound= function(name){
       console.log("ローマ字としての解釈もできない" + err);
     }
 
+
     throw Error("cannot translate");
 
   });

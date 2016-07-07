@@ -60,6 +60,7 @@ block sub-content
 
 
 block append body-end-scripts
+
   script(src="/javascripts/myscript.js")
 
   // なぜかいきなりトップにもどるスクロール我発生する謎のバグ
@@ -67,19 +68,6 @@ block append body-end-scripts
   //
 
   script.
-    //    //see-another ボタン
-    //    $(function(){
-    //      var curtain = $('#hide-curtain');
-    //
-    //      curtain.click(function(){
-    //        curtain.hide();
-    //      });
-    //
-    //    });
-
-
-    //topbar delete
-
     $(function(){
 
       $topbar = $("#topbar");
@@ -102,45 +90,5 @@ block append body-end-scripts
       });
     });
 
-
-    //sticky name
-    /* 無駄な切り替えはしないことにした
-    *
-    $(function(){
-      var box    = $("#kanji-selected-container");
-      var cands = $("#ateji-cands");
-
-      var boxTop = box.offset().top;
-      var topbarHeight = 50;
-
-      $(window).scroll(function () {
-        console.log("scroll");
-        var scrolltop = $(window).scrollTop(); 
-        
-        
-        console.log("----scrolltop" + scrolltop);
-        console.log("----topbarHeight" + topbarHeight);
-        console.log("----boxTop" + boxTop);
-
-        if(scrolltop + topbarHeight > boxTop) {
-          console.log("scrolled");
-          
-          box.addClass("fixed");
-          cands.css("margin-top" , box.height());
-          console.log(box.height());
-         
-
-
-        } else {
-
-          console.log("not scrolled");
-          
-          box.removeClass("fixed"); 
-          cands.css("margin-top" , 0);
-         
-        }
-      });
-    });
-    */
-
-
+  script(src="https://use.typekit.net/yjx8eou.js")
+  script try{Typekit.load({ async: true });}catch(e){}

@@ -21,10 +21,10 @@ PurchaseSchema.statics.createNew = function(params){
   var Purchase = this;
   return co(function*(){
     //params
-    var buyer_id = params.buyer_id;
-    var price    = params.price; 
-    var artwork_name  = params.artwork_name; 
-    var japaname_code = params.japaname_code;
+    var buyer_id     = params.buyer_id;
+    var price        = params.price; 
+    var artwork_name = params.artwork_name; 
+    var japaname_code= params.japaname_code;
 
     //models
     var User = mongoose.model("User");

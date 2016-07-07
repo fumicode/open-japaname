@@ -34,10 +34,8 @@ block sub-content
 
     each artwork in artworks
       a(href="/shops/arton/artworks/#{artwork.artwork_name}/#{japaname.code}/preview") 
-        img(src="/images/artworks/#{artwork.artwork_name}.svg" alt="#{artwork.artwork_name}" style="width:50mm;height:90mm")
+        img(src="/images/artworks/#{artwork.artwork_name}.svg" alt="#{artwork.artwork_name}" style="width:50mm;height:#{artwork.ratio * 50}mm")
         | #{artwork.jp_name}
-        
-    
 
 
   if !user 
