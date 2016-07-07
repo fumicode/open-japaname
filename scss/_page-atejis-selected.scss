@@ -1,0 +1,174 @@
+div#ateji-column-wrapper{
+
+  @include outer-container();
+  div#ateji-column{
+    @include span-columns(4);
+    @include omega();
+
+    margin-bottom:3rem;
+  }
+
+  div#ateji-side-column{
+
+    @include span-columns(4);
+     
+
+    div.ateji-side-content{
+      @include span-columns(4);
+
+      margin-bottom:1rem;
+    }
+
+  }
+
+  @include media($medium-screen-up){
+    div#ateji-column{
+
+      
+    }
+    div#ateji-side-column{
+      div.ateji-side-content{
+        @include span-columns(1 of 3);
+        @include omega(3n);
+      }
+    }
+  }
+
+  @include media($large-screen-up){
+    div#ateji-column{
+      @include span-columns(8);// of 12
+
+      div#ateji-scroller{
+        margin-right:0;
+        
+      }
+    }
+    div#ateji-side-column{
+      @include span-columns(4);// of 12
+      div.ateji-side-content{
+        @include span-columns(4 of 4);// of 12
+
+      }
+    }
+  }
+}
+
+div#ateji-scroller{
+  @extend .full-width;
+
+  overflow-x:auto;
+
+  text-align:center;
+
+  div#ateji-block{
+    display:inline-block;
+    margin:0 auto;
+
+    table#ateji-table{
+      width:auto;
+      margin:0; //
+
+      @include media($medium-screen-up){ //thを表示させるため
+        margin-left:-8rem;
+      }
+      td,th{
+        margin:0;
+        padding:0;
+        border-bottom:1px solid $ateji-lightgray-color ;
+      }
+
+      th{
+        width:7rem;
+        vertical-align:middle;
+        text-align:right;
+        padding-right:1rem;
+
+        display:none;
+
+        @include media($medium-screen-up){
+          display:table-cell;
+        }
+      }
+
+      tr#kanji-row td{
+        
+        padding:0;
+        font-size:10rem;
+
+        position:relative;
+        img.ateji-stamp{
+          display:block;
+          position:absolute;
+            right:0;
+            bottom:0;
+        }
+      }
+
+      tr#kanji-row td.stamp{
+        background:url(/images/ateji-hanko-stamp.png) right bottom no-repeat;
+        background-size: 50% ;
+
+
+      }
+
+      tr#kana-row,
+      tr#meanings-row{
+      }
+
+
+      /*
+        @include media($tablet-breakpoint){
+          tr#kanji-row td{
+            font-size:60px;
+            width:60px;
+          }
+        }
+
+        @include media($mobile-breakpoint){
+          tr#kanji-row td{
+            font-size:30px;
+            width:30px;
+          }
+        }
+      */
+
+      tr#meanings-row{
+        a{
+          display:block;
+          box-sizing:content-box;
+          padding:5px;
+          margin:0 auto;
+        }
+      }
+    }
+  }
+}
+
+a.ateji-side-banner{
+  display:block;
+  box-sizing:border-box;
+  width:100%;
+  height:100%;
+  padding:10px 20px;
+
+  background:white;
+  color:black;
+
+  border-radius:5px;
+  strong{
+    display:block;
+  }
+
+}
+
+div#yukikaki-ads{
+  text-align:center;
+
+}
+
+div#login-ads{
+  text-align:center;
+
+}
+
+

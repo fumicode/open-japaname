@@ -1,0 +1,222 @@
+div#kanji-selected-wrapper{
+  position:fixed;
+    top:$topbar-height; //topbar のしたに表示
+    left:0;
+    right:0;
+    z-index:900;
+
+  background-color:rgba(255,255,255,0.8);
+
+  &.notopbar{
+    top:0;
+
+  }
+
+  div#kanji-selected-container{
+
+    width:100%;
+
+    @include outer-container;
+
+    padding:1rem;
+    div#kanji-selected-box{
+
+      @include span-columns(3);
+
+      //background:url("/images/ateji-done-button.png") 95% 95% no-repeat;
+
+
+      font-family:serif;
+      text-align:center;
+
+      p#kanji-selected{
+        line-height:1em;
+        font-size:5rem;
+
+        margin-bottom:0;
+        span{
+          //ここに漢字がはいります
+        }
+      }
+      p#japanese-sound{
+        font-size:2rem;
+        margin:0;
+      }
+    }
+
+    div#kanji-button-container{
+      @include span-columns(1);
+
+      button.gonext {
+        box-sizing:border-box;
+        width:100%;
+        white-space:normal;
+        padding:1em;
+      }
+    }
+  }
+}
+
+div#kanji-selected-container-margin{
+  height:10rem;
+
+
+}
+
+
+
+
+.kana-string{
+  text-align:center;
+  font-size:3rem;
+}
+
+
+#ateji-cands-container{
+
+}
+
+#ateji-cands{
+
+  @include full-width;
+  overflow-x:auto;
+
+  overflow:scroll;
+  position:relative;
+
+  table.table.ateji-cands-table>tbody>tr>td,
+  table.table.ateji-cands-table>tbody>tr>th{
+    border-width:0px ;
+    text-align:center;
+    vertical-align:top;
+  }
+
+  .hiragana-char{
+    background : rgba(255,255,255,0.8);
+    text-align:center;
+  }
+
+  .hiragana-char.notselected{
+    background : red;
+  }
+
+  /*box inside td*/
+  table{
+    width:auto;
+    margin:0 auto;
+    
+    td{
+      .kana-box{
+        text-align:center;
+        background:rgba(0,0,0,0.3);
+        padding:0.5rem;
+
+
+        .ateji-cands-for-kana{
+          overflow-y:scroll;
+          height:30rem;
+
+          .ateji-cand {
+            position:relative;
+
+
+            .ateji-cand-radio{
+              display:none;
+            }
+
+
+            &:hover{ 
+              .kanji-char{
+                background:#dde;
+              }
+              .kanji-detail{
+                color:black;
+              }
+            }
+
+
+
+            label{
+              display:block;
+              
+              width:100%;
+
+              .kanji-char{
+                position:relative;
+
+                box-sizing:content-box;
+                display:block;
+                padding:0.3rem;
+                width:1.2em;
+                height:1.2em;
+                margin:0 auto;
+
+                vertical-align:middle;
+                line-height:1.2;
+
+                font-size:3rem;
+                font-family:"ro-nikkatsu-sei-kai-std",serif;
+
+              }
+
+              .kanji-detail{
+                //position:absolute;
+                //  bottom:0px;
+                //  left:0;
+                display:block;
+
+                width:100%;
+
+                text-align:center;
+                padding:0;
+                color:#888;
+
+                ul.meanings{
+                  display:none;
+
+                  margin:0;
+                  padding:0;
+
+                  li{
+                    text-align:center;
+                  }
+
+                  list-style:none;
+
+                  text-align:left;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  input.kana-radiobox{
+    display:none;
+    &:checked {
+      &+ .kana-box{
+        background:rgba(255,255,255,0.7);
+
+        //選ばれた奴しか意味は表示しない
+        .ateji-cands-for-kana .ateji-cand 
+        label .kanji-detail ul.meanings{
+          display:inline;
+        }
+      }
+      &+ .kana-box .ateji-cand input:checked + label{
+        .kanji-char{
+          background:skyblue;
+          font-size:6rem;
+        }
+
+        .kanji-detail{
+          color:black;
+        }
+
+      }
+    }
+  }
+}
+

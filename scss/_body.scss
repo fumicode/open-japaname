@@ -1,0 +1,45 @@
+
+body.topbar-margin{
+  margin-top:$topbar-height;
+  background-position:0px $topbar-height;
+}
+
+body{
+  font-family:$georgia;
+
+  background-color: white;
+  background-repeat:no-repeat;
+  background-size:100%;
+}
+
+body#normal,
+body#bg-index{
+  background-image:url("/images/bg-index.jpg");
+}
+
+body#bg-plane{
+  background: white repeat ;
+  background-size:auto;
+  background-image: url("/images/bg-washi.png");
+}
+
+body%same-height{
+  background-size:140%;
+
+  @include media($medium-screen-up){
+    background-size:100%;
+  }
+
+}
+
+body#bg-candidates{
+  @extend %same-height;
+  background-image:url("/images/bg-candidates.jpg");
+}
+
+body#bg-selected{
+  @extend %same-height;
+  background-image:url("/images/bg-selected.jpg");
+  background-color: $ateji-light-oudo-color;
+
+}

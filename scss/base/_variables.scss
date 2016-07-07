@@ -1,0 +1,69 @@
+///////////////////////////ATEJI original///////////////////////////////
+$ateji-oudo-color: #b28f44;
+$ateji-light-oudo-color: #D9B881;
+$ateji-shu-color : #d4371c;
+$ateji-shu-color : #d4371c;
+$ateji-lightgray-color : #efefef;
+
+$topbar-color: #b28f44;
+
+
+
+////////////// basic /////////////
+
+//////////////topbar/////////////
+
+$topbar-color: $ateji-oudo-color;
+
+$topbar-height:4rem; 
+
+$body-side-margin:1rem;
+
+///////////////////////////BITTERS///////////////////////////////
+
+// Typography
+$base-font-family: $georgia;
+$heading-font-family: $base-font-family;
+
+// Font Sizes
+$pc-font-size: 62.5%;    // = 10px => 1.6rem = 16px
+$tablet-font-size: 54.6875%;// タブレットは14px
+$mobile-font-size: 46.875%; // モバイルは12px
+
+$base-font-size: 1.6rem; // パソコンは16px
+
+// Line height
+$base-line-height: 1.5;
+$heading-line-height: 1.2;
+
+// Other Sizes
+$base-border-radius: 3px;
+$base-spacing: $base-line-height * 1em;
+$small-spacing: $base-spacing / 2;
+$base-z-index: 0;
+
+// Colors
+$blue: #477dca;
+$dark-gray: #333;
+$medium-gray: #999;
+$light-gray: #ddd;
+
+// Font Colors
+$base-font-color: $dark-gray;
+$action-color: $ateji-shu-color;
+
+// Border
+$base-border-color: $light-gray;
+$base-border: 1px solid $base-border-color;
+
+// Background Colors
+$base-background-color: #fff;
+$secondary-background-color: tint($base-border-color, 75%);
+
+// Forms
+$form-box-shadow: inset 0 1px 3px rgba(#000, 0.06);
+$form-box-shadow-focus: $form-box-shadow, 0 0 5px adjust-color($action-color, $lightness: -5%, $alpha: -0.3);
+
+// Animations
+$base-duration: 150ms;
+$base-timing: ease;

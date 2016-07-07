@@ -1,0 +1,361 @@
+
+img#yuki-logo{ 
+
+}
+
+
+#send-request-button{
+  
+  display:block;
+
+  margin: {
+    left:auto;
+    right:auto;
+  }
+  padding:3rem;
+
+  max-width:40rem;
+
+
+  text-align:center;
+
+}
+
+ul.select-image{
+  list-style:none;
+  margin:0;
+  padding:0;
+
+  overflow:hidden;
+  border-radius:5px;
+
+  li{
+    margin:0;
+    padding:0;
+
+    input{ display:none; }
+
+    label{
+      display:block;
+      margin:1rem; //ボーダーのかわり
+      padding:10px;
+
+      opacity:0.8;
+      background-color:white;
+
+
+      &:hover{
+        opacity:1;
+      }
+
+      h3{
+        font-weight:bold;
+      }
+
+      .choice-name{
+        display:block;
+      }
+
+      img{
+        @include img-responsive;
+        margin:0px auto;
+      }
+    }
+
+    input[type=radio]:checked + label{
+      opacity:1;
+      margin:0rem; //1remだったものをもどす。
+      border:1rem solid $ateji-shu-color;
+    }
+
+  }
+}
+
+
+
+ul#select-font.select-image{
+  background:#fff;
+
+  li{
+    @include span-columns(4);
+
+    @include media($medium-screen-up){
+      @include span-columns(2);
+      @include omega(2n);
+    }
+    label{
+      height:100%;
+      font-weight:normal;
+
+      .choice-name{
+        float:left;
+        width:100px;
+        margin-right:-100px;
+        height:100%;
+
+      }
+
+      img{
+        max-height:10rem;
+
+      }
+
+      #omakase-gazo{
+        font-size:10rem;
+        text-align:center;
+        line-height:10rem;
+        vertical-align:middle;
+        margin:0;
+      }
+    }
+
+  }
+}
+
+
+ul#select-direction.select-image{
+
+  border-radius:0;
+  @include outer-container;
+  li{
+    @include span-columns(2);
+
+    background:white;
+
+    input[type="radio"]{
+      display:none;
+    }
+    h3{
+      text-align:center;
+
+    }
+
+    label{
+      background:transparent;
+
+      img{
+        box-shadow:0px 0px 3px #000;
+        width:100%;
+        max-width:30rem;
+        background:white;
+        border-radius:5px;
+
+      }
+    }
+  }
+}
+
+ul#select-ateji.select-image{
+
+  border-radius:0;
+  @include outer-container;
+
+  li{
+    @include media($medium-screen-up){
+      @include span-columns(2);
+      @include omega(2n);
+    }
+
+    @include media($large-screen-up){
+      @include span-columns(4);
+      @include omega-reset(2n, 12);
+      @include omega(3n);
+    }
+
+    input[type="radio"]{
+      display:none;
+    }
+    label{
+      background:transparent;
+
+      img{
+
+        background:white;
+        border-radius:5px;
+      }
+    }
+
+    input[type="radio"]:checked + label{
+      background-color:#ffe0d7;
+    }
+  }
+}
+
+div.artist-header{
+  @include outer-container();
+  div.artist-icon-container{
+    @include span-columns(4);
+    img.artist-icon{
+      @include span-columns(2 of 4);
+    }
+
+    h1.artist-name {
+      @include span-columns(2 of 4);
+    }
+  }
+  div.artist-description{
+    @include span-columns(4);
+  }
+
+  @include media($medium-screen-up){
+    div.artist-icon-container{
+      @include span-columns(2);
+      img.artist-icon{
+        @include span-columns(2 of 2);
+      }
+      h1.artist-name {
+        @include span-columns(2 of 2);
+      }
+    }
+    div.artist-description{
+      @include span-columns(2);
+    }
+  }
+
+  @include media($large-screen-up){
+    div.artist-icon-container{
+      @include span-columns(4);
+      img.artist-icon{
+        @include span-columns(4 of 4);
+      }
+      h1.artist-name {
+        @include span-columns(4 of 4);
+      }
+    }
+    div.artist-description{
+      @include span-columns(8);
+    }
+
+  }
+}
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!
+div.price-box{
+  del{
+
+  }
+  h2{
+
+  }
+
+  .the-price{
+    font-size:5rem;
+
+    .in-doller {
+      color:red;
+    }
+
+    .in-yen{
+      font-size:3rem;
+    }
+  }
+
+  #explanation{
+    font-size:0.8em;
+    color:#333;
+  }
+
+}
+
+
+
+
+div#font-direction-container{
+  @include outer-container();
+
+  div#font-selector-box{
+    @include span-columns(4);
+  }
+
+  div#direction-selector-box{
+    @include span-columns(4);
+  }
+
+  @include media($medium-screen-up){
+    div#font-selector-box{
+      @include span-columns(2);
+    }
+
+    div#direction-selector-box{
+      @include span-columns(2);
+    }
+  }
+
+
+
+}
+
+
+
+.artist-example-container{
+
+  @include outer-container();
+
+  .artist-example-description{
+
+  }
+  .artist-example-image{
+    box-shadow:0px 0px 10px #000;
+  }
+
+  @include media($large-screen-up){
+    .artist-example-description{
+
+    }
+    .artist-example-image{
+    }
+  }
+
+  @include direction-context(right-to-left){
+    @include media($medium-screen-up){
+      .artist-example-description{
+        @include span-columns(2);
+
+      }
+      .artist-example-image{
+        @include span-columns(2);
+      }
+    }
+
+    @include media($large-screen-up){
+      .artist-example-description{
+        @include span-columns(8);
+
+      }
+      .artist-example-image{
+        @include span-columns(4);
+      }
+    }
+  }
+
+}
+
+
+.artist-detail-container{
+  @include outer-container;
+
+  
+  .artist-detail-col{
+    @include span-columns(2);
+
+  }
+
+  @include media($medium-screen-up){
+    .artist-detail-col{
+      @include span-columns(2);
+    }
+
+  }
+}
+
+div.artist-purchase-container{
+  @include outer-container;
+  div.artist-purchase-logo{
+    @include span-columns(2);
+  }
+  
+  div.artist-purchase-table{
+    @include span-columns(2);
+  }
+}
+

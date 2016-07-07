@@ -1,0 +1,51 @@
+footer#page-footer{
+  @include page-box;
+  
+  margin:20px 0px 0px;
+  padding:20px 0px;
+  background:$ateji-lightgray-color;
+
+  div#page-footer-container {
+
+    @include page-box;
+    @include outer-container();
+
+    overflow:hidden;
+
+    div#contents {
+
+      overflow:hidden;
+      @include span-columns(4); //max
+    }
+    div#share {
+      @include span-columns(4); //max
+    }
+
+
+    @include media($medium-screen-up){
+      div#contents {
+        @include span-columns(2);
+      }
+
+      div#share {
+        @include span-columns(2);
+      }
+    }
+
+    @include media($large-screen-up){
+      div#contents {
+        @include span-columns(6);
+      }
+
+      div#share {
+        @include span-columns(6);
+      }
+    }
+  }
+
+  div#copyright{
+    padding-top:30px;
+    text-align:center;
+    @include outer-container();
+  }
+}

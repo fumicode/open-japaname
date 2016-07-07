@@ -28,5 +28,13 @@
     "passport-strategy": "^1.0.0",
     "serve-favicon": "~2.3.0",
     "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "gulp-jshint": "^2.0.1",
+    "gulp-notify": "^2.2.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sass": "^2.3.2",
+    "node-bourbon": "^4.2.8",
+    "node-neat": "^1.7.2"
   }
 }

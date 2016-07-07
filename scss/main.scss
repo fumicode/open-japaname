@@ -1,0 +1,37 @@
+//////////// basic framework////////////
+@import "bourbon";
+@import "base/grid-settings";
+@import "neat";
+@import "base/base"; //bitters これは変えちゃっていいもの。
+
+//////////// fandamentals ////////////
+@import "lib";
+@import "body";
+
+
+////////////// modules ////////////////
+//これらの組み合わせでできたらうれしい。
+//いささかbootstrap的発想か。
+@import "module";
+
+//各モジュール
+@import "ateji-search";
+@import "topbar";
+@import "footer";
+@import "share-this-page";
+@import "flash-message";
+
+
+///////////// pages /////////////////
+//だんだん↑に移動していくべきだと思う
+@import "page-index"; 
+@import "page-atejis-candidates";
+@import "page-atejis-selected";
+@import "page-market-artists";
+@import "page-auth";
+@import "page-kanjis";
+@import "page-survey";
+
+
+
+

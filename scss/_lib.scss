@@ -1,0 +1,59 @@
+
+/////////////////////MIXINS/////////////////////////
+
+@mixin omega-reset($nth, $columns) {
+  &:nth-child(#{$nth}) { margin-right: flex-gutter($columns); }
+  &:nth-child(#{$nth}+1) { clear: none }
+}
+
+@mixin img-responsive(){
+  
+  display:block;
+  max-width:100%;
+  height:auto;
+
+}
+
+@mixin box-center(){
+  display:block;
+  margin:0px auto;
+}
+
+
+@mixin page-box(){
+
+  display:block;
+
+  padding-left:$body-side-margin;
+  padding-right:$body-side-margin;
+
+
+
+}
+
+
+@mixin page-margin-box(){
+  display:block;
+
+  margin-left:$body-side-margin;
+  margin-right:$body-side-margin;
+
+}
+
+@mixin full-width(){
+  margin: {
+    left: -$body-side-margin;
+    right:-$body-side-margin;
+  }
+}
+
+
+/////////////////////BASICS/////////////////////////
+
+
+
+
+
+
+
+

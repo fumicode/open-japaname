@@ -1,0 +1,65 @@
+
+div.bigkanji-outer{
+  $bigkanji-size : 20rem;
+  $subkanji-size:$bigkanji-size * 0.2;
+
+  position:relative;
+  width:100%;
+
+  height:$bigkanji-size * 3;
+
+  .child{ //真ん中を原点にするためのクラス
+
+    width:100%;
+    height:100%;
+    margin-left: -50%;
+  }
+
+  div.bigkanji-container{
+    position:absolute;
+      left:50%;
+      top:50%;
+    width:0;
+    height:0;
+
+    h1.bigkanji {
+      position:absolute;
+        top:0;
+        left:0;
+
+      width:$bigkanji-size;
+      height:$bigkanji-size;
+
+      font-size: $bigkanji-size;
+
+      line-height: $bigkanji-size;
+      text-align:center;
+
+      .child{ //真ん中を原点にするためのクラス
+        margin-top:-$bigkanji-size/2;
+      }
+    }
+
+    ul.bigkanji-subs{
+      position:absolute;
+        top:0;
+        left:0;
+      li.bigkanji-sub{
+        position:absolute;
+          top:0;
+          left:0;
+
+        font-size:$subkanji-size;
+        line-height:$subkanji-size;
+        height:$subkanji-size;
+
+        white-space:nowrap;
+        .child{
+          margin-top:-$subkanji-size/2;
+        }
+      }
+    }
+
+  }
+
+}

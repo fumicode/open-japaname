@@ -1,0 +1,122 @@
+div#topbar {
+  position:fixed;
+    top:0px;
+    left:0px;
+    z-index:1000;
+
+  width:100%;
+  height:$topbar-height;
+
+  box-shadow: black 0px 0px 20px;
+  background: $topbar-color;
+
+  &.searching-topbar{
+
+    div#topbar-container{
+      #ateji-logo-hanko {
+        display:none;
+      }
+      #topbar-ateji-search{
+        @include span-columns(4);
+
+      }
+      #user-info{
+        display:none;
+      }
+    }
+  }
+
+  div#topbar-container{
+
+    @include outer-container();
+
+    /////////////////layout settings///////////////////
+    #ateji-logo-hanko {
+      @include span-columns(1);
+    }
+    #topbar-ateji-search{
+      @include span-columns(2);
+    }
+    #user-info{
+      @include span-columns(1);
+      @include omega;
+      float:right;
+    }
+
+
+    @include media($medium-screen-up){ //4
+      #ateji-logo-hanko {
+        @include span-columns(1);
+      }
+      #topbar-ateji-search{
+        @include span-columns(2);
+        display:block;
+      }
+      #user-info{
+        @include span-columns(1);
+        @include omega;
+        float:right;
+      }
+
+    }
+
+
+    ///////////////other styles////////////////////
+
+    #ateji-logo-hanko {
+
+      img{
+
+        display:block;
+
+        width:$topbar-height;
+        height:$topbar-height;
+      }
+    }
+
+    #topbar-ateji-search{
+
+      form{
+        input[type="text"]{
+        }
+        button{
+        }
+      }
+
+    }
+
+    #user-info{
+
+      overflow:hidden;
+      white-space: nowrap;
+        
+      line-height:$topbar-height; //上下センタリング
+      text-align:right;
+      font-size:2.1rem;
+
+      color:white;
+      a{
+        padding-right:$body-side-margin;
+        color:white;
+      }
+    }
+
+
+  }
+}
+
+div#topbar.searching{
+
+  div#topbar-container{
+    #ateji-logo-hanko {
+      display:none;
+    }
+    #topbar-ateji-search{
+      @include span-columns(4);
+    }
+    #user-info{
+      display:none;
+    }
+  }
+}
+

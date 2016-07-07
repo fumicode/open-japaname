@@ -58,7 +58,7 @@ label {
   label abbr {
     display: none; }
 
-input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], textarea,
+input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], input:not([type]), textarea,
 select[multiple=multiple] {
   background-color: #fff;
   border: 1px solid #ddd;
@@ -71,19 +71,19 @@ select[multiple=multiple] {
   padding: 0.5em;
   transition: border-color 150ms ease;
   width: 100%; }
-  input[type="color"]:hover, input[type="date"]:hover, input[type="datetime"]:hover, input[type="datetime-local"]:hover, input[type="email"]:hover, input[type="month"]:hover, input[type="number"]:hover, input[type="password"]:hover, input[type="search"]:hover, input[type="tel"]:hover, input[type="text"]:hover, input[type="time"]:hover, input[type="url"]:hover, input[type="week"]:hover, textarea:hover,
+  input[type="color"]:hover, input[type="date"]:hover, input[type="datetime"]:hover, input[type="datetime-local"]:hover, input[type="email"]:hover, input[type="month"]:hover, input[type="number"]:hover, input[type="password"]:hover, input[type="search"]:hover, input[type="tel"]:hover, input[type="text"]:hover, input[type="time"]:hover, input[type="url"]:hover, input[type="week"]:hover, input:not([type]):hover, textarea:hover,
   select[multiple=multiple]:hover {
     border-color: #b1b1b1; }
-  input[type="color"]:focus, input[type="date"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="email"]:focus, input[type="month"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="text"]:focus, input[type="time"]:focus, input[type="url"]:focus, input[type="week"]:focus, textarea:focus,
+  input[type="color"]:focus, input[type="date"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="email"]:focus, input[type="month"]:focus, input[type="number"]:focus, input[type="password"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="text"]:focus, input[type="time"]:focus, input[type="url"]:focus, input[type="week"]:focus, input:not([type]):focus, textarea:focus,
   select[multiple=multiple]:focus {
     border-color: #d4371c;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06), 0 0 5px rgba(189, 49, 25, 0.7);
     outline: none; }
-  input[type="color"]:disabled, input[type="date"]:disabled, input[type="datetime"]:disabled, input[type="datetime-local"]:disabled, input[type="email"]:disabled, input[type="month"]:disabled, input[type="number"]:disabled, input[type="password"]:disabled, input[type="search"]:disabled, input[type="tel"]:disabled, input[type="text"]:disabled, input[type="time"]:disabled, input[type="url"]:disabled, input[type="week"]:disabled, textarea:disabled,
+  input[type="color"]:disabled, input[type="date"]:disabled, input[type="datetime"]:disabled, input[type="datetime-local"]:disabled, input[type="email"]:disabled, input[type="month"]:disabled, input[type="number"]:disabled, input[type="password"]:disabled, input[type="search"]:disabled, input[type="tel"]:disabled, input[type="text"]:disabled, input[type="time"]:disabled, input[type="url"]:disabled, input[type="week"]:disabled, input:not([type]):disabled, textarea:disabled,
   select[multiple=multiple]:disabled {
     background-color: #f2f2f2;
     cursor: not-allowed; }
-    input[type="color"]:disabled:hover, input[type="date"]:disabled:hover, input[type="datetime"]:disabled:hover, input[type="datetime-local"]:disabled:hover, input[type="email"]:disabled:hover, input[type="month"]:disabled:hover, input[type="number"]:disabled:hover, input[type="password"]:disabled:hover, input[type="search"]:disabled:hover, input[type="tel"]:disabled:hover, input[type="text"]:disabled:hover, input[type="time"]:disabled:hover, input[type="url"]:disabled:hover, input[type="week"]:disabled:hover, textarea:disabled:hover,
+    input[type="color"]:disabled:hover, input[type="date"]:disabled:hover, input[type="datetime"]:disabled:hover, input[type="datetime-local"]:disabled:hover, input[type="email"]:disabled:hover, input[type="month"]:disabled:hover, input[type="number"]:disabled:hover, input[type="password"]:disabled:hover, input[type="search"]:disabled:hover, input[type="tel"]:disabled:hover, input[type="text"]:disabled:hover, input[type="time"]:disabled:hover, input[type="url"]:disabled:hover, input[type="week"]:disabled:hover, input:not([type]):disabled:hover, textarea:disabled:hover,
     select[multiple=multiple]:disabled:hover {
       border: 1px solid #ddd; }
 
@@ -619,7 +619,7 @@ div#share-this-page {
 
 .flash-error {
   background-color: #fbe3e4;
-  color: #96151b;
+  color: #97161b;
   display: block;
   margin-bottom: 0.75em;
   padding: 0.75em;
@@ -713,52 +713,6 @@ div#index-logo-container {
     text-align: center;
     font-size: 2em;
     white-space: nowrap; }
-
-div.kotodama-page-container {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto; }
-  div.kotodama-page-container::after {
-    clear: both;
-    content: "";
-    display: table; }
-  div.kotodama-page-container div.kotodama-canvas-container {
-    text-align: center;
-    position: relative;
-    float: left;
-    display: block;
-    margin-right: 2.85714%;
-    width: 100%; }
-    div.kotodama-page-container div.kotodama-canvas-container canvas.kotodama-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      background: white; }
-    div.kotodama-page-container div.kotodama-canvas-container:last-child {
-      margin-right: 0; }
-    @media screen and (min-width: 900px) {
-      div.kotodama-page-container div.kotodama-canvas-container {
-        float: left;
-        display: block;
-        margin-right: 0.93458%;
-        width: 66.35514%; }
-        div.kotodama-page-container div.kotodama-canvas-container:last-child {
-          margin-right: 0; } }
-  div.kotodama-page-container form#kotodama-params {
-    float: left;
-    display: block;
-    margin-right: 2.85714%;
-    width: 100%; }
-    div.kotodama-page-container form#kotodama-params:last-child {
-      margin-right: 0; }
-    @media screen and (min-width: 900px) {
-      div.kotodama-page-container form#kotodama-params {
-        float: left;
-        display: block;
-        margin-right: 0.93458%;
-        width: 32.71028%; }
-        div.kotodama-page-container form#kotodama-params:last-child {
-          margin-right: 0; } }
 
 div#kanji-selected-wrapper {
   position: fixed;
@@ -864,7 +818,7 @@ div#kanji-selected-container-margin {
               vertical-align: middle;
               line-height: 1.2;
               font-size: 3rem;
-              font-family: serif; }
+              font-family: "ro-nikkatsu-sei-kai-std",serif; }
             #ateji-cands table td .kana-box .ateji-cands-for-kana .ateji-cand label .kanji-detail {
               display: block;
               width: 100%;
@@ -883,8 +837,7 @@ div#kanji-selected-container-margin {
     display: none; }
     #ateji-cands input.kana-radiobox:checked + .kana-box {
       background: rgba(255, 255, 255, 0.7); }
-      #ateji-cands input.kana-radiobox:checked + .kana-box .ateji-cands-for-kana .ateji-cand
-label .kanji-detail ul.meanings {
+      #ateji-cands input.kana-radiobox:checked + .kana-box .ateji-cands-for-kana .ateji-cand label .kanji-detail ul.meanings {
         display: inline; }
     #ateji-cands input.kana-radiobox:checked + .kana-box .ateji-cand input:checked + label .kanji-char {
       background: skyblue;
@@ -1524,14 +1477,14 @@ div.bigkanji-outer {
         div.bigkanji-outer div.bigkanji-container ul.bigkanji-subs li.bigkanji-sub .child {
           margin-top: -2rem; }
 
-header#questionnaire-header {
+header#questionaire-header {
   position: fixed;
   top: 0;
   right: 0;
   left: 0;
   border-bottom: 1px solid gray;
   background: rgba(255, 255, 255, 0.8); }
-  header#questionnaire-header div#questionnaire-header-container {
+  header#questionaire-header div#questionaire-header-container {
     max-width: 90rem;
     margin-left: auto;
     margin-right: auto;
@@ -1539,23 +1492,23 @@ header#questionnaire-header {
     padding-left: 1rem;
     padding-right: 1rem;
     padding-top: 1rem; }
-    header#questionnaire-header div#questionnaire-header-container::after {
+    header#questionaire-header div#questionaire-header-container::after {
       clear: both;
       content: "";
       display: table; }
-    header#questionnaire-header div#questionnaire-header-container p {
+    header#questionaire-header div#questionaire-header-container p {
       margin: 0; }
-    header#questionnaire-header div#questionnaire-header-container h1#questionnaire-title {
+    header#questionaire-header div#questionaire-header-container h1#questionaire-title {
       margin-bottom: 0.2em; }
 
-div#questionnaire-header-spacer {
+div#questionaire-header-spacer {
   height: 10rem; }
 
-div#questionnaire-body {
+div#questionaire-body {
   max-width: 90rem;
   margin-left: auto;
   margin-right: auto; }
-  div#questionnaire-body::after {
+  div#questionaire-body::after {
     clear: both;
     content: "";
     display: table; }
@@ -1568,7 +1521,7 @@ table.n.question-table {
   table.n.question-table tr.answer-header td {
     padding: 0.5rem;
     color: white;
-    background-image: -webkit-linear-gradient(90deg, #515151 0, #777 100%);
+    background-image: -webkit-linear-gradient(-360deg, #515151 0, #777 100%);
     background-image: linear-gradient(90deg, #515151 0, #777 100%);
     border-top-left-radius: 5px;
     border-top-right-radius: 5px; }
@@ -1582,7 +1535,7 @@ table.n.question-table {
     display: block;
     box-sizing: content-box;
     margin: 0;
-    padding: 1rem 0;
+    padding: 1rem;
     height: 3rem;
     border-style: solid;
     border-width: 1px 0px 1px 1px;
@@ -1605,23 +1558,5 @@ table.n.question-table {
     border-right-color: #777;
     border-bottom-right-radius: 5px; }
 
-div#questionnaire-submit {
+div#questionaire-submit {
   text-align: center; }
-
-.qAnswer__table {
-  table-layout: fixed; }
-
-.qAnswer__adjective--left {
-  text-align: right; }
-
-.qAnswer__adjective--right {
-  text-align: left; }
-
-.qAnswer__scale, .qAnswer__scale--left, .qAnswer__scale--right {
-  width: 0%;
-  background: #2368a0;
-  height: 2em; }
-  .qAnswer__scale--left {
-    margin-left: auto; }
-  .qAnswer__scale--right {
-    margin-right: auto; }

@@ -1,0 +1,127 @@
+
+$questionaire-width : 90rem;
+
+header#questionaire-header{
+  position:fixed;
+    top:0;
+    right:0;
+    left:0;
+
+  border-bottom:1px solid gray;
+  background:rgba(255,255,255,0.8);
+
+  div#questionaire-header-container{
+    @include outer-container($questionaire-width);
+    @include page-box;
+
+    padding-top:1rem;
+
+    p{
+      margin:0;
+    }
+
+    h1#questionaire-title{
+      margin-bottom:0.2em;
+
+    }
+  }
+}
+
+div#questionaire-header-spacer{
+  height:10rem;
+}
+
+div#questionaire-body{
+  @include outer-container($questionaire-width);
+}
+
+table.n.question-table{
+  $font-family:sans-serif;
+
+  $action-color :#477dca;
+
+  $gray:#ccc;
+  $lightgray:#eee;
+  $darkgray:#777;
+  $border-radius:5px;
+
+  $button-group-background-checked: $action-color;
+  $button-group-color-checked: white;
+  $button-group-border-checked: darken($button-group-background-checked, 15%);
+
+  margin:0 auto 4rem;
+
+
+
+  width:100%;
+  max-width:60rem;
+  font-size:1.6rem;
+
+  tr.answer-header{
+
+    td{
+      padding:0.5rem;
+      color:white;
+      @include background-image(linear-gradient(90deg,darken($darkgray,15%) 0, $darkgray 100%));
+      @include border-top-radius($border-radius);
+
+      div.question-left{
+        float:left;
+      }
+      div.question-right{
+        float:right;
+
+      }
+    }
+  }
+  tr.answer-buttons{
+
+    td{
+      input.answer-input[type="radio"]{
+        display:none;
+      }
+
+      label.answer-button{
+        display:block;
+        box-sizing:content-box;
+        margin:0;
+        padding:1rem;
+        height:3rem;
+
+        border-style:solid;
+        border-width:1px 0px 1px 1px;
+        border-color:$darkgray;
+
+        border-left-color:$gray;
+
+        background:$lightgray; 
+        line-height:1.5rem;
+        text-align:center;
+        font-weight:normal;
+      }
+      input.answer-input[type="radio"]:checked + label.answer-button{
+        background: $button-group-background-checked;
+        border: 1px solid $button-group-border-checked;
+        box-shadow: inset 0 1px 2px darken($button-group-background-checked, 10%);
+         color: $button-group-color-checked;
+
+
+      }
+    }
+    td:first-of-type label.answer-button{
+      border-left-color:$darkgray;
+      border-bottom-left-radius:$border-radius;
+    }
+    td:last-of-type label.answer-button{
+      border-right-width:1px;
+      border-right-color:$darkgray;
+      border-bottom-right-radius:$border-radius;
+    }
+  }
+}
+
+div#questionaire-submit{
+  text-align:center;
+}
+
+

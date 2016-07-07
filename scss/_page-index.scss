@@ -1,0 +1,40 @@
+@import "lib";
+@import "neat";
+@import "ateji-search";
+
+// h1#index-logo
+//    img.img-responsive.center-block
+// p.text-center.h2
+
+div#index-logo-container{
+  @include page-box;
+
+  div#index-logo-column{
+    h1#index-logo{
+      margin:0px;
+
+      @include box-center;
+      max-width:400px;
+
+      img{
+        @include img-responsive;
+        @include box-center;
+      }
+    }
+
+    p#index-subtitle{
+      margin-top:-2em;
+      margin-bottom:1em;
+      //Get Your Japanese Name
+      //画像にすべきかなあ
+      text-align:center;
+      font-size:2em;
+      white-space:nowrap;
+    }
+  }
+}
+
+
+
+
+

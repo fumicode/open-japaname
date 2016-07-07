@@ -1,0 +1,98 @@
+
+
+div.authtab-container{
+  position:relative;
+  top:1px;
+  z-index:10;
+
+  $base-border-radius:5px;;
+
+  @include outer-container();
+
+  a.authtab{
+    display:block;
+    @include span-columns(2);
+
+    padding:10px;
+    border-top-right-radius: $base-border-radius;
+    border-top-left-radius: $base-border-radius;
+
+
+    border-width: 1px 1px 0;
+    border-color: #ddd;
+    border-style: solid;
+ 
+
+    color :black;
+    text-decoration:none;
+
+
+
+    background:white;
+    opacity:0.5;
+    
+
+    &.active{
+      opacity:1;
+    }
+
+    &#login-tab {
+
+    }
+
+    &#signup-tab {
+
+    }
+  }
+
+}
+
+
+div.authcontent-cotainer{
+  position:relative;
+  background:white;
+
+  div.authcontent{
+
+    display:none;
+
+    padding:20px;
+    border-width: 1px ;
+    border-color: #ddd;
+    border-style: solid;
+
+    &.active{
+      display:block;
+    }
+
+    &#login-content{
+    }
+
+    &#signup-content{
+    }
+  }
+}
+
+table.auth-box{
+  margin:0 auto;
+
+  border:none;
+  padding:0;
+  width:auto;
+
+
+  tr{
+    border:none;
+    td{
+      border:none;
+      input[type=text]{
+        margin:0px;
+      }
+      button{
+        display:block;
+        margin:0 auto;
+      }
+    }
+  }
+}
+

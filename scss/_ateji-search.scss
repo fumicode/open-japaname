@@ -1,0 +1,60 @@
+div.ateji-search-normal{
+  height:4rem;
+  font-size:2rem;
+}
+
+div.ateji-search-bigger{
+
+  height:6rem;
+  font-size:3rem;
+}
+
+div{
+  //ateji_searchをくるむひとは、height とfont-size だけ指定おねがいします;
+
+  form.ateji-search{  
+    ///////////////////////////////////////////////////////////////////////////////////
+    $base-border-color: gainsboro !default;
+    $base-border-radius: 5px !default;
+    $action-color: $ateji-shu-color !default;
+    $dark-gray: #333 !default;
+
+
+    $search-bar-border-color: $base-border-color;
+    $search-bar-border: 1px solid $search-bar-border-color;
+    $search-bar-background: lighten($search-bar-border-color, 10%);
+    //////////////////////////////////////////////////////////////////////////////////
+
+    //@include page-box;
+    //@include box-center;
+    display:block;
+    position: relative;
+    box-sizing:border-box;
+    max-width:400px;
+
+    height:100%;
+    margin:0 auto;
+    padding:1px 0;
+
+    font-size:1em;
+
+    input[type=search] {
+
+      height:100%;
+       
+    }
+
+    button[type=submit] {
+      @include position(absolute, 1px 0em 1px null);
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+      outline: none;
+      
+      padding: 0 ($base-spacing / 2);
+
+      font-size:0.8em; //目立つ必要なし。
+
+    }
+  }
+}
+
