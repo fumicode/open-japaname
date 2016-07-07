@@ -30,13 +30,12 @@ block append body-end-scripts
     var variables = {
       japaname_string:"#{japaname.names[0].ateji.string}",
       japaname_code:  "#{japaname.code}",
-      japaname_url:   "#{japaname.code}",
+      japaname_url:   "http://japaname.jp/#{japaname.code}",
       original_name:  "#{japaname.names[0].original}",
     };
 
   script(type="text/javascript" src="/javascripts/artworks.js")
 
-  //まだよくわからん。
   script(type="text/javascript" src="https://use.typekit.net/yjx8eou.js")
   script try{Typekit.load({ async: true });} catch(e){}
   

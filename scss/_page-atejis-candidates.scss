@@ -26,7 +26,7 @@ div#kanji-selected-wrapper{
       //background:url("/images/ateji-done-button.png") 95% 95% no-repeat;
 
 
-      font-family:serif;
+      font-family:$kanji-font-family;
       text-align:center;
 
       p#kanji-selected{
@@ -155,7 +155,7 @@ div#kanji-selected-container-margin{
                 line-height:1.2;
 
                 font-size:3rem;
-                font-family:"ro-nikkatsu-sei-kai-std",serif;
+                font-family:$kanji-font-family;
 
               }
 

@@ -738,7 +738,7 @@ div#kanji-selected-wrapper {
       display: block;
       margin-right: 2.85714%;
       width: 74.28571%;
-      font-family: serif;
+      font-family: "ro-nikkatsu-sei-kai-std", serif;
       text-align: center; }
       div#kanji-selected-wrapper div#kanji-selected-container div#kanji-selected-box:last-child {
         margin-right: 0; }
@@ -818,7 +818,7 @@ div#kanji-selected-container-margin {
               vertical-align: middle;
               line-height: 1.2;
               font-size: 3rem;
-              font-family: "ro-nikkatsu-sei-kai-std",serif; }
+              font-family: "ro-nikkatsu-sei-kai-std", serif; }
             #ateji-cands table td .kana-box .ateji-cands-for-kana .ateji-cand label .kanji-detail {
               display: block;
               width: 100%;
