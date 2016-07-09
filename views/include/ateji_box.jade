@@ -6,9 +6,11 @@ mixin ateji_box(atejis)
           th Kanji
           each ateji,index in atejis
             if index == atejis.length-1
-              td.stamp #{ateji.kanji} 
+              td.stamp
+                a(href="/characters/kanjis/#{ateji.kanji}")=ateji.kanji
             else
-              td #{ateji.kanji} 
+              td 
+                a(href="/characters/kanjis/#{ateji.kanji}")=ateji.kanji
         tr#kana-row
           th Sound
           each ateji in atejis

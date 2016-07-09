@@ -36,3 +36,13 @@ artworks.doesExist = function(artwork_name){
 artworks.getList = function(){
   return artwork_list;
 }
+
+artworks.get = function(artwork_name){
+  var artwork =  artwork_list[artwork_name];
+
+  if(!artwork){
+    throw new Error("artwork "+artwork+" is not found");
+  }
+
+  return artwork;
+}

@@ -18,8 +18,8 @@ function authorizeUser(username, authorities){
     console.log(username);
     var user = yield User.doesExist(username);
     if(user){
-
       user.authorities = authorities;
+      return yield user.save();
     }
     else{
       User.register(new User({
@@ -36,6 +36,14 @@ function authorizeUser(username, authorities){
 
   });
 }
+
+co(function*(){
+  for(user in authorized_users) {
+    authorizeUser(user, authorized_users[user]);
+  }
+
+});
+
 
 //dbが読み込まれたら、atejilibの方に読み込む
 db.db_loaded_promise.then(function(){

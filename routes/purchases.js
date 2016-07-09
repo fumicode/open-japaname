@@ -29,17 +29,21 @@ purchases_router.get("/:artwork_name/:japaname_code",(req,res,next)=>{
     }
 
     //check if puchase exists or not
-    var purchase = yield Purchase
-      .findOne({buyer:req.user._id, artwork_name, japaname:japaname.id}).exec();
+    var purchaseExists = yield Purchase.doesExist({
+      user_id:req.user._id,
+      artwork_name,
+      japaname:japaname.id
+    })
 
 
     //購入してない場合、買ってね
-    if(!purchase){
+    if(!purchaseExists){
       return res.redirect("/shops/arton/artworks/"+artwork_name+"/"+japaname_code+"/preview");
     }
-
-    //購入してる場合、どうぞ
-    return res.redirect("/shops/arton/artworks/"+artwork_name+"/"+japaname_code+"/");
+    else{
+      //購入してる場合、どうぞ
+      return res.redirect("/shops/arton/artworks/"+artwork_name+"/"+japaname_code+"/");
+    }
 
   }).catch((err)=>{
     return next(err)
@@ -47,27 +51,35 @@ purchases_router.get("/:artwork_name/:japaname_code",(req,res,next)=>{
 });
 
 
+
 purchases_router.post("/:artwork_name/:japaname_code",(req,res,next)=>{
-  console.log("purchase start");
   co(function*(){
     var artwork_name  = req.params.artwork_name;
     var japaname_code = req.params.japaname_code;
 
-    var purchase = yield Purchase
-      .findOne({buyer:req.user._id, artwork_name, japaname_code}).exec();
+    if(!artworks.doesExist(artwork_name)){
+      return next();
+    }
+
+    if(!Japaname.isJapanameCode(japaname_code)){
+      return next();
+    }
+
+    //check if puchase exists or not
+    var purchaseExists = yield Purchase.doesExist({
+      user_id:req.user._id,
+      artwork_name,
+      japaname:Japaname.japanameDecode(japaname_code)
+    });
 
     //すでに購入があったら
-    if(purchase){
+    if(purchaseExists){
       var message = "you have already bought the item";
 
       console.log(message);
       req.flash("info", message);
       //購入済
       return res.redirect("/shops/arton/artworks/"+artwork_name+"/"+japaname_code+"/");
-    }
-
-    if(!artworks.doesExist(artwork_name)){
-      return next();
     }
 
     YAEHATA_PRICE = 300;
@@ -77,13 +89,12 @@ purchases_router.post("/:artwork_name/:japaname_code",(req,res,next)=>{
       buyer_id :req.user._id,
       price    : YAEHATA_PRICE,
       artwork_name ,
-      japaname_code,
+      japaname:Japaname.japanameDecode(japaname_code),
     })
 
-    // !!!! result の中身を見る必要がある
-    
+    //result の中身を見る必要がある
     console.log("purchase completed");
-    console.log(result);
+    console.log(JSON.stringify(result));
 
     if(result){
       return res.redirect("/shops/arton/artworks/"+artwork_name+"/"+japaname_code+"/");
@@ -92,8 +103,9 @@ purchases_router.post("/:artwork_name/:japaname_code",(req,res,next)=>{
       return next();
     }
 
-
   }).catch((err)=>{
     return next(err)
   });
 });
+
+

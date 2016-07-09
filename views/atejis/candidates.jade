@@ -8,6 +8,9 @@ block append variables
   - body_id = "bg-candidates";
 
 block sub-content
+
+  img(src="/images/risumaru_hang_scope_right.png" style="position:absolute;left:0;top:0;width:20%;z-index:-1000;opacity:0.8")
+
   form(id="selected-form" method="POST" action="/names")
     input(type="hidden" name="original_name" value="#{original_name}")
     input#selected_ateji(type="hidden" name="ateji"  value="")
@@ -22,7 +25,7 @@ block sub-content
         p#japanese-sound
       div#kanji-button-container
         p
-          button.gonext &raquo;Go Next!
+          button.gonext &raquo;Go<br>Next!
   div#kanji-selected-container-margin
 
 

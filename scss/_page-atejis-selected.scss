@@ -59,7 +59,6 @@ div#ateji-scroller{
   overflow-x:auto;
 
   text-align:center;
-
   div#ateji-block{
     display:inline-block;
     margin:0 auto;
@@ -161,6 +160,12 @@ a.ateji-side-banner{
     display:block;
   }
 
+}
+
+.ateji_risumaru_box{
+  background-image:url(/images/risumaru_jump_left.png);
+  background-position:right bottom;
+  background-size:20%;
 }
 
 div#yukikaki-ads{

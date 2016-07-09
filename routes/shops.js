@@ -10,7 +10,6 @@ var path = require("path");
 var mongoose = require("mongoose");
 var Japaname = mongoose.model("Japaname");
 var Purchase = mongoose.model("Purchase");
-
 var artworks = require("../models/artworks.js");
 
 shops_router.get("/:shopname/artworks/:artwork_name/:japaname_code",(req,res,next)=>{
@@ -21,83 +20,124 @@ shops_router.get("/:shopname/artworks/:artwork_name/:japaname_code",(req,res,nex
 
     var artwork_width =  req.query.artwork_width || 310;
 
-    if(shopname == "arton"){  //haveRight = authModule.authorize("arton")
 
-      if(artworks.doesExist(artwork_name)){
-
-        var japaname = yield Japaname.findByCode(japaname_code)
-          .populate("names.ateji").populate("names.kana").exec();
-
-        if(!japaname){
-          return next(); //404
-        }
-
-        var purchaseExists = yield Purchase.doesExist({
-          user_id:req.user._id,
-          artwork_name:artwork_name,
-          japaname_id:japaname.id
-        });
-console.log("artwork");
-console.log(artwork_width);
-
-        if(purchaseExists){ //すでに購入していた
-          return res.render("artworks" , {japaname, artwork_width, artwork_name});
-        }
-        else{
-          return res.redirect(path.join(req.baseUrl , req.url , "/preview"));
-        }
-      }
-      else{
-        return next();//not found
-      }
-    }
-    else{
+    if(shopname !== "arton"){  //haveRight = authModule.authorize("arton")
       return next();//not found
     }
 
+    try{
+      var obj = yield obtainPurchaseObjects(artwork_name,japaname_code,req.user._id);
+
+      if(obj){ //すでに購入していた
+        return res.render("artworks" , {
+          japaname:obj.japaname, 
+          artwork:obj.artwork,
+          artwork_width,
+          sizing:true});
+      }
+      else{
+        return res.redirect(path.join(req.baseUrl , req.url , "/preview"));
+      }
+    }
+    catch(err){
+      console.log(err);
+      next();//not found
+    }
+  }).catch((err)=>{
+    return next(err);
+  });
+
+});
+
+shops_router.get("/:shopname/artworks/:artwork_name/:japaname_code/print",(req,res,next)=>{
+  co(function*(){
+    var shopname = req.params.shopname;
+    var artwork_name = req.params.artwork_name;
+    var japaname_code = req.params.japaname_code;
+
+    var artwork_width =  req.query.artwork_width || 310;
+
+    if(shopname !== "arton"){  //haveRight = authModule.authorize("arton")
+      return next();//not found
+    }
+
+    try{
+      var obj = yield obtainPurchaseObjects(artwork_name,japaname_code,req.user._id);
+
+      if(obj){ //すでに購入していた
+        return res.render("artworks" , {
+          japaname: obj.japaname,
+          artwork:obj.artwork,
+          artwork_width,
+          print:true});
+      }
+      else{
+        return res.redirect(path.join(req.baseUrl , req.url , "/preview"));
+      }
+    }
+    catch(err){
+      next();//not found
+    }
   }).catch((err)=>{
     return next(err);
   });
 });
 
 
+
+function obtainPurchaseObjects(artwork_name, japaname_code, user_id){
+  return co(function*(){
+
+    if(!artworks.doesExist(artwork_name)){
+      throw new Error("artwork not found");//not round
+    }
+
+    var artwork = artworks.get(artwork_name);
+
+    var japaname = yield Japaname.findByCode(japaname_code)
+      .populate("names.ateji").populate("names.kana").exec();
+
+    if(!japaname){
+      throw new Error("japaname not found"); //404
+    }
+
+    return {
+      artwork,
+      japaname,
+      purchase:yield Purchase.doesExist({
+        user_id:user_id,
+        artwork_name:artwork.artwork_name,
+        japaname:japaname_code
+      })
+    };
+  });
+}
+
 shops_router.get("/:shopname/artworks/:artwork_name/:japaname_code/preview",(req,res,next)=>{
   co(function*(){
     var shopname = req.params.shopname;
+
+    if(shopname !== "arton"){  //haveRight = authModule.authorize("arton")
+      return next();//not round
+    }
+
     var artwork_name = req.params.artwork_name;
     var japaname_code = req.params.japaname_code;
 
-    if(shopname == "arton"){  //haveRight = authModule.authorize("arton")
-      // var ino   = "risumaru_ino"; var shika = "risumaru_shika"; var chou  = "risumaru_chou"; 
+    try{
+      var purchaseExists = yield obtainPurchaseObjects(artwork_name,japaname_code,req.user._id);
 
-      if(artworks.doesExist(artwork_name)){
 
-        var japaname = yield Japaname.findByCode(japaname_code)
-          .populate("names.ateji").populate("names.kana").exec();
-
-        if(!japaname){
-          return next(); //404
-        }
-
-        var purchase = yield Purchase
-          .findOne({ buyer:req.user._id, artwork_name, japaname:japaname.id})
-          .exec();
-
-        console.log(purchase);
-
-        if(purchase){ //すでに購入していた
-          return res.redirect(path.join(req.baseUrl, req.url , "../"));
-        }
-        else{
-          return res.render("artworks" , {japaname, preview:true, artwork_name});
-        }
+      if(purchaseExists){ //すでに購入していた
+        return res.redirect(path.join(req.baseUrl, req.url , "../"));
       }
       else{
-        return next();//not found
+        return res.render("artworks" , {japaname, preview:true, artwork});
       }
     }
-    else{
-      return next();//not found
+    catch(err){
+      console.log(err)
+      next();//notfound
     }
   }).catch((err)=>{
     return next(err);

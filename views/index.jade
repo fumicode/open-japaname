@@ -9,27 +9,33 @@ block topbar
 
 block content
 
-  div
-    div
-      div(style="height:50px;")
-      h1(style="text-align:center;") Get Your 
-        img(src="/images/japaname_logo_1024.png" alt="japaname" style="max-width:90%;")
+  img(src="/images/risumaru_hang_left.png" style="position:absolute;right:0;top:0;width:20%;z-index:-1000;opacity:0.7")
 
-      include /include/ateji_search.jade
-      div(style="height:5rem;font-size:2.5rem")
+  div(style="height:50px;")
+  h1(style="text-align:center;") Get Your <br>
+    img(src="/images/japaname_logo_800.png" alt="japaname" style="max-width:90%;")
+
+  include /include/ateji_search.jade
+
+  
+  table
+    tr
+      td(style="width:20%;opacity:0.7")
+        img(src="/images/risumaru_yubi_right.png")
+      td(style="width:80%")
         +ateji_search(null,null,null,true)
+        p.text-center(style="opacity:0.7")
+          br
+          |Accepts 
+          strong Alphabet
+          |, 
+          strong ひらがな
+          |, 
+          strong カタカナ
 
-      p.text-center(style="opacity:0.7")
-        br
-        |Accepts 
-        strong Alphabet
-        |, 
-        strong ひらがな
-        |, 
-        strong カタカナ
 
 block footer
+  div(style="height:200px;")
   include /include/footer.jade
 
-  div(style="height:200px;")
 

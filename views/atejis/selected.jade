@@ -8,7 +8,7 @@ block append variables
   - hashtag = "japaname";
   - share_url = "http://" + "japaname.jp" +"/" + japaname.code;
   - description = tweet + " " +  share_url + " #" + hashtag;
-  - body_id= "bg-white";
+  - body_id= "bg-selected";
   - og_image = ""; //!!!!open graph image is required
 
 block append head-end
@@ -20,8 +20,12 @@ block sub-content
 
     include /include/ateji_box
     h2 japaname of <wbr><strong style="text-transform:capitalize;color:red;">#{name.original}</strong><br>
-      | Japaname Code : #{japaname.code}
+      | Japaname Code : 
+      input.inline(type="text" value="#{japaname.code}") 
+    
     mixin ateji_box(name.ateji.populated_atemojis)
+    p.text-center Click each kanji and see detail!<br>
+      img(src="/images/risumaru_jump_left.png")
 
   div(style="height:3rem;")
   div
@@ -30,12 +34,12 @@ block sub-content
       +sharebox(tweet, share_url, hashtag)
 
   if user && user.haveRight("arton")
-    div(style="height:2rem;")
+    div(style="martin-top:2rem;background:white;")
 
-    each artwork in artworks
-      a(href="/shops/arton/artworks/#{artwork.artwork_name}/#{japaname.code}/preview") 
-        img(src="/images/artworks/#{artwork.artwork_name}.svg" alt="#{artwork.artwork_name}" style="width:50mm;height:#{artwork.ratio * 50}mm")
-        | #{artwork.jp_name}
+      each artwork in artworks
+        a(href="/shops/arton/artworks/#{artwork.artwork_name}/#{japaname.code}/preview") 
+          img(src="/images/artworks/#{artwork.artwork_name}.svg" alt="#{artwork.artwork_name}" style="width:50mm;height:#{artwork.ratio * 50}mm")
+          | #{artwork.jp_name}
 
 
   if !user 
@@ -49,50 +53,4 @@ block append body-end-scripts
   script(type="text/javascript" src="/javascripts/imageProcessing.js")
   script(src="https://use.typekit.net/yjx8eou.js")
   script try{Typekit.load({ async: true });}catch(e){}
-
-  script(type="text/javascript").
-    //returns promise
-
-    $(function(){
-      var fontname = "honokamin";
-
-      loadFont(fontname).then(function(){
-        draw();
-      }).catch(function(){
-        //しょうがなくかく
-        draw();
-      });
-
-      function draw(){
-        (function(){
-
-          var canvas = document.createElement("canvas");
-          canvas.width = 300;
-          canvas.height = 300;
-          var name = "#{name.ateji.string}";
-
-          textOnItem(canvas, name, fontname, "rgb(0,0,0)", "/images/tee-thumbnail.png",90,160)
-          .then(function(){
-            $("#tee-thumbnail").attr("src", canvas.toDataURL());
-          });
-        }());
-
-
-        (function(){
-          var canvas = document.createElement("canvas");
-          canvas.width = 300;
-          canvas.height = 300;
-          var name = "#{name.ateji.string}";
-
-          textOnItem(canvas, name, fontname,  "rgb(255,255,255)", "/images/yunomi-thumbnail.png",100,130)
-          .then(function(){
-            $("#yunomi-thumbnail").attr("src", canvas.toDataURL());
-          });
-
-        }());
-      }
-    });
-
-
-
 

@@ -44,6 +44,9 @@ JapanameSchema.statics.japanameDecode = function (url_str){
   if(!sta.isJapanameCode(url_str)){
     throw new Error(url_str + " is not a Japaname Code");
   }
+  if(typeof url_str !== "string"){
+    return url_str;
+  }
 
   var str = url_str.split("-").join("");
   var number = parseInt( str );

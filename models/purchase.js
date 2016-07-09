@@ -24,7 +24,7 @@ PurchaseSchema.statics.createNew = function(params){
     var buyer_id     = params.buyer_id;
     var price        = params.price; 
     var artwork_name = params.artwork_name; 
-    var japaname_code= params.japaname_code;
+    var japaname_code= params.japaname;
 
     //models
     var User = mongoose.model("User");
@@ -78,7 +78,9 @@ PurchaseSchema.statics.doesExist = function(params){
   return co(function*(){
     var user_id     = params.user_id;
     var artwork_name= params.artwork_name;
-    var japaname_id = params.japaname_id;
+    var japaname_code= params.japaname;
+    var Japaname = mongoose.model("Japaname");
+    var japaname_id = Japaname.japanameDecode(japaname_code);
 
     var purchase = yield Purchase
       .findOne({ buyer:user_id, artwork_name, japaname:japaname_id})
