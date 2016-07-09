@@ -4,9 +4,11 @@ block append variables
   - body_id = "normal";
   - body_class = (body_class || "") + " topbar-margin";
 
-block content 
+block topbar
   include /template/topbar
   +topbar(true, true, original_name)
+
+block content 
 
   div(style="height:2rem;")
   include /template/flash_messages

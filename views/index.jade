@@ -3,9 +3,11 @@ extends /template/basic_layout
 block variables 
 - body_id = "page_index";
 
-block content
+block topbar
   include /template/topbar
   +topbar(false,false)
+
+block content
 
   div
     div
@@ -26,6 +28,8 @@ block content
         |, 
         strong カタカナ
 
+block footer
+  include /include/footer.jade
 
   div(style="height:200px;")
 

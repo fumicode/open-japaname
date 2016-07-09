@@ -3,7 +3,7 @@ footer#page-footer
     div#contents
       h3 Contents
       // 受け渡したい
-      - var links = [ { url:"/characters/kanjis", name: "Kanji Database" },{ url:"/contents/asct", name: "特定商取引法にもとづく表示 (asct description)" }, { url:"/contents/purchase-flow", name: "購入までの流れ (prices of all items)" }, { url:"/contents/purchase-flow-en", name: "Flow of purchase" }, { url:"https://www.facebook.com/ateji.jp", name: "Facebook Page" }, ];
+      - var links = [ { url:"/characters/kanjis", name: "Kanji Database" },{ url:"https://www.facebook.com/japaname", name: "Facebook Page" }, ];
 
       div
         ul.n
@@ -16,11 +16,10 @@ footer#page-footer
       h3 Share
       include /include/sharebox.jade
       +sharebox(
-        tweet || "Get Your JAPANESE Name with ATEJI! Ateji is to map japanese charactors to certain sound.", 
-        share_url || "http://ateji.jp",
-        hashtag || "ATEJI")
+        tweet || "Get Your Japaname on japaname.jp! ", 
+        share_url || "http://japaname.jp",
+        hashtag || "Japaname")
 
   div#copyright
-    p Copyright &copy; 2015 Envirome, Inc. All Rights Reserved.
-
+    p Copyright &copy; 2016 fumicode. All Rights Reserved.
 

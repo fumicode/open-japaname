@@ -246,8 +246,9 @@ atejilib.hiraganaToNosmall = function(hiraganas){ //hiraganas: expected to be hi
   for(var i = 0; i < hiraganas.length; i++){
     var newchar = ""; //new char to substitute
 
-    if(hiraganas[i]==="っ") // continue ltu
+    if(hiraganas[i]==="っ"){ // continue ltu
       continue;
+    }
 
     if(hiraganas[i]==="ー"){
       if(i === 0){ //skip first -
@@ -259,8 +260,8 @@ atejilib.hiraganaToNosmall = function(hiraganas){ //hiraganas: expected to be hi
 
       switch(prevHiragana){
         case "あ":
-          continue;
-
+          newchar = "あ";
+          break;
         case "い":
           newchar = "い";
           break;
@@ -430,7 +431,7 @@ atejilib.atejiSyllables = function (hiraganas_str){
 
 
   if(!atejilib.isHiraganas(hiraganas_str)){
-    throw new Error("enter HIRAGANAS not " + array_of_string);
+    throw new Error("enter HIRAGANAS not " + hiraganas_str);
   }
 
   var hiraganas_nosmall = atejilib.hiraganaToNosmall(hiraganas_str);
@@ -582,6 +583,12 @@ atejilib.toJapaneseSound= function(name){
 
     try{
       var jap_sound = atejilib.translateAsRomaji(lower_name)
+
+      if(!jap_sound){
+        //空になっちゃった場合、
+        console.log("hogehoge");
+        throw new Error("ローマ字として解釈してみたら、空になっちゃったよ");
+      }
 
       return new JapaneseSound({
         hiragana:jap_sound,

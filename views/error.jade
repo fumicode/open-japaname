@@ -1,23 +1,19 @@
-//
-  extends /template/sub_layout
+extends /template/sub_layout
 
-  block sub-content
-html
-  head
-  body
+block sub-content
 
-    h1 ERROR PAGE
-    h2= error_code
+  h1 ERROR PAGE
+  h2= error_code
 
-    div
-      p.h3 !{error_message}
-      if(error)
-        p -----error-----
-        pre !{error}
+  div
+    p.h3 !{error_message}
+    if(error)
+      p -----error-----
+      pre !{error}
 
-        pre !{error && error.stack}
-      else
-        p 
-        p 
+      pre !{error && error.stack}
+    else
+      p 
+      p 
 
 

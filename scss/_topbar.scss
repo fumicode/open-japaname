@@ -1,8 +1,4 @@
 div#topbar {
-  position:fixed;
-    top:0px;
-    left:0px;
-    z-index:1000;
 
   width:100%;
   height:$topbar-height;
@@ -27,12 +23,17 @@ div#topbar {
   }
 
   div#topbar-container{
+    #japaname-logo-small{
+      height:3em;
+    }
 
     @include outer-container();
 
     /////////////////layout settings///////////////////
     #ateji-logo-hanko {
       @include span-columns(1);
+
+      height:2em;
     }
     #topbar-ateji-search{
       @include span-columns(2);
@@ -63,16 +64,6 @@ div#topbar {
 
     ///////////////other styles////////////////////
 
-    #ateji-logo-hanko {
-
-      img{
-
-        display:block;
-
-        width:auto;
-        height:$topbar-height;
-      }
-    }
 
     #topbar-ateji-search{
 

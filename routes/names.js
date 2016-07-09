@@ -125,7 +125,7 @@ names_router.get('/candidates/:original_name', function(req, res, next) {
     var succeeded_names = _(translated_names).filter(a=>a); //falseになるもの(null)は排除される
 
     if(succeeded_names.length < 1){
-      return next();//404
+      return res.render("japaname_not_found", {original_name});
     }
 
     console.log(succeeded_names);

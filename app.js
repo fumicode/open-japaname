@@ -223,12 +223,18 @@ app.use('/admin', authorize(["admin"]),  admin_router);
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
-  next(err);
+
+  res.render("error",{
+    error_message: "Not Found",
+    error_code:err.status
+  });
 });
 
 // error handlers
 // development error handler
 // will print stacktrace
+
+console.log ( "starting with " +  app.get('env') + " mode");
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
@@ -246,7 +252,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
     error_message: err.message,
-    error: {},
+    error: null,
     error_code:err.status || 500
   });
 });

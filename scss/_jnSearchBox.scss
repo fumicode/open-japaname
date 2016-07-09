@@ -1,0 +1,65 @@
+
+$jsb: "jnSearchBox";
+
+$jsb-font-size:3rem;
+$jsb-padding-size:$jsb-font-size*0.3;
+$jsb-height: $jsb-font-size + $jsb-padding-size*2;
+
+
+.#{$jsb}{
+  @include clearfix();
+
+  //margin:0 auto;
+  padding:0;
+
+
+  border-bottom:2px solid ;
+
+  font-size:$jsb-font-size;
+  background:white;
+
+  position:relative;
+  overflow:hidden;
+}
+
+input[type="search"].#{$jsb}__textbox{
+  display:block;
+
+  //erace
+  border:0;
+  box-shadow:none;
+  border-radius:0;
+
+  width:auto;
+
+  //reset
+
+  padding:$jsb-padding-size;
+  margin:0;
+  height:$jsb-height;
+
+  line-height:1;
+
+  font-size:$jsb-font-size;
+
+
+}
+
+
+.#{$jsb}__button{
+  display:block;
+  position:absolute;
+    right:0;
+    top:0;
+  box-sizing:border-box;
+  border-radius:0;
+
+  height:$jsb-height;
+  padding:$jsb-padding-size;
+
+  width:auto;
+
+  line-height:1;
+}
+
+

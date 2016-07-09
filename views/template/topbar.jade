@@ -3,14 +3,14 @@ mixin topbar(logo_hanko, search_box, original_name)
     div#topbar-container
       //トップなどではオフにする
       //if logo_hanko 
-      div#ateji-logo-hanko(style="height:4rem;")
+      div#ateji-logo-hanko
         if logo_hanko
           a(href="/")
-            img(src="/images/japaname_logo_1024.png" alt="Go to top")
+            img#japaname-logo-small(src="/images/japaname_logo_1024.png" alt="Go to top")
 
 
       //検索
-      div#topbar-ateji-search(style="height:4rem")
+      div#topbar-ateji-search
         if search_box
           include /include/ateji_search
           +ateji_search(original_name || "" )
