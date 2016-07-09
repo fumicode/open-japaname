@@ -11,8 +11,8 @@
 	.st5{fill:#FFFFFF;}
 	.st6{fill:#6A0000;}
 	.st7{writing-mode:tb;}
-	.st8{font-family:'RoShinoStd-Md-90ms-RKSJ-H';}
-	.st9{font-size:43.3256px;glyph-orientation-vertical:0;}
+	.st8{font-family:'ro-nikkatsu-sei-kai-std';}
+	.st9{font-size:27px;glyph-orientation-vertical:0;}
 	.st10{font-size:9.9535px;}
 </style>
 <g id="illust">
@@ -1819,7 +1819,7 @@
 	<path class="st6" d="M0,0v360h252.3V0H0z M238.1,345.8H14.2V14.2h223.9V345.8z"/>
 </g>
 <g id="text">
-	<text id="japaname_string" transform="matrix(1 0 0 1 193.5518 39.3976)" class="st5 st7">舞家流</text>
-  <text id="original_name" transform="matrix(1 0 0 1 179.0098 186.7539)" class="st5 st8 st10">michael</text>
+	<text id="japaname_string" transform="matrix(1 0 0 1 193 39.3976)" class="st5 st7 st8 st9">舞家流</text>
+  <text id="original_name" transform="matrix(1 0 0 1 193 186.7539)" class="st5 st8 st10" text-anchor="middle">michael</text>
 </g>
 </svg>

@@ -10,7 +10,7 @@
 	.st4{fill:#FFFFFF;}
 	.st5{fill:#391A3A;}
 	.st6{fill:#6A0000;}
-	.st7{font-family:'RoShinoStd-Md-90ms-RKSJ-H';}
+	.st7{font-family:'ro-nikkatsu-sei-kai-std';}
 	.st8{font-size:27px;glyph-orientation-vertical:0;writing-mode:tb;}
 	.st9{font-size:9.9535px;}
 </style>
@@ -2779,7 +2779,7 @@
 	<path class="st6" d="M0,0v360h252.3V0H0z M238.1,345.8H14.2V14.2h223.9V345.8z"/>
 </g>
 <g id="text">
-	<text id="japaname_string" transform="matrix(1 0 0 1 193.5518 35.3976)" class="st4 st7 st8">あいうえお</text>
-  <text id="original_name" transform="matrix(1 0 0 1 179.0098 186.7539)" class="st4 st7 st9">michael</text>
+	<text id="japaname_string" transform="matrix(1 0 0 1 193 35.3976)" class="st4 st7 st8">あいうえお</text>
+  <text id="original_name" transform="matrix(1 0 0 1 193 186.7539)" class="st4 st7 st9" text-anchor="middle">michael</text>
 </g>
 </svg>

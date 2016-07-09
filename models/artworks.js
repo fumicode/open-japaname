@@ -4,7 +4,7 @@ var artwork_list = {
   "risumaru_ofuda":{ 
     "artwork_name" :"risumaru_ofuda",
     "ratio" : 1.8,
-    "jp_name":"レシートお札"
+    "jp_name":"札"
 
   },
 

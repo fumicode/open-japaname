@@ -34,7 +34,7 @@ block sub-content
       +sharebox(tweet, share_url, hashtag)
 
   if user && user.haveRight("arton")
-    div(style="martin-top:2rem;background:white;")
+    div(style="martin-top:2rem;background:white;text-align:center;")
 
       each artwork in artworks
         a(href="/shops/arton/artworks/#{artwork.artwork_name}/#{japaname.code}/preview") 
