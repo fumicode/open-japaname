@@ -134,7 +134,7 @@ names_router.get('/candidates/:original_name', function(req, res, next) {
       name_obj.hiragana_nosmall = atejilib.hiraganaToNosmall(name_obj.hiragana);
 
       //ローマ字
-      name_obj.romajis = atejilib.hiraganasToRomajis(name_obj.hiragana_nosmall);
+      name_obj.romajis_array = _(name_obj.hiragana_nosmall).map(atejilib.hiraganasToRomajis);
       
 
       var obj = atejilib.atejiSyllables(name_obj.hiragana);

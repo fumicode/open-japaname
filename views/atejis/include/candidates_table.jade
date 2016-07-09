@@ -1,12 +1,11 @@
-
 mixin ateji_cands(name)
   div#ateji-cands.ateji-cands
 
     table.ateji-cands-table.n
       tr 
-        each hiragana_char,hiragana_index in name.hiragana.split("")
+        each hiragana_char,hiragana_index in name.hiragana
           td 
-            div.hiragana-char(id="hiragana_#{hiragana_index}") #{name.romajis[hiragana_index]}
+            div.hiragana-char(id="hiragana_#{hiragana_index}") #{name.romajis_array[hiragana_index]}
 
       each row,row_index in name.syllables_table 
         tr
