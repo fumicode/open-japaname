@@ -571,36 +571,47 @@ function removeFromArray(array, obj){
 
 // james -> JapaneseSound(じぇーむず,ジェームズ,james,"en")
 atejilib.toJapaneseSound= function(name){
-  return co(function*(){
-    var lower_name = name.toLowerCase();
-    try{
-      var jap_sound_obj = yield atejilib.translateByDict(lower_name); //まずは辞書を探してみる
-      return jap_sound_obj;
-    }
-    catch(err){
-      console.log("辞書にはなかったようだ" + err);
-    }
+	return co(function*(){
+		var lower_name = name.toLowerCase();
 
-    try{
-      var jap_sound = atejilib.translateAsRomaji(lower_name)
+		if(atejilib.isAlphabets(lower_name)){//check the name is alphabets
+			try{
+				var jap_sound_obj = yield atejilib.translateByDict(lower_name); //まずは辞書を探してみる
+				return jap_sound_obj;
+			}
+			catch(err){
+				console.log("辞書にはなかったようだ" + err);
+			}
 
-      if(!jap_sound){
-        //空になっちゃった場合、
-        console.log("hogehoge");
-        throw new Error("ローマ字として解釈してみたら、空になっちゃったよ");
-      }
+			try{
+				var jap_sound = atejilib.translateAsRomaji(lower_name)
 
-      return new JapaneseSound({
-        hiragana:jap_sound,
-        katakana:atejilib.hiraganasToKatakanas(jap_sound),
-        original_name:lower_name,
-        detected_lang:"ja"
-      });
-    }
-    catch(err){
-      console.log("ローマ字としての解釈もできない" + err);
-    }
+				if(!jap_sound){
+					//空になっちゃった場合、
+					console.log("hogehoge");
+					throw new Error("ローマ字として解釈してみたら、空になっちゃったよ");
+				}
 
+				return new JapaneseSound({
+					hiragana:jap_sound,
+					katakana:atejilib.hiraganasToKatakanas(jap_sound),
+					original_name:lower_name,
+					detected_lang:"ja"
+				});
+			}
+			catch(err){
+				console.log("ローマ字としての解釈もできない" + err);
+			}
+		}
+		else{
+			try{
+				var jap_sound_obj = atejilib.processJapanese(lower_name);
+				return jap_sound_obj;
+			}
+			catch(err){
+	      		console.log("漢字が入力されているようだ" + err);
+	    	}
+	}
 
     throw Error("cannot translate");
 
@@ -658,7 +669,7 @@ atejilib.processJapanese = function (japanese_name){
     if(atejilib.isKatakanas(japanese_name)){
       console.log("is katakana");
       katakana_str = japanese_name;
-      hiragana_str = atejilib.katakanasToHiraganas(japanese_name.split("")).join('');
+      hiragana_str = atejilib.katakanasToHiraganas(japanese_name);//.split("")).join('');
 
       return new JapaneseSound({
         hiragana: hiragana_str,
@@ -670,7 +681,7 @@ atejilib.processJapanese = function (japanese_name){
     else if(atejilib.isHiraganas(japanese_name)){
       console.log("is hiragana");
       hiragana_str = japanese_name;
-      katakana_str = atejilib.hiraganasToKatakanas(japanese_name.split("")).join('');
+      katakana_str = atejilib.hiraganasToKatakanas(japanese_name);//.split("")).join('');
 
       return new JapaneseSound({
         hiragana: hiragana_str,
