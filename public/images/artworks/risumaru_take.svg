@@ -1819,7 +1819,7 @@
 	<path class="st6" d="M0,0v360h252.3V0H0z M238.1,345.8H14.2V14.2h223.9V345.8z"/>
 </g>
 <g id="text">
-	<text id="japaname_string" transform="matrix(1 0 0 1 193 39.3976)" class="st5 st7 st8 st9">舞家流</text>
+  <g id="japaname_box" x="193" y="39" height="125"> </g>
   <text id="original_name" transform="matrix(1 0 0 1 193 186.7539)" class="st5 st8 st10" text-anchor="middle">michael</text>
 </g>
 </svg>

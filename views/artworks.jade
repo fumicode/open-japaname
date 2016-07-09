@@ -5,6 +5,12 @@ block body
   - }
   - var artwork_height = artwork_width * artwork.ratio;
 
+
+  if preview || sizing
+    a(href="/") トップへ戻る
+    | --
+    a(href="/#{japaname.code}") japaname.string さんのページへ戻る
+
   if preview
     h1 プレビュー #{artwork.artwork_name} #{japaname.code} 
 
