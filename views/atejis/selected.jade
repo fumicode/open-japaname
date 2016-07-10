@@ -35,17 +35,24 @@ block sub-content
 
   if user && user.haveRight("arton")
     div(style="martin-top:2rem;background:white;text-align:center;")
-
       each artwork in artworks
         a(href="/shops/arton/artworks/#{artwork.artwork_name}/#{japaname.code}/preview") 
           img(src="/images/artworks/#{artwork.artwork_name}.svg" alt="#{artwork.artwork_name}" style="width:50mm;height:#{artwork.ratio * 50}mm")
           | #{artwork.jp_name}
 
+  div
+    p(style="text-align:center")
+      a(href="http://arton.jp")
+        img(src="/images/arton_logo.png" alt="ARTON")
+
+  if !(user && user.haveRight("arton"))
+    div.widgetHelper__accessMap
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.6611458134553!2d139.6982283818941!3d35.66071938770297!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188ca845f30001%3A0x86c4ae6e4b746366!2sARTON!5e0!3m2!1sja!2sjp!4v1468119874678" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
 
   if !user 
     div#login-ads
       h1 Log-in and Save your japaname
-      a.button(href="/auth/login")  Log in!
+      a.button(href="/auth")  Log in!
 
 
 block append body-end-scripts

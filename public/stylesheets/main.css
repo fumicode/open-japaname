@@ -1607,3 +1607,19 @@ table.n.question-table {
 
 div#questionaire-submit {
   text-align: center; }
+
+.widgetHelper__accessMap {
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden; }
+
+.widgetHelper__accessMap iframe,
+.widgetHelper__accessMap object,
+.widgetHelper__accessMap embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }

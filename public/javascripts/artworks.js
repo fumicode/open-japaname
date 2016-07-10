@@ -47,8 +47,11 @@
             var chara = japaname_string[index];
 
             var text = japaname_box.text(x, y + char_height/2 + (index ) * char_height, chara);
+            var color  = "#FFFFFF"
+            if(artwork_name == "risumaru_ofuda")
+              color = "#000000";
 
-            text.attr({style:'font-family:"ro-nikkatsu-sei-kai-std";font-size:'+char_height+'px;glyph-orientation-vertical:0;writing-mode:tb;fill:#FFFFFF', "text-anchor":"middle"})
+            text.attr({style:'font-family:"ro-nikkatsu-sei-kai-std";font-size:'+char_height+'px;glyph-orientation-vertical:0;writing-mode:tb;fill:'+color, "text-anchor":"middle"})
 
             
           }

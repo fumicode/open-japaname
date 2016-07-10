@@ -28,7 +28,8 @@ shops_router.get("/:shopname/artworks/:artwork_name/:japaname_code",(req,res,nex
     try{
       var obj = yield obtainPurchaseObjects(artwork_name,japaname_code,req.user._id);
 
-      if(obj){ //すでに購入していた
+      if(obj.purchaseExists){ //すでに購入していた
+        //ふつうにレンダリングする
         return res.render("artworks" , {
           japaname:obj.japaname, 
           artwork:obj.artwork,
@@ -36,7 +37,7 @@ shops_router.get("/:shopname/artworks/:artwork_name/:japaname_code",(req,res,nex
           sizing:true});
       }
       else{
-        return res.redirect(path.join(req.baseUrl , req.url , "/preview"));
+        return res.redirect(path.join(req.baseUrl, "/arton/artworks/"+ artwork_name +"/"+ japaname_code + "/preview"));
       }
     }
     catch(err){
@@ -64,7 +65,7 @@ shops_router.get("/:shopname/artworks/:artwork_name/:japaname_code/print",(req,r
     try{
       var obj = yield obtainPurchaseObjects(artwork_name,japaname_code,req.user._id);
 
-      if(obj){ //すでに購入していた
+      if(obj.purchaseExists){ //すでに購入していた
         return res.render("artworks" , {
           japaname: obj.japaname,
           artwork:obj.artwork,
@@ -72,7 +73,7 @@ shops_router.get("/:shopname/artworks/:artwork_name/:japaname_code/print",(req,r
           print:true});
       }
       else{
-        return res.redirect(path.join(req.baseUrl , req.url , "/preview"));
+        return res.redirect(path.join(req.baseUrl, "arton/artworks/"+ artwork_name +"/"+ japaname_code + "/preview"));
       }
     }
     catch(err){
@@ -101,15 +102,29 @@ function obtainPurchaseObjects(artwork_name, japaname_code, user_id){
       throw new Error("japaname not found"); //404
     }
 
-    return {
-      artwork,
-      japaname,
-      purchase:yield Purchase.doesExist({
-        user_id:user_id,
-        artwork_name:artwork.artwork_name,
-        japaname:japaname_code
-      })
-    };
+    var purchase = yield Purchase.doesExist({
+      user_id:user_id,
+      artwork_name:artwork.artwork_name,
+      japaname:japaname_code
+    });
+
+    if(purchase){
+      return{
+        purchaseExists:true,
+        artwork,
+        japaname,
+        purchase
+      };
+    }
+    else{
+      return{
+        purchaseExists:false,
+        artwork,
+        japaname,
+        purchase:null
+      };
+    }
+
   });
 }
 
@@ -125,14 +140,13 @@ shops_router.get("/:shopname/artworks/:artwork_name/:japaname_code/preview",(req
     var japaname_code = req.params.japaname_code;
 
     try{
-      var purchaseExists = yield obtainPurchaseObjects(artwork_name,japaname_code,req.user._id);
+      var obj = yield obtainPurchaseObjects(artwork_name,japaname_code,req.user._id);
 
-
-      if(purchaseExists){ //すでに購入していた
-        return res.redirect(path.join(req.baseUrl, req.url , "../"));
+      if(obj.purchaseExists){ //すでに購入していた
+        return res.redirect(path.join(req.baseUrl, "/arton/artworks/"+ artwork_name +"/"+ japaname_code));
       }
       else{
-        return res.render("artworks" , {japaname, preview:true, artwork});
+        return res.render("artworks" , {japaname:obj.japaname, preview:true, artwork:obj.artwork});
       }
     }
     catch(err){

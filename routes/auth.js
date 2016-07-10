@@ -4,6 +4,7 @@ var auth_router = module.exports = express.Router();
 
 var mongoose = require("mongoose");
 var User = mongoose.model("User");
+var Japaname = mongoose.model("Japaname");
 
 var _ = require("underscore");
 
@@ -20,7 +21,7 @@ auth_router.post("/signup", function (req, res, next) {
   co(function*(){
     var username =  req.body.username;
     var password =  req.body.password;
-    var re_password =  req.body.confirm_password;
+    var re_password  =  req.body.confirm_password;
 
     console.log("signing up username " + username);
     console.log("password " + password);
@@ -40,11 +41,13 @@ auth_router.post("/signup", function (req, res, next) {
       return res.redirect(req.baseUrl + "#signup");
     }
 
+
     //needs validataion
     console.log("registering: " + username);
 
     User.register(new User({
       username: req.body.username,
+      japaname: Japaname.japanameDecode(japaname_code)
     }), password, function (err, user) {
       if (err) {
         req.flash("error","couldn't add try once");

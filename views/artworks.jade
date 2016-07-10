@@ -9,12 +9,11 @@ block body
   if preview || sizing
     a(href="/") トップへ戻る
     | --
-    a(href="/#{japaname.code}") japaname.string さんのページへ戻る
+    a(href="/#{japaname.code}") #{japaname.string} さんのページへ戻る
 
   if preview
     h1 プレビュー #{artwork.artwork_name} #{japaname.code} 
 
-  
   if sizing 
     table
       tr
@@ -62,7 +61,6 @@ block append body-end-scripts
         window.print();
 
       },1000);
-
 
   script(type="text/javascript" src="https://use.typekit.net/yjx8eou.js")
   script try{Typekit.load({ async: true });} catch(e){}

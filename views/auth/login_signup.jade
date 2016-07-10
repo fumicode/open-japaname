@@ -45,13 +45,6 @@ block sub-content
 
 
         table.auth-box
-          if ateji
-              tr
-                td(colspan=2)
-                  p Your ATEJI name: #{ateji.ateji_name}
-                  input#ateji_id(type="hidden" name="ateji_id" value="#{ateji._id}") 
-                  input#use_ateji_id(type="checkbox" name="use_ateji_id" value="use" checked) 
-                  label(for="use_ateji_id") Use this Ateji for me (can change later)
           tr
             td Email
             td
