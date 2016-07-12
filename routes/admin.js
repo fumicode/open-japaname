@@ -5,6 +5,7 @@ var admin_router = module.exports = express.Router();
 
 var mongoose = require("mongoose");
 var User = mongoose.model("User");
+var Purchase = mongoose.model("Purchase");
 
 var users_router = require("./users");
 
@@ -20,7 +21,9 @@ admin_router.get('/', function(req, res, next) {
     console.log("users");
     console.log(users);
     res.render("admin", {
-      users
+      users,
+      purhcases
+
     });
     return ;
 

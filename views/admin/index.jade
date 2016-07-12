@@ -19,27 +19,19 @@ block sub-content
   table.table
     thead
       tr
-        th フォント
-        th 横書き・縦書き
-        th 当て字
-        th ユーザーID
-        th 進捗状況
-        th アクション
+        th 購入者
+        th 価格
+        th 商品名
+        th japaname code
+
     tbody
-      each request in requests
-        if request.progress === "doing" ||  !request.progress
-          tr(id="#{request._id}")
-            td= request.font
-            td= request.direction
-            td= request.purchase_ateji.ateji_name
-            td= request.user.name
-            td= request.progress
-            td
-              a.button(href="/admin/requests/#{request._id}") リクエストページへ
-              //
-                form(method="post" action="/admin/done")
-                  input(type="hidden" name ="id" value="#{request._id}")
-                  input(type="submit" value="done")
+      each purchase in purchases
+        if purchase.closed === false
+          tr(id="#{purchase._id}")
+            td= purchase.buyer
+            td= purchase.price
+            td= purchase.artwork_name
+            td= purchase.japaname
 
   hr
   h2 
@@ -48,21 +40,15 @@ block sub-content
   table.table
     thead
       tr
-        th 認証方法
         th メールアドレス
-        th 名前
         th 権限
-        th 登録当て字
-        th Webpay登録有無
+        th 登録japaname
         th アクション
     tbody
       each user in users
         tr(id="#{user._id}")
-          td= user.userinfo.method
-          td= user.userinfo.email
-          td= user.name
+          td= user.username
           td= user.authorities.join(', ')
-          td= user.ateji_id && user.ateji_id.ateji_name
-          td= !!(user.webpay_cus_code)
+          td= user.my_japaname 
           td
             a.button(href="/admin/users/#{user._id}") ユーザーページへ
