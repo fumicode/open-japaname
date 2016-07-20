@@ -44,7 +44,7 @@ thumbnail_router.get("/svg/:japaname_code",(req,res,next)=>{
 
 
     res.setHeader('Content-Type', 'image/svg+xml');
-    res.render("risumaru_ume.ejs", {japaname});
+    res.render("artworks.ejs/risumaru_ofuda.ejs", {japaname,share_url:"http://japaname.jp/" + japaname.code});
 
   }).catch((err)=>{
     next(err);
@@ -69,7 +69,7 @@ thumbnail_router.get("/png/:japaname_code",(req,res,next)=>{
     }
 
     var pngdata = yield ejs2svg2png(
-      path.join(__dirname, "../views/risumaru_ume.ejs"), japaname);
+      path.join(__dirname, "../views/artworks.ejs/risumaru_ume.ejs"), japaname);
 
     res.setHeader('Content-Type', 'image/png');
     res.send(pngdata);

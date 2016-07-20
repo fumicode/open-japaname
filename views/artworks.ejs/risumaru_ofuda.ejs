@@ -920,13 +920,35 @@
 </g>
 <g id="variables">
   <g id="japaname_box" x="-155" y="350" height="125">
+
+<% 
+  var x=-155;
+  var y=360;
+  var box_height = 125;
+  var box_width = 42;
+
+  var char_num = japaname.string.length;
+  var char_height = Math.min(box_height / char_num, box_width);
+  //まず大きさが決まる。ここまではよい。
+
+  var char_margin =  (box_height - char_height*char_num) / (char_num );
+
+
+  for(index  in  japaname.string){ 
+    var chara = japaname.string[index];
+
+    var chara_y = y + char_height/2 + (index ) * (char_height + char_margin);
+%>
+    <text x="<%=x %>" y="<%=chara_y %>" class="st7" style="font-size: <%= char_height %>px;fill: rgb(0,0,0);" text-anchor="middle" dominant-baseline="top"><%= chara %></text>
+<% } %>
   </g>
 
-	<text id="japaname_code" transform="matrix(1 0 0 1 -165.9317 330.4198)" class="st7 st8">00-0042</text>
-	<text id="original_name" transform="matrix(1 0 0 1 -155.6575 482.1234)" class="st7 st9" text-anchor="middle">michael</text>
+	<text id="japaname_code" transform="matrix(1 0 0 1 -165.9317 330.4198)" class="st7 st8"><%=japaname.code%></text>
+	<text id="original_name" transform="matrix(1 0 0 1 -155.6575 482.1234)" class="st7 st9" text-anchor="middle"><%=japaname.original%></text>
 	<rect id="qrcode_container" x="-219.5" y="499" class="st1" width="41.2" height="41.2"/>
 
-  <image id="qrcode" transform="matrix(1 0 0 1 -219.5 500.2)" width="40" height="40" style="" xlink:href=""></image>
-	<text id="japaname_url" transform="matrix(1 0 0 1 -171.5469 545.4196)" class="st7 st8">00-0042</text>
+  <image id="qrcode" x="-219.5" y="500.2" width="40" height="40" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://chart.apis.google.com/chart?cht=qr&amp;chld=L|0&amp;chs=150x150&amp;chl=aho %>"></image>
+
+	<text id="japaname_url" transform="matrix(1 0 0 1 -171.5469 545.4196)" class="st7 st8"><%=japaname.code%></text>
 </g>
 </svg>

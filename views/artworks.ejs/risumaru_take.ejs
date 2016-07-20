@@ -1818,10 +1818,36 @@
 	</g>
 	<path class="st6" d="M0,0v360h252.3V0H0z M238.1,345.8H14.2V14.2h223.9V345.8z"/>
 </g>
-<g id="text">
-  <g id="japaname_box" x="193" y="39" height="125"> </g>
-  <text id="original_name" transform="matrix(1 0 0 1 193 186.7539)" class="st5 st8 st10" text-anchor="middle">michael</text>
 
-  <text id="japaname_code" transform="matrix(1 0 0 1 15 354.7539)" class="st5 st10">michael</text>
+<g id="text">
+  <g id="japaname_box"> 
+
+  <!--<rect x="193" y="39" height="135" width="42" />-->
+
+<% 
+  var x=193;
+  var y=47;
+  var box_height = 135;
+  var box_width = 42;
+
+  var char_num = japaname.string.length;
+  var char_height = Math.min(box_height / char_num, box_width);
+  //まず大きさが決まる。ここまではよい。
+
+  var char_margin =  (box_height - char_height*char_num) / (char_num );
+
+
+  for(index  in  japaname.string){ 
+    var chara = japaname.string[index];
+
+    var chara_y = y + char_height/2 + (index ) * (char_height + char_margin);
+%>
+    <text x="<%=x %>" y="<%=chara_y %>" class="st8" style="font-size: <%= char_height %>px;fill: rgb(255, 255, 255);" text-anchor="middle" dominant-baseline="top"><%= chara %></text>
+
+<% } %>
+  
+  </g>
+  <text id="original_name" transform="matrix(1 0 0 1 193 186.7539)" class="st5 st8 st10" text-anchor="middle"><%= japaname.original %></text>
+  <text id="japaname_code" transform="matrix(1 0 0 1 15 354.7539)" class="st5 st8 st10"><%= japaname.code%></text>
 </g>
 </svg>
