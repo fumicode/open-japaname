@@ -60,10 +60,17 @@ block sub-content
             td
               input#password.form-control.input-lg(type="password" name="confirm_password" placeholder="password confirmation")
 
+
+          if(japaname)
+            tr
+              td(colspan=2)
+                input(type="hidden" name="japaname" value="#{japaname._id}")
+                input(type="checkbox" name="use_japaname" id="use_japaname")
+                label(for="use_japaname") Save my japaname "#{japaname.string}" to this account.
+
           tr
             td(colspan=2)
               button(type="submit") Signup 
-
 
     //
       | Do you want to log-in by SNS account?

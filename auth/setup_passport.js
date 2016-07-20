@@ -1,5 +1,7 @@
 // config/passport.js
 
+var co = require("co");
+
 // load all the things we need
 var LocalStrategy   = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
@@ -13,24 +15,12 @@ var User = mongoose.model("User");
 var configAuth = require('./auth_config.js');
 // expose this function to our app using module.exports
 module.exports = function(passport) {
-
   // =========================================================================
   // passport session setup ==================================================
   // =========================================================================
   // required for persistent login sessions
   // passport needs ability to serialize and unserialize users out of session
 
-  // used to serialize the user for the session
-  passport.serializeUser(function(user, done) {
-    done(null, user.id);
-  });
-
-  // used to deserialize the user
-  passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
-      done(err, user);
-    });
-  });
 
   // =========================================================================
   // LOCAL SIGNUP ============================================================
@@ -39,139 +29,47 @@ module.exports = function(passport) {
   // by default, if there was no name, it would just be called 'local'
 
   passport.use('local-signup', new LocalStrategy({
-    // by default, local strategy uses username and password, we will override with email
-    usernameField : 'email',
-    passwordField : 'password',
-    passReqToCallback : true // allows us to pass back the entire request to the callback
-  },
-
-  function(req, email, password, done) {
-    console.log("local-signup");
-    // asynchronous
-    // User.findOne wont fire unless data is sent back
-
-    var ateji_id = req.body.ateji_id;
-    var use_ateji_id = req.body.use_ateji_id; //Boolean
-
-    /////////////////////////////Verification///////////////////////////////
-    req.checkBody({
-      'email': {
-        notEmpty: true,
-        isEmail: {
-          errorMessage: 'Invalid Email. Please check the format.'
-        }
-      },
-      'password': {
-        notEmpty: true,
-
-        isLength: {
-          options: [6, 20] // pass options to the valdatior with the options property as an array
-        },
-        errorMessage: 'Invalid Password. Password should not be empty'+
-          ' and the length should be 6-20.' // Error message for the parameter
+    passReqToCallback:true
+  },function(req, username, password, done){
+    co(function*(){
+      if(password !== req.body.confirm_password){
+        return done(null, null, {message:"Passwords is not same"});
       }
-    });
 
-    var errors = req.validationErrors();
-    if (errors && errors.length) {
-      console.log("errors");
-      console.log(errors);
-
-      req.flash('info', errors[0].msg);
-      
-      return done(null, false);
-    }
-
-
-    process.nextTick(function() {
-      // find a user whose email is the same as the forms email
-      // we are checking to see if the user trying to login already exists
-      console.log("next tick");
-      User.findOne({ 'userinfo.local.email' :  email }, function(err, user) {
-
-        console.log("find one");
-        // if there are any errors, return the error
-        if (err)
-          return done(err, false, req.flash('info', 'error'));
-
-        // check to see if theres already a user with that email
-        if (user) {
-          return done(null, false, req.flash('error', 'The email is already taken.'));
-        }
-
-        // if there is no user with that email
-        // create the user
-        var newUser = new User();
-
-        // set the user's local credentials
-        newUser.userinfo.local.email    = email;
-        newUser.setPassword(password);
-
-
-          console.log("ateji id set");
-          console.log("use");
-          console.log(use_ateji_id + typeof use_ateji_id);
-          console.log(ateji_id + typeof ateji_id);
-
-        if(use_ateji_id && ateji_id){
-          newUser.ateji_id = ateji_id;
-        }
-        else{
-
-          console.log("ateji id not set");
-          newUser.ateji_id = 0;
-        }
-
-        console.log(newUser);
-
-        // save the user
-        newUser.save(function(err) {
-
-          console.log("save func");
-
-          if (err){
-            console.log("err of save");
-            console.log(err);
-            throw err;
+      //retype password
+      User.register(new User({
+        username: req.body.username,
+        //japaname: Japaname.japanameDecode(japaname_code) atode
+      }), password, function (err, user) {
+        try{
+          if(err){
+            return done(null, null, {message:err.message});
           }
 
-
-          console.log(newUser);
-          console.log("done func " + done);
-          return done(null, newUser);
-        });
+          if(user){
+            return done(null, user); //success!!!!!
+          }
+          else{
+            throw new Error("error and user is null");
+          }
+        }catch(err){
+          return done(err, null); //success!!!!!
+        }
+      
       });
+    }).catch((err)=>{
+      return done(err, null)
     });
   }));
 
-  passport.use('local-login', new LocalStrategy({
-    // by default, local strategy uses username and password, we will override with email
-    usernameField : 'email',
-    passwordField : 'password',
-    passReqToCallback : true // allows us to pass back the entire request to the callback
-  },
-  function(req, email, password, done) { // callback with email and password from our form
-    // find a user whose email is the same as the forms email
-    // we are checking to see if the user trying to login already exists
-    User.findOne({'userinfo.local.email' :  email }, function(err, user) {
-      // if there are any errors, return the error before anything else
-      if (err)
-      {
-        console.log("error occured");
-        return done(err);
-      }
+  // delegate loginStrategy to User (passport-local-mongoose)
+  passport.use('local-login', new LocalStrategy(User.authenticate()));
 
-      // if no user is found, return the message
-      if (!user || !user.passwordIsCorrect(password)){
-        console.log('authentication failed!!!!!!!!!!!!!!!');
-        req.flash('info', 'authentication failed');
-        return done(null, false);
-      }
+  // used to serialize the user for the session
+  passport.serializeUser(User.serializeUser());
 
-      req.flash('info','login success!!!!');
-      return done(null, user);
-    });
-  }));
+  // used to deserialize the user
+  passport.deserializeUser(User.deserializeUser());
 
   // =========================================================================
   // FACEBOOK ================================================================

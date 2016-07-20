@@ -7,8 +7,6 @@ mixin topbar(logo_hanko, search_box, original_name)
         if logo_hanko
           a(href="/")
             img#japaname-logo-small(src="/images/japaname_logo_1024.png" alt="Go to top")
-
-
       //検索
       div#topbar-ateji-search
         if search_box
@@ -20,7 +18,7 @@ mixin topbar(logo_hanko, search_box, original_name)
         if debugging
           |debug mode
         if user
-          a(href="/mypage") #{user.username }
+          a(href="/mypage") #{user.my_japaname && user.my_japaname.string }
           span(style="font-size:0.7em") 様
 
         else

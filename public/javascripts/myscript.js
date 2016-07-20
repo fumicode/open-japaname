@@ -1,7 +1,6 @@
 //end of body, after loading library
 
 $(function(){
-
   $(".kana-radiobox").change(function(e){
 
     var $that = $(this);
@@ -76,8 +75,6 @@ function updateSelectedName(){
     return 0;
   });
 
-
-
   var str = "";
   var url = "";
   for(var i =0;i<namearray.length;i++){
@@ -96,7 +93,6 @@ function updateSelectedName(){
 }
 
 function updateFilled(){
-
   var namesound = "";
   $(".hiragana-char").map(function(index,el){
     $that = $(el);

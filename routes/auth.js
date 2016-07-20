@@ -10,65 +10,61 @@ var _ = require("underscore");
 
 var co = require("co");
 
+var passport = require("passport");
+
 
 
 auth_router.get("/",(req,res,next)=>{
-  res.render("auth/login_signup");
-});
-
-
-auth_router.post("/signup", function (req, res, next) {
   co(function*(){
-    var username =  req.body.username;
-    var password =  req.body.password;
-    var re_password  =  req.body.confirm_password;
+    if(req.query.japaname && Japaname.isJapanameCode(req.query.japaname)){
+      var japaname = yield Japaname.findByCode(req.query.japaname).
+        populate("names.ateji").populate("names.kana").exec();
 
-    console.log("signing up username " + username);
-    console.log("password " + password);
-    console.log("re_password " + re_password);
-
-    if(yield User.doesExist(username)){
-      var message =  "user exist! error!";
-      console.log(message);
-      req.flash("error", message);
-      return res.redirect(req.baseUrl + "#signup");
+      console.log(japaname);
+      if(japaname){
+        return res.render("auth/login_signup", {japaname});
+      }
     }
 
-    if(password !== re_password){
-      var message =  "password not same";
-      console.log(message);
-      req.flash("error", message);
-      return res.redirect(req.baseUrl + "#signup");
-    }
-
-
-    //needs validataion
-    console.log("registering: " + username);
-
-    User.register(new User({
-      username: req.body.username,
-      japaname: Japaname.japanameDecode(japaname_code)
-    }), password, function (err, user) {
-      if (err) {
-        req.flash("error","couldn't add try once");
-        return res.redirect(req.baseUrl + "#signup");
-      } 
-
-      authenticate_and_redirect_mypage(username,password,req,res);
-    });
-
+    res.render("auth/login_signup");
 
   }).catch((err)=>{
     next(err);
+  })
+});
+
+
+auth_router.post("/signup", passport.authenticate("local-signup",{
+  failureRedirect: "/auth#signup",
+  failureFlash: true,
+}),function(req,res,next){
+  co(function*(){
+
+    if(req.body.japaname){
+      console.log("hogehoge");
+      req.user.my_japaname = req.body.japaname;
+
+      console.log(req.user.my_japaname);
+
+      //asdfasdga:sldgja]
+      //lksjdfs
+      var result = yield req.user.save();
+
+      //!!res check!!
+    }
+    res.redirect("/mypage");
+
+  }).catch((err)=>{
+    next(err)
   });
-});
+}); 
 
-auth_router.post("/login", function(req,res,next){
-  var username = req.body.username;
-  var password = req.body.password;
+auth_router.post("/login", passport.authenticate("local-login",{
+  successRedirect: "/mypage",
+  failureRedirect: "/auth#login", 
+  failureFlash: true,
+}));
 
-  authenticate_and_redirect_mypage(username,password,req,res);
-});
 
 auth_router.get('/logout', function(req,res){
   req.logout();
@@ -76,16 +72,13 @@ auth_router.get('/logout', function(req,res){
 });
 
 
-
 function authenticate_and_redirect_mypage(username,password,req,res,next){
 
-  console.log("here1 " + username + " " + password);
+  console.log("Here1 " + username + " " + password);
   User.authenticate()(username,password,function(err,user,options){
-    
-      console.log("here2");
+    console.log("here2");
     if (err) return next(err);
     if (user === false) {
-
       console.log("here");
       //!!!! いずれいれる！！
       //req.flash("error", "Enter same password twice.");
@@ -94,6 +87,7 @@ function authenticate_and_redirect_mypage(username,password,req,res,next){
     else {
       console.log("here3");
       req.login(user, function (err) {
+        if(err) return next(err);
         return res.redirect("/mypage/");
       });
     }

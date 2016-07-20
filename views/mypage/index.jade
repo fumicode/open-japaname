@@ -14,27 +14,19 @@ block sub-content
     p
       a.button(href="/characters/kanjis") 漢字ページにいく
 
+
   if user.my_japaname
     h1.text-center
       nobr
         |Mypage of 
         wbr
         strong(style="text-transform:capitalize;color:red;")
-          |#{user.my_japaname.names[0].original}
+          |#{user.my_japaname.names[0].ateji.string}
 
     include /include/ateji_box
-    mixin ateji_box(user.my_japaname.names[0].ateji.atemojis)
-
-    p.text-center
-      a.button(href="/mypage/ateji" ) Go to ATEJI page
+    mixin ateji_box(user.my_japaname.names[0].ateji.populated_atemojis)
 
   else
-    h1.text-center
-      nobr
-        |Mypage of 
-        wbr
-        strong(style="text-transform:capitalize;color:red;")
-          |#{user.name}
     p You haven't registered ATEJI name.
       | Don't you wanna choose one ? 
     include /include/ateji_search

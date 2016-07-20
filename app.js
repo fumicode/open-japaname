@@ -44,7 +44,6 @@ co(function*(){
 
 });
 
-
 //dbが読み込まれたら、atejilibの方に読み込む
 db.db_loaded_promise.then(function(){
   console.log("loading atejilib!!");
@@ -66,7 +65,6 @@ var bodyParser = require('body-parser');
 var methodOverride= require('method-override');
 
 //var livereload = require('connect-livereload')
-
 
 //////////////////app obj//////////////////
 var app = module.exports = express();
@@ -115,17 +113,17 @@ var logDirectory = __dirname + '/logs';
 //logger.log('info', 'log by logger');
 
 //ensure log directory exists
+//
 var result = fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
 
 
 app.use(morgan('combined'));
 app.use(morgan('dev'));
 
-
 //////////////////////authentication///////////////////////
-
 // https://www.npmjs.com/package/express-session
-//
+
+
 var session = require("express-session");
 var MongoDBStore = require("connect-mongodb-session")(session); //なんでここでsessionいれるのか謎
 
@@ -173,6 +171,7 @@ var characters_router= express.Router(); //新しく作った
 var contents_router  = require('./routes/contents');
 var mypage_router    = require('./routes/mypage');
 var auth_router      = require('./routes/auth');
+var thumbnail_router      = require('./routes/thumbnail');
 var shops_router     = require('./routes/shops');
 var purchases_router = require('./routes/purchases');
 var admin_router     = require('./routes/admin');
@@ -220,6 +219,7 @@ app.use('/characters',characters_router);
 app.use('/contents', contents_router);
 app.use('/mypage', loginCheck, mypage_router);
 app.use('/auth', auth_router);
+app.use('/thumbnail', thumbnail_router);
 app.use('/shops', loginCheck, shops_router ); // loginCheck ,
 app.use('/purchases', loginCheck, purchases_router); // loginCheck,
 app.use('/admin', authorize(["admin"]),  admin_router);

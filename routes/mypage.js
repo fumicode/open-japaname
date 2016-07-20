@@ -19,20 +19,24 @@ mypage_router.get('/', function(req, res, next) {
     var purchases = yield Purchase.find({buyer:req.user._id})
       .populate("japaname").exec();
 
+    yield req.user
+      .populate({
+        path:"my_japaname", 
+        populate:{
+          path:"names.ateji names.kana"
+        }
+      })
+      .execPopulate();
 
-    console.log("mypage dayo" );
-    console.log(purchases);
     res.render("mypage", {purchases});
-
   }).catch((err)=>{
     next(err);
   });
-
 });
 
-mypage_router.route("/ateji").get(function(req, res, next) {
-  if(req.user.ateji_id){
-    res.redirect("/" + req.user.ateji_id._id);
+mypage_router.route("/japaname").get(function(req, res, next) {
+  if(req.user.japaname){
+    res.redirect("/" + req.user.japaname._id);
   }
 }).post(function(req, res, next) {
   co(function*(){
@@ -50,11 +54,10 @@ mypage_router.route("/ateji").get(function(req, res, next) {
       });
     }
     else{
-      req.flash("info", "Ateji " +ateji_id+ " was not found");
+      req.flash("info", "Ateji " + ateji_id + " was not found");
       res.redirect("/mypage");
     }
-  })
-  .catch(function(err){
+  }).catch(function(err){
     next(err);
   });
 });

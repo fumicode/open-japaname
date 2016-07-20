@@ -21,7 +21,20 @@ var JapanameSchema = module.exports = new Schema({
 JapanameSchema.plugin(autoIncrement.plugin,{model:"Japaname"});
 
 // 0 => 00-0000-0000
+JapanameSchema.virtual("code").get(function(){
+  return sta.japanameEncode(this._id);
+});
 
+JapanameSchema.virtual("string").get(function(){
+  return this.names[0].ateji.string;
+});
+
+JapanameSchema.virtual("original").get(function(){
+  return this.names[0].original;
+});
+
+
+/////////////////////////////////// STATICS ///////////////////////////////////
 var sta  = JapanameSchema.statics;
 
 JapanameSchema.statics.japanameEncode = function (id_num){
@@ -105,7 +118,6 @@ JapanameSchema.statics.createNew = function(names){
       }
 
       var ateji_id = savedAteji._id;
-
       var newJapaname = new Japaname({
         //_id:auto increment
         names:[{
@@ -151,16 +163,6 @@ JapanameSchema.statics.createNew = function(names){
     }
   });
 }
-
-
-JapanameSchema.virtual("code").get(function(){
-  return sta.japanameEncode(this._id);
-});
-
-
-JapanameSchema.virtual("string").get(function(){
-  return this.names[0].ateji.string;
-});
 
 
 

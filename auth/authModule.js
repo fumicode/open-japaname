@@ -37,13 +37,24 @@ authModule.loadUser = function(req,res,next){
   res.locals.user = req.user;
 
   if(req.user){
-    req.user.populate("ateji_id",function(){
+    req.user.populate({
+      path:"my_japaname",
+      populate:{
+        path:"names.ateji"
+      }
+    })
+    .execPopulate()
+    .then(function(){
 
-      next();
+
+      return next();
+    })
+    .catch((err)=>{
+      next(err);
     });
   }
   else{
-    next();
+    return next();
   }
 
 };

@@ -4,21 +4,20 @@ var _ = require("underscore");
 var passportLocalMongoose = require("passport-local-mongoose");
 
 var UserSchema = module.exports = new mongoose.Schema({
-  //username :String, //set up by passportLocalMongoose
-  //password :String  //set up by passportLocalMongoose
-  
-  oauth_info:{
+  username :String, //set up by passportLocalMongoose
+  password :String, //set up by passportLocalMongoose
 
-  },
+  oauth_info:{ },
 
-  my_japaname:{ type:Number, ref:"" },
-
+  my_japaname:{ type:Number, ref:"Japaname" },
   authorities:[String], //admin,kanji-edit,content-edit,
-
 });
 
 
-UserSchema.plugin(passportLocalMongoose,{missingPasswordError: "Foutief password"});
+UserSchema.plugin(passportLocalMongoose,{
+  missingPasswordError: "Foutief password",
+
+});
 
 UserSchema.statics.doesExist = function(username){
   var User = this;
