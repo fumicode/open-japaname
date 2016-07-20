@@ -18,7 +18,7 @@ mixin topbar(logo_hanko, search_box, original_name)
         if debugging
           |debug mode
         if user
-          a(href="/mypage") #{user.my_japaname && user.my_japaname.string }
+          a(href="/mypage") #{user.my_japaname && user.my_japaname.string || user.username }
           span(style="font-size:0.7em") 様
 
         else

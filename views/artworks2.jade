@@ -40,7 +40,7 @@ block body
 
 
   div(style="text-align:center ;")
-    object(type="image/svg+xml" data="/thumbnail/svg/#{japaname.code}" style="width:#{artwork_width}mm")
+    object(type="image/svg+xml" data="/shops/arton/artworks/#{artwork.artwork_name}/#{japaname.code}/thumbnail" style="width:#{artwork_width}mm")
 
   if(preview)
     div
@@ -68,5 +68,5 @@ block append body-end-scripts
       },1000);
 
   script(type="text/javascript" src="https://use.typekit.net/yjx8eou.js")
-  script try{Typekit.load({ async: true });} catch(e){}
+  script try{Typekit.load({ async: true });} catch(e){alert(e)}
 

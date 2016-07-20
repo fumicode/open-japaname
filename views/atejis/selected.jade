@@ -16,8 +16,6 @@ block append head-end
 
 block sub-content
   div.text-center
-
-
     include /include/ateji_box
     h2 japaname of <wbr><strong style="text-transform:capitalize;color:red;">#{name.original}</strong><br>
       | Japaname Code : 
@@ -25,7 +23,6 @@ block sub-content
     
     mixin ateji_box(name.ateji.populated_atemojis)
     p.text-center Click each kanji and see detail!<br>
-      img(src="/images/risumaru_jump_left.png")
 
   div(style="height:3rem;")
   div
@@ -37,7 +34,7 @@ block sub-content
     div(style="martin-top:2rem;background:white;text-align:center;")
       each artwork in artworks
         a(href="/shops/arton/artworks/#{artwork.artwork_name}/#{japaname.code}") 
-          object(type="image/svg+xml" data="/shops/arton/artworks/#{artwork.artwork_name}/#{japaname.code}/thumbnail" alt="#{artwork.artwork_name}" style="width:50mm;height:#{artwork.ratio * 50}mm")
+          img(src="/shops/arton/artworks/#{artwork.artwork_name}/#{japaname.code}/thumbnail" alt="#{artwork.artwork_name}" style="width:50mm;height:#{artwork.ratio * 50}mm")
           | #{artwork.jp_name}
 
   div

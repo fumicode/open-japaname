@@ -30,7 +30,7 @@ shops_router.get("/:shopname/artworks/:artwork_name/:japaname_code",(req,res,nex
 
       if(obj.purchaseExists){ //すでに購入していた
         //ふつうにレンダリングする
-        return res.render("artworks2" , {
+        return res.render("artworks" , {
           japaname:obj.japaname, 
           artwork:obj.artwork,
           artwork_width,
@@ -65,7 +65,7 @@ shops_router.get("/:shopname/artworks/:artwork_name/:japaname_code/print",(req,r
       var obj = yield obtainPurchaseObjects(artwork_name,japaname_code,req.user._id);
 
       if(obj.purchaseExists){ //すでに購入していた
-        return res.render("artworks2" , {
+        return res.render("artworks" , {
           japaname: obj.japaname,
           artwork:obj.artwork,
           artwork_width,
@@ -145,7 +145,7 @@ shops_router.get("/:shopname/artworks/:artwork_name/:japaname_code/preview",(req
         return res.redirect(path.join(req.baseUrl, "/arton/artworks/"+ artwork_name +"/"+ japaname_code));
       }
       else{
-        return res.render("artworks2" , {japaname:obj.japaname, preview:true, artwork:obj.artwork});
+        return res.render("artworks" , {japaname:obj.japaname, preview:true, artwork:obj.artwork});
       }
     }
     catch(err){
