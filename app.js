@@ -33,7 +33,6 @@ function authorizeUser(username, authorities){
         console.log(user);
       });
     }
-
   });
 }
 
@@ -168,6 +167,7 @@ var names_router     = require('./routes/names');
 var characters_router= express.Router(); //新しく作った
   var kanjis_router    = require('./routes/kanjis');
   var words_router     = require('./routes/words');
+var funding_router     = require('./routes/funding');
 var contents_router  = require('./routes/contents');
 var mypage_router    = require('./routes/mypage');
 var auth_router      = require('./routes/auth');
@@ -180,25 +180,30 @@ var admin_router     = require('./routes/admin');
 
 app.all('*', function(req, res, next){
   
-  var host = req.get('host');
-
   //nginxにやらせたい！
+  /*
+  if(req.hostname == "japaname.jp" && req.protocol == "http"){
+    return res.redirect("https://japaname.jp" + req.url);
+  }*/
+
+  /*
   if( host == "japaname.info" || host == "japaname.tokyo" || host == "ateji.me"){ //!!!!!! jika gaki yokunai.
     return res.redirect("http://japaname.jp" + req.url);
   }
+	*/
 
   next();
 }); 
 
 app.all('*', loadUser); //load user to res.locals.user !!! to show it in topbar
 app.all('*', function(req, res, next){
-  res.locals.url = req.protocol + '://' + req.get('host') + req.url;
-  res.locals.originalUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+  res.locals.url = req.protocol + '://' + req.hostname + req.url;
+  res.locals.originalUrl = req.protocol + '://' + req.hostname + req.originalUrl;
 
   res.locals.path = req.url;
   res.locals.originalPath = req.originalUrl;
 
-  res.locals.host = req.host;
+  res.locals.host= req.hostname;
 
   res.locals.err_message = req.flash('error');
   res.locals.alert_message = req.flash('alert');
@@ -216,6 +221,7 @@ app.use('/characters',characters_router);
   characters_router.use('/words',words_router);
   //characters_router.use('/hiragana',words_router);
   //characters_router.use('/katakana',words_router);
+app.use('/funding', funding_router);
 app.use('/contents', contents_router);
 app.use('/mypage', loginCheck, mypage_router);
 app.use('/auth', auth_router);

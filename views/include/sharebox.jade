@@ -23,7 +23,7 @@ mixin sharebox( tweet, share_url, hashtag )
       div#share-qr
         h4 QR code
         a(data-toggle="modal" data-target="#myModal")
-          img.img-responsive.center-block(src="http://chart.apis.google.com/chart?cht=qr&chs=150x150&chl=#{share_url}")
+          img.img-responsive.center-block(src="//chart.apis.google.com/chart?cht=qr&chs=150x150&chl=#{share_url}")
 
 
   //
@@ -37,6 +37,6 @@ mixin sharebox( tweet, share_url, hashtag )
               h4.modal-title#myModalLabel Share this page
             div.modal-body
               p.text-center.h3 #{share_url}
-                img.img-responsive.center-block(src="http://chart.apis.google.com/chart?cht=qr&chs=500x500&chl=#{share_url}")
+                img.img-responsive.center-block(src="//chart.apis.google.com/chart?cht=qr&chs=500x500&chl=#{share_url}")
             div.modal-footer
               button.btn.btn-default(type="button"  data-dismiss="modal") Close
