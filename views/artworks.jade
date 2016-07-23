@@ -33,7 +33,7 @@ block body
               input(type="text" name="artwork_width" value="#{artwork_width}")
               |mm
         td
-          form(action="/shops/arton/artworks/#{artwork.artwork_name}/#{japaname.code}/print" method="GET")
+          form(action="/artworks/#{artwork.artwork_name}/#{japaname.code}/print" method="GET")
             input(type="hidden" name="artwork_width" value="#{artwork_width}")
             input(type="submit" value="印刷する")
 
@@ -57,16 +57,17 @@ block append body-end-scripts
       $("#other_japaname_form").submit(function(e){
         e.preventDefault();
         var japaname_code = $("#other_japaname").val();
-        var url = "/shops/arton/artworks/#{artwork.artwork_name}/"+japaname_code+"";
+        var url = "/artworks/#{artwork.artwork_name}/"+japaname_code+"";
         window.location = url;
       });
     });
 
+  script(type="text/javascript" src="/javascripts/artworks.js")
   script(type="text/javascript").
     var artwork_name = "#{artwork.artwork_name}";
     var japaname_code= "#{japaname.code}";
+    drawSvg($("#artwork_svg")[0], artwork_name, japaname_code);
 
-  script(type="text/javascript" src="/javascripts/artworks.js")
 
   if print
     script(type="text/javascript").

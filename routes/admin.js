@@ -18,12 +18,13 @@ admin_router.get('/', function(req, res, next) {
       .populate("my_japaname")
       .exec();
 
+    var purchases = yield Purchase.find().exec();
+
     console.log("users");
     console.log(users);
     res.render("admin", {
       users,
-      purhcases
-
+      purchases
     });
     return ;
 

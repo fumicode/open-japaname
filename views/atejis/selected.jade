@@ -33,8 +33,8 @@ block sub-content
   if user && user.haveRight("arton")
     div(style="martin-top:2rem;background:white;text-align:center;")
       each artwork in artworks
-        a(href="/shops/arton/artworks/#{artwork.artwork_name}/#{japaname.code}") 
-          img(src="/shops/arton/artworks/#{artwork.artwork_name}/#{japaname.code}/thumbnail" alt="#{artwork.artwork_name}" style="width:50mm;height:#{artwork.ratio * 50}mm")
+        a(href="/artworks/#{artwork.artwork_name}/#{japaname.code}") 
+          img(src="/artworks/#{artwork.artwork_name}/#{japaname.code}/thumbnail" alt="#{artwork.artwork_name}" style="width:50mm;height:#{artwork.ratio * 50}mm")
           | #{artwork.jp_name}
 
   div
