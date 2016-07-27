@@ -1,0 +1,48 @@
+
+$jt:".japanameTable";
+
+#{$jt}{
+  width:auto;
+  margin:0; //
+
+
+  td,th{
+    margin:0;
+    padding:0;
+    border-bottom:1px solid $ateji-lightgray-color ;
+
+  }
+  @include media($medium-screen-up){ //thを表示させるため
+    margin-left:-8rem;
+  }
+}
+
+#{$jt}__heading{
+  width:7rem;
+  vertical-align:middle;
+  text-align:right;
+  padding-right:1rem;
+
+  display:none;
+
+  @include media($medium-screen-up){ //thを表示させるため
+    display:table-cell;
+  }
+}
+
+#{$jt}__kanjiRow{
+}
+
+#{$jt}__kanjiCell{
+  padding:0;
+  font-family:$kanji-font-family;
+  font-size:10rem;
+}
+
+#{$jt}__kanaRow{
+
+}
+#{$jt}__meaningRow{
+}
+
+

@@ -913,6 +913,32 @@ input[type="search"].jnSearchBox__textbox {
       .goToArton__item.insideShop:nth-child(2n+1) {
         clear: left; } }
 
+.japanameTable {
+  width: auto;
+  margin: 0; }
+  .japanameTable td, .japanameTable th {
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #efefef; }
+  @media screen and (min-width: 600px) {
+    .japanameTable {
+      margin-left: -8rem; } }
+
+.japanameTable__heading {
+  width: 7rem;
+  vertical-align: middle;
+  text-align: right;
+  padding-right: 1rem;
+  display: none; }
+  @media screen and (min-width: 600px) {
+    .japanameTable__heading {
+      display: table-cell; } }
+
+.japanameTable__kanjiCell {
+  padding: 0;
+  font-family: "ro-nikkatsu-sei-kai-std", serif;
+  font-size: 10rem; }
+
 html {
   box-sizing: border-box; }
 
@@ -1182,58 +1208,6 @@ div#ateji-scroller {
   div#ateji-scroller div#ateji-block {
     display: inline-block;
     margin: 0 auto; }
-    div#ateji-scroller div#ateji-block table#ateji-table {
-      width: auto;
-      margin: 0;
-      font-family: "ro-nikkatsu-sei-kai-std", serif;
-      /*
-        @include media($tablet-breakpoint){
-          tr#kanji-row td{
-            font-size:60px;
-            width:60px;
-          }
-        }
-
-        @include media($mobile-breakpoint){
-          tr#kanji-row td{
-            font-size:30px;
-            width:30px;
-          }
-        }
-      */ }
-      @media screen and (min-width: 600px) {
-        div#ateji-scroller div#ateji-block table#ateji-table {
-          margin-left: -8rem; } }
-      div#ateji-scroller div#ateji-block table#ateji-table td, div#ateji-scroller div#ateji-block table#ateji-table th {
-        margin: 0;
-        padding: 0;
-        border-bottom: 1px solid #efefef; }
-      div#ateji-scroller div#ateji-block table#ateji-table th {
-        width: 7rem;
-        vertical-align: middle;
-        text-align: right;
-        padding-right: 1rem;
-        display: none; }
-        @media screen and (min-width: 600px) {
-          div#ateji-scroller div#ateji-block table#ateji-table th {
-            display: table-cell; } }
-      div#ateji-scroller div#ateji-block table#ateji-table tr#kanji-row td {
-        padding: 0;
-        font-size: 10rem;
-        position: relative; }
-        div#ateji-scroller div#ateji-block table#ateji-table tr#kanji-row td img.ateji-stamp {
-          display: block;
-          position: absolute;
-          right: 0;
-          bottom: 0; }
-      div#ateji-scroller div#ateji-block table#ateji-table tr#kanji-row td.stamp {
-        background: url(/images/ateji-hanko-stamp.png) right bottom no-repeat;
-        background-size: 50%; }
-      div#ateji-scroller div#ateji-block table#ateji-table tr#meanings-row a {
-        display: block;
-        box-sizing: content-box;
-        padding: 5px;
-        margin: 0 auto; }
 
 a.ateji-side-banner {
   display: block;

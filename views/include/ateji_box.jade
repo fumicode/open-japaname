@@ -1,24 +1,21 @@
 mixin ateji_box(atejis)
   div#ateji-scroller
     div#ateji-block
-      table#ateji-table.table
-        tr#kanji-row
-          th Kanji
+
+      table.japanameTable
+        tr.japanameTable__kanjiRow
+          th.japanameTable__heading Kanji
           each ateji,index in atejis
-            if index == atejis.length-1
-              td.stamp
-                a(href="/characters/kanjis/#{ateji.kanji}")=ateji.kanji
-            else
-              td 
-                a(href="/characters/kanjis/#{ateji.kanji}")=ateji.kanji
-        tr#kana-row
-          th Sound
+            td.japanameTable__kanjiCell
+              a(href="/characters/kanjis/#{ateji.kanji}")=ateji.kanji
+        tr.japanameTable__kanaRow
+          th.japanameTable__heading Sound
           each ateji in atejis
             td #{ateji.romaji_kana}
 
 
-        tr#meanings-row
-          th Meanings
+        tr.japanameTable__meaningsRow
+          th.japanameTable__heading Meanings
           each ateji in atejis
             td 
               each meaning in ateji.meanings

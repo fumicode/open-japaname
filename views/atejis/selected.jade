@@ -17,8 +17,8 @@ block append head-end
 block sub-content
   div.text-center
     include /include/ateji_box
-    h2 japaname of <wbr><strong style="text-transform:capitalize;color:red;">#{name.original}</strong><br>
-      | Japaname Code : 
+    h2 The japaname of <wbr><strong style="text-transform:capitalize;color:red;">#{name.original}</strong><br>
+      | The japaname code : 
       input.inline(type="text" value="#{japaname.code}") 
     
     mixin ateji_box(name.ateji.populated_atemojis)
