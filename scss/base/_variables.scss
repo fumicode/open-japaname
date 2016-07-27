@@ -22,15 +22,15 @@ $body-side-margin:1rem;
 ///////////////////////////BITTERS///////////////////////////////
 
 // Typography
-$base-font-family: $georgia;
+$base-font-family: $verdana;
 $heading-font-family: $base-font-family;
 $kanji-font-family: "ro-nikkatsu-sei-kai-std",serif;
 // web font available: "ro-shino-std"
 
 // Font Sizes
 $pc-font-size: 62.5%;    // = 10px => 1.6rem = 16px
-$tablet-font-size: 54.6875%;// タブレットは14px
-$mobile-font-size: 46.875%; // モバイルは12px
+$tablet-font-size:$pc-font-size;// おなじでよくね
+$mobile-font-size:$pc-font-size;// おなじでよくね
 
 $base-font-size: 1.6rem; // パソコンは16px
 

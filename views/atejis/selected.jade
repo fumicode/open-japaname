@@ -44,11 +44,12 @@ block sub-content
           img.shopThumbs__icon(src="/images/arton_logo.png" alt="ARTON")
 
       each artwork in artworks
-        li.shopThumbs__item
-          a.shopThumbs__link(href="/shops/arton/")
-            div.shopThumbs__icon.teeComposite
-              img.teeComposite__tee(src="/images/white-tee.jpg" alt="tee thumbnail")
-              img.teeComposite__image(src="/artworks/#{artwork.artwork_name}/#{japaname.code}/thumbnail" alt="")
+        if artwork.artwork_name !== "risumaru_ofuda"
+          li.shopThumbs__item
+            a.shopThumbs__link(href="/shops/arton/")
+              div.shopThumbs__icon.teeComposite
+                img.teeComposite__tee(src="/images/white-tee.jpg" alt="tee thumbnail")
+                img.teeComposite__image(src="/artworks/#{artwork.artwork_name}/#{japaname.code}/thumbnail" alt="")
 
 
             //img.shopThumbs__icon(src="/artworks/#{artwork.artwork_name}/#{japaname.code}/thumbnail" alt="#{artwork.artwork_name}")

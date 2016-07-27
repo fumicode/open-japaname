@@ -62,9 +62,7 @@ names_router.post('/', function(req, res, next) {
     var ateji = JSON.parse(req.body.ateji);
 
     console.log(ateji); //JSON [{kana,kanji,sylindex}]
-
     var newJapaname = yield Japaname.createNew([{original:original_name, ateji}]);
-
     var url_id = Japaname.japanameEncode(newJapaname._id);
 
     res.redirect(/*req.baseUrl +*/ "/" + url_id); //短縮URL
