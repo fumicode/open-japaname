@@ -1,0 +1,40 @@
+
+/*
+  div.goToArton
+    h2.goToArton__title The way to ARTON.
+    ul.goToArton__list
+      each index in [0,1,2]
+        li.goToArton__item
+          img.goToArton__photo(src="/images/go-arton-#{index}.jpg" alt="go arton #{index}")
+          */
+
+
+$gta:".goToArton";
+
+
+#{$gta}{
+}
+
+#{$gta}__title{
+  margin-top:2em;
+  @extend .bottomLine;
+}
+
+#{$gta}__list{
+  @include outer-container();
+}
+
+#{$gta}__item{
+  margin-bottom:2em;
+  @include media($medium-screen-down){
+    @include span-columns(1 of 2);
+    @include omega(2n);
+  }
+  @include media($medium-screen-up){
+    @include span-columns(1 of 6);
+    @include omega(6n);
+  }
+}
+
+#{$gta}__photo{
+}

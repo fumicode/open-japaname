@@ -201,6 +201,11 @@ h3, .h3 {
 h4, .h4 {
   font-size: 2.1rem; }
 
+.bottomLine, .shopDesc__title, .shopItems__title, .goToArton__title {
+  padding-bottom: 0;
+  border-bottom: 1px solid;
+  line-height: 1; }
+
 h1.n,
 h2.n,
 h3.n,
@@ -742,6 +747,143 @@ input[type="search"].jnSearchBox__textbox {
   top: 20%;
   left: 33%;
   width: 33%; }
+
+/*
+
+    
+  div.shopHeader
+    div.shopHeader__icon
+    div.shopHeader__desc
+
+*/
+.shopHeader {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto; }
+  .shopHeader::after {
+    clear: both;
+    content: "";
+    display: table; }
+
+@media screen and (min-width: 600px) {
+  .shopHeader__icon {
+    float: left;
+    display: block;
+    margin-right: 2.85714%;
+    width: 22.85714%; }
+    .shopHeader__icon:last-child {
+      margin-right: 0; }
+  .shopHeader__desc {
+    float: left;
+    display: block;
+    margin-right: 2.85714%;
+    width: 74.28571%; }
+    .shopHeader__desc:last-child {
+      margin-right: 0; } }
+
+/*
+  div.shopIcon
+    img.shopIcon__image(src="/images/arton_logo.png" alt="Nice tee meet you! arton.jp")
+
+*/
+/*
+      div.shopDesc
+        h1.shopDesc__title ARTON
+        div.shopDesc__desc.
+
+*/
+/*
+  div.shopItems
+    h2.shopItems__title Japaname Original Design
+    p.shopItems__desc
+    ul.shopItems__list
+      each artwork in artworks
+        li.shopItems__item
+*/
+.shopItems__title {
+  margin-top: 2em; }
+
+.shopItems__list {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto; }
+  .shopItems__list::after {
+    clear: both;
+    content: "";
+    display: table; }
+
+@media screen and (max-width: 600px) {
+  .shopItems__item {
+    float: left;
+    display: block;
+    margin-right: 5.88235%;
+    width: 47.05882%; }
+    .shopItems__item:last-child {
+      margin-right: 0; }
+    .shopItems__item:nth-child(2n) {
+      margin-right: 0; }
+    .shopItems__item:nth-child(2n+1) {
+      clear: left; } }
+
+@media screen and (min-width: 600px) {
+  .shopItems__item {
+    float: left;
+    display: block;
+    margin-right: 3.84615%;
+    width: 30.76923%; }
+    .shopItems__item:last-child {
+      margin-right: 0; }
+    .shopItems__item:nth-child(3n) {
+      margin-right: 0; }
+    .shopItems__item:nth-child(3n+1) {
+      clear: left; } }
+
+/*
+  div.goToArton
+    h2.goToArton__title The way to ARTON.
+    ul.goToArton__list
+      each index in [0,1,2]
+        li.goToArton__item
+          img.goToArton__photo(src="/images/go-arton-index.jpg" alt="go arton index")
+          */
+.goToArton__title {
+  margin-top: 2em; }
+
+.goToArton__list {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto; }
+  .goToArton__list::after {
+    clear: both;
+    content: "";
+    display: table; }
+
+.goToArton__item {
+  margin-bottom: 2em; }
+  @media screen and (max-width: 600px) {
+    .goToArton__item {
+      float: left;
+      display: block;
+      margin-right: 5.88235%;
+      width: 47.05882%; }
+      .goToArton__item:last-child {
+        margin-right: 0; }
+      .goToArton__item:nth-child(2n) {
+        margin-right: 0; }
+      .goToArton__item:nth-child(2n+1) {
+        clear: left; } }
+  @media screen and (min-width: 600px) {
+    .goToArton__item {
+      float: left;
+      display: block;
+      margin-right: 1.88679%;
+      width: 15.09434%; }
+      .goToArton__item:last-child {
+        margin-right: 0; }
+      .goToArton__item:nth-child(6n) {
+        margin-right: 0; }
+      .goToArton__item:nth-child(6n+1) {
+        clear: left; } }
 
 html {
   box-sizing: border-box; }

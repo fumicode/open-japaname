@@ -1,0 +1,36 @@
+
+/*
+  div.shopItems
+    h2.shopItems__title Japaname Original Design
+    p.shopItems__desc
+    ul.shopItems__list
+      each artwork in artworks
+        li.shopItems__item
+*/
+
+$si:".shopItems";
+
+#{$si}__title{
+  margin-top:2em;
+  @extend .bottomLine;
+}
+
+#{$si}__desc{
+}
+
+#{$si}__list{
+  @include outer-container;
+}
+
+#{$si}__item{
+
+  @include media($medium-screen-down){
+    @include span-columns(1 of 2);
+    @include omega(2n);
+
+  }
+  @include media($medium-screen-up){
+    @include span-columns(1 of 3);
+    @include omega(3n);
+  }
+}

@@ -1,0 +1,35 @@
+/*
+
+    
+  div.shopHeader
+    div.shopHeader__icon
+    div.shopHeader__desc
+
+*/
+
+
+$sh:".shopHeader";
+
+
+#{$sh}{
+  @include outer-container;
+
+}
+
+#{$sh}__icon{
+
+}
+
+#{$sh}__desc{
+
+}
+
+@include media($medium-screen-up){
+  #{$sh}__icon{
+    @include span-columns(1 of 4);
+  }
+  #{$sh}__desc{
+    @include span-columns(3 of 4);
+  }
+
+}

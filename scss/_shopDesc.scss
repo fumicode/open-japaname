@@ -1,0 +1,17 @@
+
+/*
+      div.shopDesc
+        h1.shopDesc__title ARTON
+        div.shopDesc__desc.
+
+*/
+
+$sd:".shopDesc";
+
+
+#{$sd}{
+}
+
+#{$sd}__title{
+  @extend .bottomLine;
+}
