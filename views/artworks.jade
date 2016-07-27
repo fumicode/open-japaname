@@ -6,37 +6,39 @@ block header
   - var artwork_height = artwork_width * artwork.ratio;
 
 
-  if preview || sizing
+  if !print
     a(href="/") トップへ戻る
     | --
     a(href="/#{japaname.code}") #{japaname.string} さんのページへ戻る
 
-    p 他のJapaname
-      form#other_japaname_form
-        input#other_japaname(type="text" name="other_japaname")
-        input#other_japaname_submit(type="submit" value="get other")
+    form#other_japaname_form
+      p 他のJapaname
+        input#other_japaname.inline(type="text" name="other_japaname" style="display:inline;")
+        input#other_japaname_submit(type="submit" value="get other" style="display:inline;")
 
 
-  if preview
-    h1.h3 プレビュー #{artwork.artwork_name} #{japaname.code} 
+    if preview
+      h1.h2 プレビュー #{artwork.artwork_name} #{japaname.code} 
+      form(action="/purchases/#{artwork.artwork_name}/#{japaname.code}/" method="post")
+        input(type="submit" value="購入してサイズ調整して印刷する")
 
-  if sizing 
-    table
-      tr
-        td
-          form(action="" method="GET")
-            p
-              |印刷する幅  
-              input(type="text" name="artwork_width" value="#{artwork_width}")
-              |mm
-        td
-          form(action="/artworks/#{artwork.artwork_name}/#{japaname.code}/print" method="GET")
-            input(type="hidden" name="artwork_width" value="#{artwork_width}")
-            input(type="submit" value="印刷する")
+    if sizing 
+      p(style="color:red") 購入済みです。
+      h1.h2サイズを調整する。#{artwork.artwork_name} #{japaname.code} 
+      table
+        tr
+          td
+            form(action="" method="GET" style="display:inline;")
+              p
+                |印刷する幅  
+                input(type="text" name="artwork_width" value="#{artwork_width}" style="display:inline;")
+                |mm
+                input(type="submit" value="幅を変更" style="display:inline;")
+          td
+            form(action="/artworks/#{artwork.artwork_name}/#{japaname.code}/print" method="GET")
+              input(type="hidden" name="artwork_width" value="#{artwork_width}")
+              input(type="submit" value="印刷する")
 
-  if preview
-    form(action="/purchases/#{artwork.artwork_name}/#{japaname.code}/" method="post")
-      input(type="submit" value="購入してサイズ調整して印刷する")
 
 block content
   div(style="text-align:center ;")
