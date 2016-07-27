@@ -3,8 +3,11 @@ html
   head(prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#")
     title #{title}
 
+
+    link(rel='stylesheet', href='/stylesheets/simple.css') 
+
     block head-end
-  body
+  body.document
     block body-begin-scripts
     block body
     block body-end-scripts

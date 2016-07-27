@@ -1,5 +1,5 @@
-extends /template/simple_struct
-block body
+extends /template/simple_layout
+block header
   - if(preview){
   -   artwork_width = 50; //mm
   - }
@@ -18,7 +18,7 @@ block body
 
 
   if preview
-    h1 プレビュー #{artwork.artwork_name} #{japaname.code} 
+    h1.h3 プレビュー #{artwork.artwork_name} #{japaname.code} 
 
   if sizing 
     table
@@ -34,15 +34,14 @@ block body
             input(type="hidden" name="artwork_width" value="#{artwork_width}")
             input(type="submit" value="印刷する")
 
+  if preview
+    form(action="/purchases/#{artwork.artwork_name}/#{japaname.code}/" method="post")
+      input(type="submit" value="購入してサイズ調整して印刷する")
 
-  
+block content
   div(style="text-align:center ;")
     svg(id="artwork_svg" style="margin:0 auto; width:#{artwork_width}mm; height:#{artwork_height}mm;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink") 
 
-  if(preview)
-    div
-      form(action="/purchases/#{artwork.artwork_name}/#{japaname.code}/" method="post")
-        input(type="submit" value="購入してサイズ調整して印刷する")
 
 block append body-end-scripts
   script(src="/javascripts/jquery.min.js" type="text/javascript")
