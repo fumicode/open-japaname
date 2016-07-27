@@ -1,0 +1,24 @@
+//////////// basic framework////////////
+@import "normalize";
+@import "bourbon";
+@import "base/grid-settings";
+@import "neat";
+@import "base/base"; //bitters これは変えちゃっていいもの。
+
+
+
+.document{
+  @include outer-container();
+}
+
+.document__header{
+
+}
+
+.document__content{
+
+}
+
+.document__footer{
+
+}
