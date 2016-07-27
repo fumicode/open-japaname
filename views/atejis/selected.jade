@@ -37,10 +37,24 @@ block sub-content
           img(src="/artworks/#{artwork.artwork_name}/#{japaname.code}/thumbnail" alt="#{artwork.artwork_name}" style="width:50mm;height:#{artwork.ratio * 50}mm")
           | #{artwork.jp_name}
 
-  div
-    p(style="text-align:center")
-      a(href="http://arton.jp")
-        img(src="/images/arton_logo.png" alt="ARTON")
+  div.shopThumbs
+    ul.shopThumbs__list
+      li.shopThumbs__item
+        a.shopThumbs__link(href="/shops/arton/")
+          img.shopThumbs__icon(src="/images/arton_logo.png" alt="ARTON")
+
+      each artwork in artworks
+
+        if artwork.artwork_name !== "risumaru_ofuda"
+
+          li.shopThumbs__item
+            a.shopThumbs__link(href="/shops/arton/")
+              div.shopThumbs__icon.teeComposite
+                img.teeComposite__tee(src="/images/white-tee.jpg" alt="tee thumbnail")
+                img.teeComposite__image(src="/artworks/#{artwork.artwork_name}/#{japaname.code}/thumbnail" alt="")
+
+
+            //img.shopThumbs__icon(src="/artworks/#{artwork.artwork_name}/#{japaname.code}/thumbnail" alt="#{artwork.artwork_name}")
 
   if !(user && user.haveRight("arton"))
     div.widgetHelper__accessMap

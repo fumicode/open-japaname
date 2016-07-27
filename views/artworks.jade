@@ -11,14 +11,11 @@ block body
     | --
     a(href="/#{japaname.code}") #{japaname.string} さんのページへ戻る
 
-
     p 他のJapaname
       form#other_japaname_form
         input#other_japaname(type="text" name="other_japaname")
         input#other_japaname_submit(type="submit" value="get other")
 
-        
-        
 
   if preview
     h1 プレビュー #{artwork.artwork_name} #{japaname.code} 

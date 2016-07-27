@@ -173,6 +173,7 @@ var mypage_router    = require('./routes/mypage');
 var auth_router      = require('./routes/auth');
 var thumbnail_router      = require('./routes/thumbnail');
 var artworks_router     = require('./routes/artworks');
+var shops_router = require('./routes/shops');
 var purchases_router = require('./routes/purchases');
 var admin_router     = require('./routes/admin');
 
@@ -226,7 +227,8 @@ app.use('/contents', contents_router);
 app.use('/mypage', loginCheck, mypage_router);
 app.use('/auth', auth_router);
 app.use('/thumbnail', thumbnail_router);
-app.use('/artworks', loginCheck, artworks_router ); // loginCheck ,
+app.use('/artworks', artworks_router ); // loginCheck ,
+app.use('/shops', shops_router ); // loginCheck ,
 app.use('/purchases', loginCheck, purchases_router); // loginCheck,
 app.use('/admin', authorize(["admin"]),  admin_router);
 
@@ -238,6 +240,7 @@ app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
 
+  res.status(err.status);
   res.render("error",{
     error_message: "Not Found",
     error_code:err.status

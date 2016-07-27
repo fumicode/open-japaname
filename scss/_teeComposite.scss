@@ -1,0 +1,20 @@
+$tc: ".teeComposite";
+
+
+#{$tc}{
+  position:relative;
+}
+
+#{$tc}__tee{
+  width:100%;
+}
+
+#{$tc}__image{
+  position:absolute;
+    top:20%;
+    left:33%;
+
+    width:33%;
+
+    
+}

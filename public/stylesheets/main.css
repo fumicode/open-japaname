@@ -275,8 +275,7 @@ body#bg-candidates {
   background-image: url("/images/bg-candidates.jpg"); }
 
 body#bg-selected {
-  background-image: url("/images/bg-selected.jpg");
-  background-color: #D9B881; }
+  background-color: #fff; }
 
 .at-container {
   max-width: 1200px;
@@ -344,91 +343,92 @@ div form.ateji-search {
     padding: 0 0.75em;
     font-size: 0.8em; }
 
-div#topbar {
+#topbar {
   position: relative;
   z-index: 100;
+  margin-bottom: 1em;
   width: 100%;
   height: auto;
   box-shadow: black 0px 0px 20px;
   background: #b28f44; }
-  div#topbar.searching-topbar div#topbar-container #ateji-logo-hanko {
+  #topbar.searching-topbar div#topbar-container #ateji-logo-hanko {
     display: none; }
-  div#topbar.searching-topbar div#topbar-container #topbar-ateji-search {
+  #topbar.searching-topbar div#topbar-container #topbar-ateji-search {
     float: left;
     display: block;
     margin-right: 2.85714%;
     width: 100%; }
-    div#topbar.searching-topbar div#topbar-container #topbar-ateji-search:last-child {
+    #topbar.searching-topbar div#topbar-container #topbar-ateji-search:last-child {
       margin-right: 0; }
-  div#topbar.searching-topbar div#topbar-container #user-info {
+  #topbar.searching-topbar div#topbar-container #user-info {
     display: none; }
-  div#topbar div#topbar-container {
+  #topbar div#topbar-container {
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto; }
-    div#topbar div#topbar-container #japaname-logo-small {
+    #topbar div#topbar-container #japaname-logo-small {
       height: 3em; }
-    div#topbar div#topbar-container::after {
+    #topbar div#topbar-container::after {
       clear: both;
       content: "";
       display: table; }
-    div#topbar div#topbar-container #ateji-logo-hanko {
+    #topbar div#topbar-container #ateji-logo-hanko {
       float: left;
       display: block;
       margin-right: 2.85714%;
       width: 22.85714%;
       height: 2em; }
-      div#topbar div#topbar-container #ateji-logo-hanko:last-child {
+      #topbar div#topbar-container #ateji-logo-hanko:last-child {
         margin-right: 0; }
-    div#topbar div#topbar-container #topbar-ateji-search {
+    #topbar div#topbar-container #topbar-ateji-search {
       float: left;
       display: block;
       margin-right: 2.85714%;
       width: 48.57143%; }
-      div#topbar div#topbar-container #topbar-ateji-search:last-child {
+      #topbar div#topbar-container #topbar-ateji-search:last-child {
         margin-right: 0; }
-    div#topbar div#topbar-container #user-info {
+    #topbar div#topbar-container #user-info {
       float: left;
       display: block;
       margin-right: 2.85714%;
       width: 22.85714%;
       margin-right: 0;
       float: right; }
-      div#topbar div#topbar-container #user-info:last-child {
+      #topbar div#topbar-container #user-info:last-child {
         margin-right: 0; }
     @media screen and (min-width: 600px) {
-      div#topbar div#topbar-container #ateji-logo-hanko {
+      #topbar div#topbar-container #ateji-logo-hanko {
         float: left;
         display: block;
         margin-right: 2.85714%;
         width: 22.85714%; }
-        div#topbar div#topbar-container #ateji-logo-hanko:last-child {
+        #topbar div#topbar-container #ateji-logo-hanko:last-child {
           margin-right: 0; }
-      div#topbar div#topbar-container #topbar-ateji-search {
+      #topbar div#topbar-container #topbar-ateji-search {
         float: left;
         display: block;
         margin-right: 2.85714%;
         width: 48.57143%;
         display: block; }
-        div#topbar div#topbar-container #topbar-ateji-search:last-child {
+        #topbar div#topbar-container #topbar-ateji-search:last-child {
           margin-right: 0; }
-      div#topbar div#topbar-container #user-info {
+      #topbar div#topbar-container #user-info {
         float: left;
         display: block;
         margin-right: 2.85714%;
         width: 22.85714%;
         margin-right: 0;
         float: right; }
-        div#topbar div#topbar-container #user-info:last-child {
+        #topbar div#topbar-container #user-info:last-child {
           margin-right: 0; } }
-    div#topbar div#topbar-container #user-info {
+    #topbar div#topbar-container #user-info {
       overflow: hidden;
       white-space: nowrap;
       line-height: auto;
       text-align: right;
       font-size: 2.1rem;
       color: white; }
-      div#topbar div#topbar-container #user-info a {
+      #topbar div#topbar-container #user-info a {
         padding-right: 1rem;
         color: white; }
 
@@ -691,6 +691,57 @@ input[type="search"].jnSearchBox__textbox {
   padding: 0.9rem;
   width: auto;
   line-height: 1; }
+
+.shopThumbs__list {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto; }
+  .shopThumbs__list::after {
+    clear: both;
+    content: "";
+    display: table; }
+
+@media screen and (max-width: 600px) {
+  .shopThumbs__item {
+    float: left;
+    display: block;
+    margin-right: 5.88235%;
+    width: 47.05882%; }
+    .shopThumbs__item:last-child {
+      margin-right: 0; }
+    .shopThumbs__item:nth-child(2n) {
+      margin-right: 0; }
+    .shopThumbs__item:nth-child(2n+1) {
+      clear: left; } }
+
+@media screen and (min-width: 600px) {
+  .shopThumbs__item {
+    float: left;
+    display: block;
+    margin-right: 2.85714%;
+    width: 22.85714%; }
+    .shopThumbs__item:last-child {
+      margin-right: 0; }
+    .shopThumbs__item:nth-child(4n) {
+      margin-right: 0; }
+    .shopThumbs__item:nth-child(4n+1) {
+      clear: left; } }
+
+.shopThumbs__link {
+  width: 100%;
+  height: 100%; }
+
+.teeComposite {
+  position: relative; }
+
+.teeComposite__tee {
+  width: 100%; }
+
+.teeComposite__image {
+  position: absolute;
+  top: 20%;
+  left: 33%;
+  width: 33%; }
 
 html {
   box-sizing: border-box; }

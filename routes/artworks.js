@@ -144,7 +144,7 @@ artworks_router.get("/:artwork_name/:japaname_code/preview",(req,res,next)=>{
 });
 
 
-// ゆる～りゆるゆるせきゅりてぃ
+//!!!!!!!11 ゆる～りゆるゆるせきゅりてぃ
 artworks_router.get("/:artwork_name/:japaname_code/thumbnail",(req,res,next)=>{
   co(function*(){
     var artwork_name = req.params.artwork_name;

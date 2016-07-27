@@ -9,12 +9,9 @@
       // You can access the token ID with `token.id`.  
       // Get the token ID to your server-side code for use.  
       //ajax
-      alert(JSON.stringify(token));
-      alert("send it to server");
     } 
   }); 
-
-  document.getElementById("customButton").onclick = function(e) { 
+  $('#customButton').on('click', function(e) { 
     // Open Checkout with further options: 
     handler.open({ 
       name: 'japaname.jp', 
@@ -24,9 +21,8 @@
       amount: 2000 
     }); 
     e.preventDefault(); 
-  }; 
-
+  }); 
   // Close Checkout on page navigation: 
-  //$(window).on('popstate', function() { handler.close(); }); 
+  $(window).on('popstate', function() { handler.close(); }); 
 
 </script>

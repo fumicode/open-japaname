@@ -1,0 +1,28 @@
+$st : ".shopThumbs";
+
+
+#{$st}{
+}
+
+#{$st}__list{
+  @include outer-container();
+}
+
+#{$st}__item{
+
+  @include media($medium-screen-down){
+    @include span-columns(1 of 2);
+    @include omega(2n);
+  }
+
+  @include media($medium-screen-up){
+    @include span-columns(1 of 4);
+    @include omega(4n);
+  }
+}
+
+#{$st}__link{
+  width: 100%;
+  height:100%;
+
+}

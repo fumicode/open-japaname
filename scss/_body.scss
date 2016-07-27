@@ -40,7 +40,6 @@ body#bg-candidates{
 
 body#bg-selected{
   @extend %same-height;
-  background-image:url("/images/bg-selected.jpg");
-  background-color: $ateji-light-oudo-color;
+  background-color:#fff;
 
 }
