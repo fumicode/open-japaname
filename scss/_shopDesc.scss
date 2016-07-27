@@ -15,3 +15,12 @@ $sd:".shopDesc";
 #{$sd}__title{
   @extend .bottomLine;
 }
+
+#{$sd}__photo{
+
+  @include media($medium-screen-up){
+    float:right;
+    width:25%;
+
+  }
+}

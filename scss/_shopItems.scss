@@ -25,12 +25,12 @@ $si:".shopItems";
 #{$si}__item{
 
   @include media($medium-screen-down){
-    @include span-columns(1 of 2);
+    @include span-columns(6 of 12);
     @include omega(2n);
 
   }
   @include media($medium-screen-up){
-    @include span-columns(1 of 3);
+    @include span-columns(4 of 12);
     @include omega(3n);
   }
 }

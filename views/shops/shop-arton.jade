@@ -16,7 +16,8 @@ block sub-content
       div.shopDesc
         h1.shopDesc__title ARTON
         div.shopDesc__desc
-          div
+          img.shopDesc__photo(src="/images/arton-inside-wide.png" alt="inside arton")
+          div.
             You can get your original tee soon after you go to ARTON. <br>
             ARTON is very close from Shibuya Station Hachiko side. <br>
             We prepared original named Tee of your Japaname. Bring your Japaname Code and get your original Tee! The price is 2,800 yen!<br>
@@ -34,6 +35,7 @@ block sub-content
           div.teeComposite
             img.teeComposite__tee(src="/images/white-tee.jpg" alt="tee thumbnail")
             img.teeComposite__image(src="/artworks/#{artwork.artwork_name}/#{japaname && japaname.code || 37}/thumbnail" alt="japaname tee thumbnail")
+            
 
   div.goToArton
     h2.goToArton__title The way to ARTON.
@@ -41,6 +43,12 @@ block sub-content
       each index in [1,2,3,4,5,6]
         li.goToArton__item
           img.goToArton__photo(src="/images/way-to-arton-#{index}.jpg" alt="way to arton #{index}")
+
+      li.goToArton__item.insideShop
+        img.goToArton__photo(src="/images/arton-inside.jpg" alt="arton-inside")
+
+      li.goToArton__item.insideShop
+        img.goToArton__photo(src="/images/arton-making.jpg" alt="arton-inside")
 
   h2 Google Map
   div

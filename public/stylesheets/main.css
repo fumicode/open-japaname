@@ -792,6 +792,11 @@ input[type="search"].jnSearchBox__textbox {
         div.shopDesc__desc.
 
 */
+@media screen and (min-width: 600px) {
+  .shopDesc__photo {
+    float: right;
+    width: 25%; } }
+
 /*
   div.shopItems
     h2.shopItems__title Japaname Original Design
@@ -816,8 +821,8 @@ input[type="search"].jnSearchBox__textbox {
   .shopItems__item {
     float: left;
     display: block;
-    margin-right: 5.88235%;
-    width: 47.05882%; }
+    margin-right: 0.93458%;
+    width: 49.53271%; }
     .shopItems__item:last-child {
       margin-right: 0; }
     .shopItems__item:nth-child(2n) {
@@ -829,8 +834,8 @@ input[type="search"].jnSearchBox__textbox {
   .shopItems__item {
     float: left;
     display: block;
-    margin-right: 3.84615%;
-    width: 30.76923%; }
+    margin-right: 0.93458%;
+    width: 32.71028%; }
     .shopItems__item:last-child {
       margin-right: 0; }
     .shopItems__item:nth-child(3n) {
@@ -864,8 +869,8 @@ input[type="search"].jnSearchBox__textbox {
     .goToArton__item {
       float: left;
       display: block;
-      margin-right: 5.88235%;
-      width: 47.05882%; }
+      margin-right: 2.85714%;
+      width: 48.57143%; }
       .goToArton__item:last-child {
         margin-right: 0; }
       .goToArton__item:nth-child(2n) {
@@ -876,13 +881,37 @@ input[type="search"].jnSearchBox__textbox {
     .goToArton__item {
       float: left;
       display: block;
-      margin-right: 1.88679%;
-      width: 15.09434%; }
+      margin-right: 0.93458%;
+      width: 15.88785%; }
       .goToArton__item:last-child {
         margin-right: 0; }
       .goToArton__item:nth-child(6n) {
         margin-right: 0; }
       .goToArton__item:nth-child(6n+1) {
+        clear: left; } }
+  @media screen and (max-width: 600px) {
+    .goToArton__item.insideShop {
+      float: left;
+      display: block;
+      margin-right: 2.85714%;
+      width: 100%; }
+      .goToArton__item.insideShop:last-child {
+        margin-right: 0; }
+      .goToArton__item.insideShop:nth-child(1n) {
+        margin-right: 0; }
+      .goToArton__item.insideShop:nth-child(1n+1) {
+        clear: left; } }
+  @media screen and (min-width: 600px) {
+    .goToArton__item.insideShop {
+      float: left;
+      display: block;
+      margin-right: 0.93458%;
+      width: 49.53271%; }
+      .goToArton__item.insideShop:last-child {
+        margin-right: 0; }
+      .goToArton__item.insideShop:nth-child(2n) {
+        margin-right: 0; }
+      .goToArton__item.insideShop:nth-child(2n+1) {
         clear: left; } }
 
 html {
