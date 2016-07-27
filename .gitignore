@@ -38,5 +38,5 @@ jspm_packages
 
 
 #vim swp files
-.swp
-.swo
+*.swp
+*.swo
