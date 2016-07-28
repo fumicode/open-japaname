@@ -2,7 +2,7 @@ mixin ateji_search(original_name,  placeholder, button, focus)
   form.jnSearchBox(role="search" method="get" action="/names/candidates/")
     input.jnSearchBox__textbox(id="original_name" name="original_name" type="search" placeholder="#{placeholder || 'Enter Your Name'}" value ="#{original_name || ''}")
 
-    button.jnSearchBox__button(type="submit") #{button || "Japaname!"}
+    button.jnSearchBox__button(type="submit") #{button || "Go!"}
 
 
   if focus

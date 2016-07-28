@@ -17,8 +17,8 @@ block append head-end
 block sub-content
   div.text-center
     include /include/ateji_box
-    h2 The japaname of <wbr><strong style="text-transform:capitalize;color:red;">#{name.original}</strong><br>
-      | The japaname code : 
+    h2.h4 The japaname of <wbr><strong style="text-transform:capitalize;color:red;">#{name.original}</strong><br>
+    p The japaname code : 
       input.inline(type="text" value="#{japaname.code}") 
     
     mixin ateji_box(name.ateji.populated_atemojis)
@@ -53,10 +53,6 @@ block sub-content
 
 
             //img.shopThumbs__icon(src="/artworks/#{artwork.artwork_name}/#{japaname.code}/thumbnail" alt="#{artwork.artwork_name}")
-
-  if !(user && user.haveRight("arton"))
-    div.widgetHelper__accessMap
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.6611458134553!2d139.6982283818941!3d35.66071938770297!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188ca845f30001%3A0x86c4ae6e4b746366!2sARTON!5e0!3m2!1sja!2sjp!4v1468119874678" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
 
   if !user 
     div#login-ads

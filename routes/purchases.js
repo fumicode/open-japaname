@@ -56,6 +56,7 @@ purchases_router.post("/:artwork_name/:japaname_code",(req,res,next)=>{
   co(function*(){
     var artwork_name  = req.params.artwork_name;
     var japaname_code = req.params.japaname_code;
+    var go_print = req.body.go_print;
 
     if(!artworks.doesExist(artwork_name)){
       return next();
@@ -79,7 +80,10 @@ purchases_router.post("/:artwork_name/:japaname_code",(req,res,next)=>{
       console.log(message);
       req.flash("info", message);
       //購入済
-      return res.redirect("/artworks/"+artwork_name+"/"+japaname_code+"/");
+      if(go_print)
+        return res.redirect("/artworks/"+artwork_name+"/"+japaname_code+"/print");
+      else
+        return res.redirect("/artworks/"+artwork_name+"/"+japaname_code+"/");
     }
 
     YAEHATA_PRICE = 300;
@@ -97,7 +101,10 @@ purchases_router.post("/:artwork_name/:japaname_code",(req,res,next)=>{
     console.log(JSON.stringify(result));
 
     if(result){
-      return res.redirect("/artworks/"+artwork_name+"/"+japaname_code+"/");
+      if(go_print)
+        return res.redirect("/artworks/"+artwork_name+"/"+japaname_code+"/print");
+      else
+        return res.redirect("/artworks/"+artwork_name+"/"+japaname_code+"/");
     }
     else{
       return next();

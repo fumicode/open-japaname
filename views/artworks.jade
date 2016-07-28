@@ -23,11 +23,14 @@ block header
               a.latestJapanames__link(href="/artworks/#{artwork.artwork_name}/#{jn.code}")=jn.string + "(" + jn.code+")"
 
 
-
     if preview
       h1.h2 プレビュー #{artwork.artwork_name} #{japaname.code} #{japaname.string} 
       form(action="/purchases/#{artwork.artwork_name}/#{japaname.code}/" method="post")
         input(type="submit" value="購入")
+
+      form(action="/purchases/#{artwork.artwork_name}/#{japaname.code}/" method="post")
+        input(type="hidden" name="go_print" value="true")
+        input(type="submit" value="購入してすぐ印刷")
 
     hr
     if sizing 
@@ -47,7 +50,9 @@ block header
 
 block content
   div(style="text-align:center ;")
-    svg(id="artwork_svg" style="margin:0 auto; width:#{artwork_width}mm; height:#{artwork_height}mm;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink") 
+    a(href="/artworks/#{artwork.artwork_name}/#{japaname.code}/")
+      svg(id="artwork_svg" style="margin:0 auto; width:#{artwork_width}mm; height:#{artwork_height}mm;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink") 
+
 
 
 block append body-end-scripts
