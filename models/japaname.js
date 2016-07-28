@@ -165,6 +165,15 @@ JapanameSchema.statics.createNew = function(names){
 }
 
 
+JapanameSchema.statics.getLatestNames = function (num){
+  var Japaname = this;
+  
+  return Japaname.find()
+        .sort({"_id":-1})
+        .limit(5)
+        .populate("names.ateji")
+        .populate("names.ateji");
+};
 
 
 

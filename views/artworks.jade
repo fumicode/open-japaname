@@ -12,32 +12,37 @@ block header
     a(href="/#{japaname.code}") #{japaname.string} さんのページへ戻る
 
     form#other_japaname_form
-      p 他のJapaname
-        input#other_japaname.inline(type="text" name="other_japaname" style="display:inline;")
-        input#other_japaname_submit(type="submit" value="get other" style="display:inline;")
+      input#other_japaname.inline(type="text" name="other_japaname" style="display:inline;")
+      input#other_japaname_submit(type="submit" value="他のJapaname" style="display:inline;")
+
+    if latest_japanames
+      div.latestJapanames
+        ul.latestJapanames__list
+          each jn in latest_japanames
+            li.latestJapanames__item
+              a.latestJapanames__link(href="/artworks/#{artwork.artwork_name}/#{jn.code}")=jn.string + "(" + jn.code+")"
+
 
 
     if preview
-      h1.h2 プレビュー #{artwork.artwork_name} #{japaname.code} 
+      h1.h2 プレビュー #{artwork.artwork_name} #{japaname.code} #{japaname.string} 
       form(action="/purchases/#{artwork.artwork_name}/#{japaname.code}/" method="post")
-        input(type="submit" value="購入してサイズ調整して印刷する")
+        input(type="submit" value="購入")
 
+    hr
     if sizing 
+      h1.h4 #{artwork.artwork_name} #{japaname.code} #{japaname.string} 
       p(style="color:red") 購入済みです。
-      h1.h2サイズを調整する。#{artwork.artwork_name} #{japaname.code} 
-      table
-        tr
-          td
-            form(action="" method="GET" style="display:inline;")
-              p
-                |印刷する幅  
-                input(type="text" name="artwork_width" value="#{artwork_width}" style="display:inline;")
-                |mm
-                input(type="submit" value="幅を変更" style="display:inline;")
-          td
-            form(action="/artworks/#{artwork.artwork_name}/#{japaname.code}/print" method="GET")
-              input(type="hidden" name="artwork_width" value="#{artwork_width}")
-              input(type="submit" value="印刷する")
+      form(action="" method="GET" style="display:inline;")
+        p
+          |印刷する幅  
+          input(type="text" name="artwork_width" value="#{artwork_width}" style="display:inline;")
+          |mm
+          input(type="submit" value="幅を変更" style="display:inline;")
+
+      form(action="/artworks/#{artwork.artwork_name}/#{japaname.code}/print" method="GET")
+        input(type="hidden" name="artwork_width" value="#{artwork_width}")
+        input(type="submit" value="印刷する")
 
 
 block content
@@ -51,12 +56,17 @@ block append body-end-scripts
   - var share_url = "http://japaname.jp/" + japaname.code;
 
   script(type="text/javascript").
+
+    function goOther(japaname_code){
+      var url = "/artworks/#{artwork.artwork_name}/"+japaname_code;
+      window.location = url;
+    }
+
     $(function(){
       $("#other_japaname_form").submit(function(e){
         e.preventDefault();
         var japaname_code = $("#other_japaname").val();
-        var url = "/artworks/#{artwork.artwork_name}/"+japaname_code+"";
-        window.location = url;
+        goOther(japaname_code);
       });
     });
 

@@ -605,6 +605,13 @@ table.n {
       margin: 0;
       padding: 0; }
 
+.latestJapanames__item {
+  display: inline-block;
+  padding: 0.3em;
+  margin: 0.1em;
+  border-radius: 3px;
+  border: 2px solid #d4371c; }
+
 .document {
   max-width: 1200px;
   margin-left: auto;

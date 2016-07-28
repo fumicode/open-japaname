@@ -16,9 +16,9 @@ artworks_router.get("/:artwork_name/:japaname_code",(req,res,next)=>{
   co(function*(){
     var artwork_name = req.params.artwork_name;
     var japaname_code = req.params.japaname_code;
-
     var artwork_width =  req.query.artwork_width || 310;
 
+    var latest_japanames = yield Japaname.getLatestNames().exec();
 
     try{
       var obj = yield obtainPurchaseObjects(artwork_name,japaname_code,req.user._id);
@@ -29,7 +29,9 @@ artworks_router.get("/:artwork_name/:japaname_code",(req,res,next)=>{
           japaname:obj.japaname, 
           artwork:obj.artwork,
           artwork_width,
-          sizing:true});
+          sizing:true,
+          latest_japanames
+        });
       }
       else{
         return res.redirect(path.join("/artworks/"+ artwork_name +"/"+ japaname_code + "/preview"));
@@ -51,6 +53,7 @@ artworks_router.get("/:artwork_name/:japaname_code/print",(req,res,next)=>{
     var japaname_code = req.params.japaname_code;
     var artwork_width =  req.query.artwork_width || 310;
 
+    var latest_japanames = yield Japaname.getLatestNames().exec();
     try{
       var obj = yield obtainPurchaseObjects(artwork_name,japaname_code,req.user._id);
 
@@ -59,7 +62,9 @@ artworks_router.get("/:artwork_name/:japaname_code/print",(req,res,next)=>{
           japaname: obj.japaname,
           artwork:obj.artwork,
           artwork_width,
-          print:true});
+          print:true,
+          latest_japanames
+        });
       }
       else{
         return res.redirect(path.join("/artworks/"+ artwork_name +"/"+ japaname_code + "/preview"));
@@ -74,10 +79,8 @@ artworks_router.get("/:artwork_name/:japaname_code/print",(req,res,next)=>{
 });
 
 
-
 function obtainPurchaseObjects(artwork_name, japaname_code, user_id){
   return co(function*(){
-
     if(!artworks.doesExist(artwork_name)){
       throw new Error("artwork not found");//not round
     }
@@ -117,13 +120,13 @@ function obtainPurchaseObjects(artwork_name, japaname_code, user_id){
   });
 }
 
-
 artworks_router.get("/:artwork_name/:japaname_code/preview",(req,res,next)=>{
   co(function*(){
     var artwork_name = req.params.artwork_name;
     var japaname_code = req.params.japaname_code;
 
 
+    var latest_japanames = yield Japaname.getLatestNames().exec();
     try{
       var obj = yield obtainPurchaseObjects(artwork_name,japaname_code,req.user._id);
 
@@ -131,7 +134,12 @@ artworks_router.get("/:artwork_name/:japaname_code/preview",(req,res,next)=>{
         return res.redirect(path.join("/artworks/"+ artwork_name +"/"+ japaname_code));
       }
       else{
-        return res.render("artworks" , {japaname:obj.japaname, preview:true, artwork:obj.artwork});
+        return res.render("artworks" , {
+          japaname:obj.japaname,
+          artwork:obj.artwork,
+          preview:true,
+          latest_japanames
+        });
       }
     }
     catch(err){
