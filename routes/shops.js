@@ -19,6 +19,10 @@ shops_router.get("/:shopname/",(req,res,next)=>{
     if(japaname_code && Japaname.isJapanameCode(japaname_code)){
       var japaname = yield Japaname.findByCode(japaname_code).exec();
     }
+    else{
+      var japaname = yield Japaname.findByCode(34).exec();
+    }
+
 
     var artworks = Artwork.getList();
 

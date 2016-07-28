@@ -1,9 +1,33 @@
 var express = require('express');
+
+var _ = require("underscore");
+var co = require("co");
 var router = express.Router();
+
+var mongoose = require("mongoose");
+var Japaname = mongoose.model("Japaname");
+var Artwork = require("../models/artworks.js");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index');
+
+  co(function*(){
+    var japaname = yield Japaname.findByCode(34).exec();
+
+    var artworks = Artwork.getList();
+    var arton_artwork = _(artworks).filter(
+      (a)=>a.artwork_name != "risumaru_ofuda");
+
+    res.render('index',{
+      artworks:arton_artwork,
+      japaname
+    });
+
+  }).catch((err)=>{
+    return next(err);
+  });
+
+
 });
 
 
