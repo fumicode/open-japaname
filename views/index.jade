@@ -33,6 +33,13 @@ block content
           |, 
           strong カタカナ
 
+  
+  div 
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/YvLrDmVK9Og" frameborder="0" allowfullscreen></iframe>
+
+
+
+  
   div.shopHeader
     div.shopHeader__icon
       div.shopIcon
@@ -51,31 +58,7 @@ block content
           br
           a(href="http://arton.jp") Go to ARTON Website
 
-  div.shopItems
-    h2.shopItems__title Japaname Original Design
-    p.shopItems__desc
-    ul.shopItems__list
-      each artwork in artworks
-        li.shopItems__item
-          div.teeComposite
-            img.teeComposite__tee(src="/images/white-tee.jpg" alt="tee thumbnail")
-            img.teeComposite__image(src="/artworks/#{artwork.artwork_name}/#{japaname && japaname.code || 37}/thumbnail" alt="japaname tee thumbnail")
-
-
-  div.goToArton
-    h2.goToArton__title The way to ARTON.
-    ul.goToArton__list
-      each index in [1,2,3,4,5,6]
-        li.goToArton__item
-          img.goToArton__photo(src="/images/way-to-arton-#{index}.jpg" alt="way to arton #{index}")
-
-      li.goToArton__item.insideShop
-        img.goToArton__photo(src="/images/arton-inside.jpg" alt="arton-inside")
-
-      li.goToArton__item.insideShop
-        img.goToArton__photo(src="/images/arton-making.jpg" alt="arton-inside")
-
-  h2 Google Map
+  h2 Location of ARTON
   div
     a.button(href="https://goo.gl/maps/YaFKbuASFsN2") Navigate to ARTON by GoogleMap.
   div.widgetHelper__accessMap
