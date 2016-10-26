@@ -96,6 +96,23 @@ names_router.get('/candidates/', function(req, res, next){//?original_name=james
   res.redirect(req.baseUrl + "/candidates/" + encodeURIComponent(original_name));
 });
 
+//↑のコピペ中尉!!!!
+names_router.get('/api/', function(req, res, next){//?original_name=james を想定
+  var original_name = req.query.original_name;
+  //名前が空だったらtopにリダイレクト
+  
+  if(!original_name){
+
+    return res.render("api",{
+      original_name,
+      name_objs
+    });
+  }
+
+  res.redirect(req.baseUrl + "/api/" + encodeURIComponent(original_name));
+});
+
+
 function isNumber(num_str){
   return !! num_str.match(/^\d+$/);
 }
@@ -160,6 +177,71 @@ names_router.get('/candidates/:original_name', function(req, res, next) {
   });
 
 });
+
+
+//candidates とほとんど同じ
+names_router.get('/api/:original_name', function(req, res, next) {
+
+  co(function*(){
+
+    var original_name = req.params.original_name;
+    //名前が空だったらtopにリダイレクト
+    if(!original_name){
+      res.redirect("/");
+      return;
+    }
+
+
+    var original_names = original_name.split(/[ ,　,\,,\|,\\,\/]+/);
+
+    var nullify = err => Promise.resolve(null); 
+
+    var translated_names = yield _(original_names).map(function(original_name){
+      return atejilib.toJapaneseSound(original_name).catch(nullify);
+    });
+
+    var succeeded_names = _(translated_names).filter(a=>a); //falseになるもの(null)は排除される
+
+    if(succeeded_names.length < 1){
+      return res.render("japaname_not_found", {original_name});
+    }
+
+    console.log(succeeded_names);
+
+    var name_objs = _(succeeded_names).map(function(name_obj,index){
+      name_obj.hiragana_nosmall = atejilib.hiraganaToNosmall(name_obj.hiragana);
+
+      //ローマ字
+      name_obj.romajis_array = _(name_obj.hiragana_nosmall).map(atejilib.hiraganasToRomajis);
+      
+
+      var obj = atejilib.atejiSyllables(name_obj.hiragana);
+      // obj =   length syllables hiragana_str_nosmall
+    
+      var syllables = name_obj.syllables = obj.syllables;
+
+      atejilib.addMeaningToSyllables(syllables);
+
+      //テーブルをつくる
+      name_obj.syllables_table = atejilib.arrangeSyllablesTable(syllables, obj.length);
+
+      return name_obj;
+    });
+
+    res.render("api",{
+      original_name,
+      name_objs
+    });
+
+  })
+  .catch(function(err){
+    next(err);
+  });
+
+});
+
+
+
 
 //returns {chars: [{kana,kanji}] ,atejiname}
 names_router.parseAtejiUrl = function (atejiquery){ 
