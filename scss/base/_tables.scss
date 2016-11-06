@@ -15,7 +15,6 @@ table {
   font-feature-settings: "kern", "liga", "tnum";
   margin: $small-spacing 0;
   table-layout: fixed;
-  width: 100%;
 
   th {
     border-bottom: 1px solid shade($base-border-color, 25%);
