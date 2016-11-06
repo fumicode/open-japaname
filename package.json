@@ -36,8 +36,10 @@
     "gulp-jshint": "^2.0.1",
     "gulp-notify": "^2.2.0",
     "gulp-plumber": "^1.1.0",
+    "gulp-riot": "^0.5.7",
     "gulp-sass": "^2.3.2",
     "node-bourbon": "^4.2.8",
-    "node-neat": "^1.7.2"
+    "node-neat": "^1.7.2",
+    "pug": "^0.1.0"
   }
 }

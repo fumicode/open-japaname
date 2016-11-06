@@ -1,0 +1,56 @@
+candidate-table
+  style(scoped).
+
+    .syllablesTable{
+    }
+    .syllablesTable__row{
+    }
+
+    .syllablesTable__cell{
+      overflow-x:scroll;
+
+    }
+
+
+    .kanjisList{ 
+      width:9999px;
+      overflow:hidden;
+    }
+
+    .kanjisList__item{
+      float:left;
+      font-size:80px;
+      text-align:center;
+      margin:0 0.3em;
+    }
+
+    .kanjisList__meanings{
+      font-size:20px;
+
+    }
+
+  table.syllablesTable
+    tr.syllablesTable__row(each="{cell in selected_cells}")
+      td.syllablesTable__cell {cell.syllable.romaji} - {cell.syllable.kana}
+        ul.kanjisList
+          li.kanjisList__item(each="{ateji in cell.syllable.atejis}") {ateji.kanji}
+            div.kanjisList__meanings {ateji.meanings.join("\n")}
+
+      
+
+
+  script.
+    this.syllables = opts.syllables;
+    this.syllables_table = opts.syllables_table;
+
+    console.log( this.syllables);
+    console.log( this.syllables_table);
+
+
+    var this_tag = this;
+    this.on("update", function(){
+      this_tag.selected_cells = this_tag.syllables_table[0];
+      console.log(this_tag.selected_cells);
+
+    });
+

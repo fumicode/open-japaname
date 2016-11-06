@@ -1,0 +1,41 @@
+mixin ateji_cands(name)
+  div#ateji-cands.ateji-cands
+
+    table.ateji-cands-table.n
+      //
+        tr 
+          each hiragana_char,hiragana_index in name.hiragana
+            td 
+              div.hiragana-char(id="hiragana_#{hiragana_index}") #{name.romajis_array[hiragana_index]}
+
+      each row,row_index in name.syllables_table 
+        tr
+          each cell in row
+            if cell.syllable
+              td.kana-cell( colspan="#{cell.cols}") 
+                -var start_index = cell.syllable.index;
+                -var finish_index = cell.syllable.next_index;
+                -var kana  = cell.syllable.kana;
+                -var romaji = cell.syllable.romaji;
+                -for(var syl_i = start_index; syl_i < finish_index; syl_i ++)
+                  -var index_in_syl = syl_i - start_index; 
+                  input.kana-radiobox(type="radio" id="syllable_r#{row_index}_s#{syl_i}" name="hiragana_#{syl_i}" checked=row_index===0)
+
+                div.kana-box
+                  // | #{romaji}
+
+                  div.ateji-cands-for-kana
+                    each ateji,i in cell.syllable.atejis
+                      div.ateji-cand  
+                        input.ateji-cand-radio(type="radio" 
+                          id="atejicand_r#{row_index}_s#{start_index}_a#{i}"
+                          name="kana_s#{start_index}_k#{cell.syllable.kana}" 
+                          value="#{ateji.kanji}"
+                          data-meanings="#{ateji.meanings.join(',')}"
+                          data-romaji="#{romaji}"
+                          checked=i==0)
+                        label(for="atejicand_r#{row_index}_s#{start_index}_a#{i}")
+                          div.kanji-char
+                            | #{ateji.kanji}
+            else
+              td

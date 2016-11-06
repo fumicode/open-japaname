@@ -176,7 +176,7 @@ var artworks_router     = require('./routes/artworks');
 var shops_router = require('./routes/shops');
 var purchases_router = require('./routes/purchases');
 var admin_router     = require('./routes/admin');
-
+var api_router = require("./routes/api");
 
 
 app.all('*', function(req, res, next){
@@ -231,8 +231,7 @@ app.use('/artworks', artworks_router ); // loginCheck ,
 app.use('/shops', shops_router ); // loginCheck ,
 app.use('/purchases', loginCheck, purchases_router); // loginCheck,
 app.use('/admin', authorize(["admin"]),  admin_router);
-
-
+app.use('/api', api_router);
 
 
 // catch 404 and forward to error handler
