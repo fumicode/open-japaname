@@ -1,37 +1,45 @@
-extends /template/basic_layout
+extends simple_struct
 
-block append variables
-  - title = "api";
-  - description = "description";
-  - body_id = "bg-white";
+block head_content
+  link(rel='stylesheet', href='/stylesheets/crafti.css') 
+  link(rel='stylesheet', href='/javascripts/ps/css/perfect-scrollbar.min.css') 
 
-block content
-  h1 Japaname outer ver. 0.01
-
-  form.jnSearchBox(role="search" method="get" action="/names/api/")
-    input.jnSearchBox__textbox(id="original_name" name="original_name" type="search" placeholder="#{placeholder || 'Enter Your Name'}" value ="#{original_name || ''}")
-
-    button.jnSearchBox__button(type="submit") #{button || "Go!"}
-
-  candidate-table
+block body_content
+  form(id="selected-form" method="POST" action="/names")
+    input(type="hidden" name="original_name" value="#{original_name}")
+    input#selected_ateji(type="hidden" name="ateji"  value="")
 
 
-block append body-end-scripts
 
 
-  script(src="/javascripts/riot.min.js")
-  script(src="/riotjs/candidate-table.js")
+  div#kanji-selected-wrapper
+    table(riot-tag="ateji-box")
+
+
+
+  div#ateji-cands-container
+    include crafti_candidates_table.jade
+
+    each name_obj in name_objs
+      +ateji_cands(name_obj)
+
+  div#ok-button-container
+    a#ok-button
+      img(src="/crafti/crafti_button_ok.png" alt="ok")
+
+    
+  script(src="/javascripts/jquery.min.js" type="text/javascript")
+  script(src="/javascripts/ps/js/perfect-scrollbar.jquery.min.js" type="text/javascript")
+
+  script(src="/javascripts/riot.min.js" type="text/javascript")
+  script(src="/riotjs/ateji-box.js" type="text/javascript")
+
   script.
-    riot.mount("candidate-table", {
-      syllables: !{JSON.stringify(name_objs[0].syllables)}, 
-      syllables_table: !{JSON.stringify(name_objs[0].syllables_table)}, 
-    });
+    var atejiBoxTag = riot.mount("ateji-box")[0];
+    console.log(atejiBoxTag);
 
 
-  
 
-  // なぜかいきなりトップにもどるスクロール我発生する謎のバグ
-  // Bitters いれたらなったきがする。ガチで意味分からん。むかつく。
-  //
 
+  script(src="/javascripts/craftiscript.js")
 

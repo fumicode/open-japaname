@@ -1,0 +1,219 @@
+//////////// basic framework////////////
+@import "normalize";
+@import "bourbon";
+@import "base/grid-settings";
+@import "neat";
+@import "base/base"; //bitters これは変えちゃっていいもの。
+
+
+
+$crafti-purple:#940D84;
+$crafti-purple-light:#DECDDC;
+$kanji-font-size:50px;
+$kanji-font-family:serif;
+
+div#kanji-selected-wrapper{
+  margin-bottom:30px;
+
+  overflow-x:auto;
+
+}
+
+.atejiBox{
+  width:auto;
+  margin: 0 auto;
+  text-align:center;
+}
+
+.atejiBox__col{
+  border-left:2px solid $crafti-purple;
+}
+
+.atejiBox__col:last-of-type{
+  border-right:2px solid $crafti-purple;
+}
+
+.atejiBox__cell{
+  border-bottom:0;
+  padding:5px;
+
+  &.atejiBox__cell--kanji{
+    font-size: $kanji-font-size;
+    font-family:$kanji-font-family;
+  }
+
+  &.atejiBox__cell--meanings{
+    color:$crafti-purple;
+  }
+}
+
+
+.kana-string{
+  text-align:center;
+  font-size:$kanji-font-size;
+}
+
+
+#ateji-cands-container{
+
+}
+
+
+#ateji-cands{
+
+  overflow-x:auto;
+
+  position:relative;
+
+  background:url(/crafti/crafti_bg.png);
+
+  border:solid $crafti-purple-light;
+  border-width:0 1px 1px 0;
+
+  table.table.ateji-cands-table>tbody>tr>td,
+  table.table.ateji-cands-table>tbody>tr>th{
+    border-width:0px ;
+    text-align:center;
+    vertical-align:top;
+  }
+
+  .hiragana-char{
+    text-align:center;
+  }
+
+  .hiragana-char.notselected{
+    background : red;
+  }
+
+  /*box inside td*/
+  table{
+    width:auto;
+    margin:0 auto;
+    
+    td{
+      .kana-box{
+        text-align:center;
+        background:rgba(0,0,0,0.3);
+        padding:0.5rem;
+
+        border-left:1px #000;
+
+
+        .ateji-cands-for-kana{
+          //overflow-y:scroll;
+          position:relative;
+          height:20rem;
+          width:100%;
+
+          .ateji-cand {
+            position:relative;
+
+
+            .ateji-cand-radio{
+              display:none;
+            }
+
+
+            &:hover{ 
+              .kanji-char{
+                background:#dde;
+              }
+              .kanji-detail{
+                color:black;
+              }
+            }
+
+
+
+            label{
+              display:block;
+              
+              width:100%;
+
+              .kanji-char{
+                position:relative;
+
+                box-sizing:content-box;
+                display:block;
+                padding:0.3rem;
+                width:1.2em;
+                height:1.2em;
+                margin:0 auto;
+
+                vertical-align:middle;
+                line-height:1.2;
+
+                font-size:$kanji-font-size;
+                font-family:$kanji-font-family;
+
+              }
+
+              .kanji-detail{
+                //position:absolute;
+                //  bottom:0px;
+                //  left:0;
+                display:block;
+
+                width:100%;
+
+                text-align:center;
+                padding:0;
+                color:#888;
+
+                ul.meanings{
+                  display:none;
+
+                  margin:0;
+                  padding:0;
+
+                  li{
+                    text-align:center;
+                  }
+
+                  list-style:none;
+
+                  text-align:left;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  input.kana-radiobox{
+    display:none;
+    &:checked {
+      &+ .kana-box{
+        background:transparent;
+
+        //選ばれた奴しか意味は表示しない
+        .ateji-cands-for-kana .ateji-cand 
+        label .kanji-detail ul.meanings{
+          display:inline;
+        }
+      }
+      &+ .kana-box .ateji-cand input:checked + label{
+        .kanji-char{
+          background:$crafti-purple;
+          color:white;
+        }
+
+        .kanji-detail{
+          color:black;
+        }
+
+      }
+    }
+  }
+}
+
+
+#ok-button-container {
+  margin-top:30px;
+  text-align:center;
+}
+
+
+
