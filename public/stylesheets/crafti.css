@@ -500,8 +500,7 @@ table {
   border-collapse: collapse;
   font-feature-settings: "kern", "liga", "tnum";
   margin: 0.75em 0;
-  table-layout: fixed;
-  width: 100%; }
+  table-layout: fixed; }
   table th {
     border-bottom: 1px solid #a6a6a6;
     font-weight: 600;
@@ -610,7 +609,7 @@ div#kanji-selected-wrapper {
   overflow-x: auto; }
 
 .atejiBox {
-  width: auto;
+  table-layout: fixed;
   margin: 0 auto;
   text-align: center; }
 
