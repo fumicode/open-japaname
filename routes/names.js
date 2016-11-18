@@ -239,20 +239,7 @@ names_router.get('/api/:original_name', function(req, res, next) {
   });
 });
 
-names_router.get('/api_test/:original_name', function(req, res, next) {
-  var original_name = req.params.original_name;
-  //名前が空だったらtopにリダイレクト
-  if(!original_name){
-    return next(new Error("input name"));
-  }
 
-  var original_names = original_name.split(/[ ,　,\,,\|,\\,\/]+/);
-  var original_name = original_names[0];
-
-  res.render("api/test",{
-    original_name
-  });
-});
 
 
 

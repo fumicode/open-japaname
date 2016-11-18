@@ -1,4 +1,6 @@
+
 //end of body, after loading library
+
 
 var SELECTED_JAPANAME = "";
 
