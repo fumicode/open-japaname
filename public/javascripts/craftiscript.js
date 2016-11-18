@@ -1,4 +1,6 @@
+
 //end of body, after loading library
+
 
 var SELECTED_JAPANAME = "";
 
@@ -58,10 +60,24 @@ $(function(){
     updateFilled();
 
   });
+  
 
   $("#ok-button").click(function(){
+
     console.log(SELECTED_JAPANAME );
   });
+
+
+  //heightを親ウィンドウに渡す
+  //
+  //
+  window.parent.postMessage( {
+    type:"window_height",
+    height:document.body.scrollHeight
+  },"*");
+
+
+
 
 });
 
@@ -99,17 +115,23 @@ function updateSelectedName(){
     url += (i === 0 ? "" : "_" ) + namearray[i].kana + "-"+ namearray[i].kanji;
   }
 
-  console.log("name is " + str);
-  console.log(namearray);
-
 
   $("#kanji-selected span").text(str);
   $("#selected_ateji").val(JSON.stringify(namearray));
 
   SELECTED_JAPANAME = namearray;
 
+
+  window.parent.postMessage({
+    type:"name_change",
+    kanji_string:str,
+    kanji_array:SELECTED_JAPANAME
+      
+  },"*");
+
   atejiBoxTag.update({atejis:namearray});
 }
+
 
 function updateFilled(){
   var namesound = "";
@@ -128,7 +150,6 @@ function updateFilled(){
   });
 
   $("#japanese-sound").text(namesound);
-  
 
 }
 

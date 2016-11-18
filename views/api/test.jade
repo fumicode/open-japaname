@@ -1,0 +1,19 @@
+extends simple_struct
+
+block head_content
+  link(rel='stylesheet', href='/stylesheets/api_test.css') 
+
+block body_content
+
+  form(id="selected-form" method="POST" action="/names")
+    input(type="text" name="original_name" value="#{original_name}")
+    input#selected_ateji(type="hidden" name="ateji"  value="")
+
+
+  p out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. 
+
+  iframe#japanameIframe(src="/names/api/#{original_name}")
+
+  p out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. out of iframe. 
+
+
