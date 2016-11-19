@@ -27,7 +27,7 @@
       japanameFrameId = id;
     },
     changeName:function(name){
-      var url = "http://japaname.jp/names/api/" + encodeURIComponent(name);
+      var url = "http://japaname.jp/api/crafti/names/" + encodeURIComponent(name);
       japanameIframe.src = url;
     }
 
