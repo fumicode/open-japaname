@@ -5,10 +5,9 @@ var api_router = module.exports = express.Router();
 //mongoose
 //
 var _ = require("underscore");
-var co = require("co");
-var path = require("path");
 
-var atejilib = require('../core/atejilib.js');
+var co = require("co");
+
 
 
 api_router.get("/",(req,res,next)=>{
@@ -20,13 +19,12 @@ api_router.get("/",(req,res,next)=>{
   res.render("contents/test", {data:obj});
 });
 
-
 api_router.get("/crafti/japaname_frame.js", function(req, res, next) {
-  return res.sendFile(path.join(__dirname, "../public/crafti/", "japaname_frame.js"));
+
 });
 
 api_router.get("/crafti/japaname_frame.css", function(req, res, next) {
-  return res.sendFile(path.join(__dirname, "../public/crafti/", "japaname_frame.css"));
+
 });
 
 
