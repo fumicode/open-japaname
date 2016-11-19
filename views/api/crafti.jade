@@ -1,0 +1,30 @@
+extends simple_struct
+
+block head_content
+  link(rel='stylesheet', href='/stylesheets/crafti.css') 
+  link(rel='stylesheet', href='/javascripts/ps/css/perfect-scrollbar.min.css') 
+  meta(name="viewport" content="width=device-width, initial-scale=1")
+  
+block body_content
+  div#kanji-selected-wrapper
+    table(riot-tag="ateji-box")
+
+  div#ateji-cands-container
+    include crafti_candidates_table.jade
+
+    each name_obj in name_objs
+      +ateji_cands(name_obj)
+
+  script(src="/javascripts/jquery.min.js" type="text/javascript")
+  script(src="/javascripts/ps/js/perfect-scrollbar.jquery.min.js" type="text/javascript")
+
+  script(src="/javascripts/riot.min.js" type="text/javascript")
+  script(src="/riotjs/ateji-box.js" type="text/javascript")
+
+  script.
+    var atejiBoxTag = riot.mount("ateji-box")[0];
+
+
+  script(src="/javascripts/craftiscript.js")
+
+

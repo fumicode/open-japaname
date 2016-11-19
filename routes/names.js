@@ -103,7 +103,7 @@ names_router.get('/api/', function(req, res, next){//?original_name=james を想
   
   if(!original_name){
 
-    return res.render("api",{
+    return res.render("api/crafti",{
       original_name,
       name_objs
     });
@@ -228,7 +228,7 @@ names_router.get('/api/:original_name', function(req, res, next) {
       return name_obj;
     });
 
-    res.render("api",{
+    res.render("api/crafti",{
       original_name,
       name_objs
     });

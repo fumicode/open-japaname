@@ -1,0 +1,17 @@
+extends simple_struct
+
+block head_content
+  link(rel='stylesheet', href='/stylesheets/crafti.css') 
+  link(rel='stylesheet', href='/javascripts/ps/css/perfect-scrollbar.min.css') 
+  meta(name="viewport" content="width=device-width, initial-scale=1")
+  
+block body_content
+  div Sorry your name "#{original_name}" is not found.
+  div
+    p Japaname.jp has to prepare pronounciation of your name to give you a kanji japaname.
+    p Please <a href="https://m.me/fumicode"> send a messeage on facebook!</a>
+
+  script.
+    window.parent.postMessage({
+      type:"name_not_found"
+    },"*");

@@ -1,12 +1,22 @@
 (function(wind){ 
   var japanameFrame = null;
   var japanameFrameId = null;
+  var nameChangeHandler = function(){};
+  var nameNotFoundHandler= function(){};
 
   var JapanameObject = wind.JapanameObject = {
     //名前が変更になったときの関数を登録する
     onNameChange : function(fn){
       if(typeof fn === "function"){
-        JapanameObject._nameChangeHandler = fn;
+        nameChangeHandler = fn;
+      }
+      else{
+        throw new Error("the argument of onNameChange must be function.");
+      }
+    },
+    onNameNotFound:function(fn){
+      if(typeof fn === "function"){
+        nameNotFoundHandler = fn;
       }
       else{
         throw new Error("the argument of onNameChange must be function.");
@@ -26,9 +36,14 @@
   wind.addEventListener("message",function(message){
     switch(message.data.type){
     case "name_change":
-      if(JapanameObject._nameChangeHandler){
-        JapanameObject._nameChangeHandler(message.data);
+      if(nameChangeHandler){
+        nameChangeHandler(message.data);
       }
+      break;
+
+    case "name_not_found":
+
+
       break;
 
     case "window_height":

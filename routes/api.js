@@ -32,16 +32,14 @@ api_router.get("/crafti/japaname_frame.css", function(req, res, next) {
 
 api_router.get("/crafti/names/",(req,res,next)=>{
   var original_name = req.query.original_name;
-  //名前が空だったらtopにリダイレクト
   
   if(!original_name){
-
-    return res.render("api",{
-      original_name,
-      name_objs
+    return res.render("api/crafti_not_found",{
+      original_name
     });
   }
 
+  //リダイレクト
   res.redirect(req.baseUrl + "/api/" + encodeURIComponent(original_name));
 });
 
@@ -50,23 +48,25 @@ api_router.get("/crafti/names/:original_name", function(req, res, next) {
     var original_name = req.params.original_name;
     //名前が空だったらtopにリダイレクト
     if(!original_name){
-      res.redirect("/");
-      return;
+
+      return res.render("api/crafti_not_found",{
+        original_name
+      });
     }
 
-
     var original_names = original_name.split(/[ ,　,\,,\|,\\,\/]+/);
-
     var nullify = err => Promise.resolve(null); 
-
     var translated_names = yield _(original_names).map(function(original_name){
       return atejilib.toJapaneseSound(original_name).catch(nullify);
     });
 
     var succeeded_names = _(translated_names).filter(a=>a); //falseになるもの(null)は排除される
 
+
     if(succeeded_names.length < 1){
-      return res.render("japaname_not_found", {original_name});
+      return res.render("api/crafti_not_found",{
+        original_name
+      });
     }
 
     console.log(succeeded_names);
@@ -91,7 +91,7 @@ api_router.get("/crafti/names/:original_name", function(req, res, next) {
       return name_obj;
     });
 
-    res.render("api",{
+    res.render("api/crafti",{
       original_name,
       name_objs
     });
