@@ -1,4 +1,3 @@
-
 //end of body, after loading library
 
 
@@ -62,12 +61,6 @@ $(function(){
   });
   
 
-  $("#ok-button").click(function(){
-
-    console.log(SELECTED_JAPANAME );
-  });
-
-
   //heightを親ウィンドウに渡す
   //
   //
@@ -75,9 +68,6 @@ $(function(){
     type:"window_height",
     height:document.body.scrollHeight
   },"*");
-
-
-
 
 });
 
