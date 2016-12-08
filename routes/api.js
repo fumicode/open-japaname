@@ -48,7 +48,6 @@ api_router.get("/crafti/names/:original_name", function(req, res, next) {
     var original_name = req.params.original_name;
     //名前が空だったらtopにリダイレクト
     if(!original_name){
-
       return res.render("api/crafti_not_found",{
         original_name
       });
@@ -77,12 +76,12 @@ api_router.get("/crafti/names/:original_name", function(req, res, next) {
       //ローマ字
       name_obj.romajis_array = _(name_obj.hiragana_nosmall).map(atejilib.hiraganasToRomajis);
       
-
       var obj = atejilib.atejiSyllables(name_obj.hiragana);
       // obj =   length syllables hiragana_str_nosmall
     
       var syllables = name_obj.syllables = obj.syllables;
 
+      //美しくないな
       atejilib.addMeaningToSyllables(syllables);
 
       //テーブルをつくる
@@ -101,6 +100,73 @@ api_router.get("/crafti/names/:original_name", function(req, res, next) {
     next(err);
   });
 });
+
+
+api_router.get("/crafti/kanjis",(req,res,next)=>{
+  var kanjis = atejilib.getKanjis();
+  return res.jsonp(kanjis);
+});
+
+api_router.get("/crafti/kanjis/random",(req,res,next)=>{
+  var kanjis = atejilib.getKanjis();
+  //オブジェクトの中身まではいじっちゃだめだよ！キャッシュを傷つけちゃう。
+  //まだディープコピーしてないから。
+
+  var N = (1 * req.query.n) || 50;
+
+  if(N > kanjis.length){
+    return res.jsonp(kanjis);
+  }
+  
+  var indexes = getRandomIndexes(kanjis.length, N);
+  console.log(indexes);
+
+  var selected_kanjis = _(indexes).reduce((memo, index)=>{
+    memo.push(kanjis[index])
+    
+    return memo;
+  },[]);
+
+
+  return res.jsonp(selected_kanjis);
+});
+
+
+//return [Number]
+function getRandomIndexes(n,m){
+  if(!(n >= m)){
+    throw new Error("n should be bigger than m");
+  }
+  var numbers = []; 
+
+  for(var i = 0; i < n; i++)
+  {
+    numbers[i] = i;
+  }
+
+  //i : 選んだ数
+  for(var i = 0; i < m; i++){
+    var length = n - i;
+    var index = Math.floor(Math.random() * length + i);
+
+    switchInArray(numbers, index, i);
+
+  }
+
+  //numbersの前半m個
+  return numbers.slice(0,m);
+}
+
+
+function switchInArray(array, i, j){
+  var tmp = array[i];
+  array[i] = array[j];
+  array[j] = tmp;
+}
+
+
+
+
 
 
 

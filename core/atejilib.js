@@ -17,8 +17,10 @@ var co = require('co');
 var romajisToHiraganas = require("./romajisToHiraganas");
 
 
+var kanjis = {};
 var atejimap = {};
 var kanjis_meanings = {};
+
 
 
 //ateji lib 
@@ -46,7 +48,7 @@ atejilib.loadKanjiDB = function(){
     var db = require('../models/database.js');
     var Kanji = mongoose.model("Kanji");
 
-    var kanjis = yield  Kanji.find().exec();
+    var kanjis_ = yield  Kanji.find().exec();
 
     var atejimap_ = {};
     var kanjis_meanings_ = {};
@@ -66,10 +68,13 @@ atejilib.loadKanjiDB = function(){
 
     console.log("atejimap switched!");
 
+    kanjis = kanjis_; //atejilib内グローバルに代入
     atejimap = atejimap_; //atejilib内グローバルに代入
     kanjis_meanings = kanjis_meanings_; //atejilib内グローバルに代入
 
+    console.log(atejimap);
     return {
+      kanjis,
       atejimap,
       kanjis_meanings
     }
@@ -148,6 +153,7 @@ atejilib.isKatakanas = function (array_of_char) { //str any string
 atejilib.syllableToKanjis = function(syllable_in_hiraganas){
   return atejimap[syllable_in_hiraganas];
 };
+
 
 //alphabet_str -> katakana_str
 atejilib.translateByDict = function(alphabet_str){ //str any string
@@ -230,9 +236,12 @@ atejilib.hiraganasToRomajis = atejilib.hiraganaToRomaji = function (hiragana_str
 };
 
 atejilib.getAtejimap = function(){
-  return clone(atejimap); 
+  return clone(atejimap);  //Deepコピーの方がいいなあ。。マジ怖い
 };
 
+atejilib.getKanjis = function(){
+  return clone(kanjis); //Deepコピーの方がいいなあ。。 マジ怖い
+};
 
 
 
@@ -494,7 +503,6 @@ atejilib.arrangeSyllablesTable = function (array_of_syllables, hiragana_length){
     console.log("hiragana"+ hiragana_length);
 
     if(syllable){
-
       removeFromArray(syllables, syllable);
 
       table[tate_index].push(
@@ -705,11 +713,11 @@ atejilib.processJapanese = function (japanese_name){
   });
 };
 
+
 //@return object including array of meanings
 //{kanji:"" , meanings:["", "",];
 atejilib.meaningsOfKanji= function (kanji){
   var meanings = kanjis_meanings[kanji] || [];
-
   return {kanji:kanji, meanings:meanings};
 };
 
