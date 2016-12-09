@@ -43,17 +43,30 @@ atejilib.translateAsRomaji = romajisToHiraganas;
 // 漢字を変更したらこれを読まなきゃいけない という規約
 atejilib.loadKanjiDB = function(){
   return co(function*(){
-    console.log("db");
     var mongoose = require("mongoose");
     var db = require('../models/database.js');
     var Kanji = mongoose.model("Kanji");
 
     var kanjis_ = yield  Kanji.find().exec();
 
+    //DB Documentから変換する
+    kanjis_ = _(kanjis_).map((kanji)=>{
+      return {
+        kanji:kanji._id,
+        sounds: kanji.sounds,
+        meanings:kanji.meanings,
+        meanings_fr:kanji.meanings_fr,
+        romaji_sounds: _(kanji.sounds).map((sound)=>{
+          var romaji_str = atejilib.hiraganasToRomajis(sound);
+          return romaji_str;
+        }),
+      };
+    });
+
     var atejimap_ = {};
     var kanjis_meanings_ = {};
 
-    _(kanjis).each((kanji)=>{
+    _(kanjis_).each((kanji)=>{
       _(kanji.sounds).each((sound)=>{
 
         //DBではsmall形式で保存してあるのだが、ここでNOSMALLになおす。
@@ -66,13 +79,12 @@ atejilib.loadKanjiDB = function(){
       kanjis_meanings_[kanji._id] = kanji.meanings;
     });
 
-    console.log("atejimap switched!");
 
     kanjis = kanjis_; //atejilib内グローバルに代入
     atejimap = atejimap_; //atejilib内グローバルに代入
     kanjis_meanings = kanjis_meanings_; //atejilib内グローバルに代入
 
-    console.log(atejimap);
+
     return {
       kanjis,
       atejimap,
@@ -220,6 +232,7 @@ atejilib.katakanasToHiraganas = function (katakanas){ //hiraganas: expected to b
   return hiraganas;
 };
 
+//改善の余地あり。craftiに影響している。
 atejilib.hiraganasToRomajis = atejilib.hiraganaToRomaji = function (hiragana_str){ //hiraganas: expected to be hiraganas
   //単純過ぎる！！
 

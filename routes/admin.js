@@ -12,7 +12,6 @@ var users_router = require("./users");
 
 admin_router.get('/', function(req, res, next) {
   co(function*(){
-
     var users = yield User.find()
       .limit(5)
       .populate("my_japaname")

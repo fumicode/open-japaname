@@ -11,6 +11,7 @@ var KanjiSchema = new mongoose.Schema({
   _id:    String, //漢字そのもの
   sounds: [String], //ひらがなで音 
   meanings:[String], //英単語の列
+  meanings_fr:[String], //払単語の列
   include_words:[String],
   additionals:Schema.Types.Mixed, //いろいろつけたせるようにする
 });

@@ -105,6 +105,21 @@ api_router.get("/crafti/names/:original_name", function(req, res, next) {
 api_router.get("/crafti/kanjis",(req,res,next)=>{
   var kanjis = atejilib.getKanjis();
 
+  kanjis = _(kanjis).map((kanji)=>{
+
+    console.log(kanji);
+    if(kanji.romaji_sounds){
+      console.log("exists");
+      return kanji;
+    }
+    else{
+      console.log("not :exists");
+      kanji.romaji_sounds = _(kanji.sound).map((sound)=>{
+        return atejilib.hiraganasToRomajis(sound);
+      });
+      return kanji;
+    }
+  });
 
   return res.jsonp(kanjis);
 });
