@@ -52,6 +52,7 @@ atejilib.loadKanjiDB = function(){
     //DB Documentから変換する
     kanjis_ = _(kanjis_).map((kanji)=>{
       return {
+        _id:kanji._id,
         kanji:kanji._id,
         sounds: kanji.sounds,
         meanings:kanji.meanings,
