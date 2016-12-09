@@ -28,7 +28,14 @@
     },
     changeName:function(name){
       var url = "http://japaname.jp/api/crafti/names/" + encodeURIComponent(name);
-      japanameIframe.src = url;
+
+      japanameFrame = document.getElementById(japanameFrameId)
+      if(japanameFrame){
+        japanameFrame.src = url;
+      }
+      else{
+        throw new Error("Please set valid iframe id");
+      }  
     }
 
   };

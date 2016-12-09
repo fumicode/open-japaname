@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
 var _us = require('underscore');
-var url = 'mongodb://localhost/ateji';
 
 var db_obj = module.exports = {};
+
+var url = db_obj.db_url = 'mongodb://localhost/ateji';
 
 mongoose.Promise = global.Promise;
   
