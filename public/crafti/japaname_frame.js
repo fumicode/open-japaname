@@ -1,5 +1,5 @@
 (function(wind){ 
-  var japaname_jp = "localserver:3001";
+  var japaname_jp = "japaname.jp";
   var japanameFrame = null;
   var japanameFrameId = null;
   var nameChangeHandler = function(){};
