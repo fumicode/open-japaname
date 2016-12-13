@@ -3,8 +3,6 @@ var co = require("co");
 var _ = require('underscore');
 var names_router = module.exports =  express.Router();
 var path = require("path");
-
-
 var atejilib = require('../core/atejilib.js');
 var cookie   = require('cookie');
 
@@ -20,6 +18,8 @@ var artworks = require("../models/artworks.js");
 
 console.log("artworks");
 console.log(artworks);
+
+
 
 
 names_router.get("/:japaname_id([0-9\-]+)", function(req, res, next){
@@ -48,8 +48,7 @@ names_router.get("/:japaname_id([0-9\-]+)", function(req, res, next){
     res.render("atejis/selected", {
       japaname,
       artworks:artworks_list,
-    });
-
+    })
   }).catch((err)=>{
     next(err);
   });
@@ -58,19 +57,30 @@ names_router.get("/:japaname_id([0-9\-]+)", function(req, res, next){
 
 names_router.post('/', function(req, res, next) {
   co(function*(){
+    //美しくないなあ。それだったらbodyそのものをjsonにすればいいじゃん
+    //何か理由があったんだっけ？クライアントサイドがつくりにくいとか
+    //かえたい。 20161212
+    //依存してるのは、names/candidatesと
+    //crafti/japaname_frame.あとでかえる。
+    //atejiってのも、atemojisが正確な表現
+
     var original_name = req.body.original_name;
-    var ateji = JSON.parse(req.body.ateji);
+    var ateji         = JSON.parse(req.body.ateji);
 
     console.log(ateji); //JSON [{kana,kanji,sylindex}]
     var newJapaname = yield Japaname.createNew([{original:original_name, ateji}]);
     var url_id = Japaname.japanameEncode(newJapaname._id);
 
+    //超危険！ どこからでもアクセスを許しちゃう。
+    res.set("Access-Control-Allow-Origin","*");
+
     res.redirect(/*req.baseUrl +*/ "/" + url_id); //短縮URL
+
   }) .catch((err)=>{
     return next(err);
   });
-
 });
+
 
 
 names_router.get('/candidates/', function(req, res, next){//?original_name=james を想定
@@ -79,7 +89,6 @@ names_router.get('/candidates/', function(req, res, next){//?original_name=james
   if(!original_name){
     res.redirect("/");
   }
-
 
   //数字が入力されたらidだと思って結果ページにそのままいく
   if(Japaname.isJapanameCode(original_name)){

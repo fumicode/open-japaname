@@ -1,4 +1,5 @@
 (function(wind){ 
+  var japaname_jp = "localserver:3001";
   var japanameFrame = null;
   var japanameFrameId = null;
   var nameChangeHandler = function(){};
@@ -27,7 +28,8 @@
       japanameFrameId = id;
     },
     changeName:function(name){
-      var url = "http://japaname.jp/api/crafti/names/" + encodeURIComponent(name);
+      var url = "http://"+japaname_jp+"/api/crafti/names/" + encodeURIComponent(name);
+
 
       japanameFrame = document.getElementById(japanameFrameId)
       if(japanameFrame){
@@ -36,8 +38,18 @@
       else{
         throw new Error("Please set valid iframe id");
       }  
+    },
+    saveJapaname:function(obj){
+      return $.ajax({
+        type:"POST",
+        url:"http://"+japaname_jp+"/api/core/names",
+        data:{
+          original_name: obj.original_name,
+          ateji:JSON.stringify( obj.atemojis), //名前か得体
+          res_json:"true"
+        }
+      });
     }
-
   };
 
   wind.addEventListener("message",function(message){

@@ -38,6 +38,21 @@ atejilib.translateAsRomaji = romajisToHiraganas;
 //Katakana_nosmall
 
 
+atejilib.kanjiDocsToArray = function(kanjis){
+  return _(kanjis).map((kanji)=>{
+    return {
+      _id:kanji._id,
+      kanji:kanji._id,
+      sounds: kanji.sounds,
+      meanings:kanji.meanings,
+      meanings_fr:kanji.meanings_fr,
+      romaji_sounds: _(kanji.sounds).map((sound)=>{
+        var romaji_str = atejilib.hiraganasToRomajis(sound);
+        return romaji_str;
+      }),
+    };
+  });
+}
 
 
 // 漢字を変更したらこれを読まなきゃいけない という規約
@@ -47,22 +62,10 @@ atejilib.loadKanjiDB = function(){
     var db = require('../models/database.js');
     var Kanji = mongoose.model("Kanji");
 
-    var kanjis_ = yield  Kanji.find().exec();
+    var kanjis_ = yield Kanji.find().exec();
 
     //DB Documentから変換する
-    kanjis_ = _(kanjis_).map((kanji)=>{
-      return {
-        _id:kanji._id,
-        kanji:kanji._id,
-        sounds: kanji.sounds,
-        meanings:kanji.meanings,
-        meanings_fr:kanji.meanings_fr,
-        romaji_sounds: _(kanji.sounds).map((sound)=>{
-          var romaji_str = atejilib.hiraganasToRomajis(sound);
-          return romaji_str;
-        }),
-      };
-    });
+    kanjis_ = atejilib.kanjiDocsToArray(kanjis_);
 
     var atejimap_ = {};
     var kanjis_meanings_ = {};

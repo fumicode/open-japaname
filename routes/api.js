@@ -10,6 +10,10 @@ var path = require("path");
 
 var atejilib = require('../core/atejilib.js');
 
+var mongoose = require("mongoose");
+var Kanji = mongoose.model("Kanji");
+var Japaname = mongoose.model("Japaname");
+
 
 api_router.get("/",(req,res,next)=>{
 
@@ -19,6 +23,93 @@ api_router.get("/",(req,res,next)=>{
 
   res.render("contents/test", {data:obj});
 });
+
+api_router.get("/core",(req,res,next)=>{
+  var obj = {
+    "hoge":"fuga"
+  };
+  res.render("contents/test", {data:obj});
+});
+
+
+api_router.get("/core/names/:japaname_id([0-9\-]+)", function(req, res, next){
+  co(function*(){
+    console.log("kitemasu");
+    var japaname_id = Japaname.japanameDecode(req.params.japaname_id);
+
+    console.log("trying to find japaname" + japaname_id);
+
+    try{
+      var japaname = yield Japaname.findById(japaname_id)
+        .populate("names.ateji").populate("names.kana").exec();
+
+      if(!japaname){
+        return next();
+      }
+    }
+    catch(err){
+      return next(err);
+    }
+
+    res.header("Access-Control-Allow-Origin","*");
+
+    /*
+    var japaname_json = {
+      japaname_id:japaname._id,
+      names:[{
+        original:japaname.names[0].original,
+        ateji:{
+          string:japaname.names[0].ateji.string,
+          atemojis:
+          
+
+        }
+      }];
+    };
+    _(japaname).map((prop)=>{
+      
+    });
+    */
+    res.json(japaname.toObject());
+
+  }).catch((err)=>{
+    res.status(500);
+    res.json({error:err.message});
+  });
+});
+
+
+var accessControl = "*";
+api_router.post('/core/names', function(req, res, next) {
+  co(function*(){
+    //美しくないなあ。それだったらbodyそのものをjsonにすればいいじゃん
+    //何か理由があったんだっけ？クライアントサイドがつくりにくいとか
+    //かえたい。 20161212
+    //依存してるのは、names/candidatesと
+    //crafti/japaname_frame.あとでかえる。
+    //atejiってのも、atemojisが正確な表現
+
+    var original_name = req.body.original_name;
+    var ateji         = JSON.parse(req.body.ateji);
+
+    console.log(ateji); //JSON [{kana,kanji,sylindex}]
+    var newJapaname = yield Japaname.createNew([{original:original_name, ateji}]);
+    var url_id = Japaname.japanameEncode(newJapaname._id);
+
+    //超危険！ どこからでもアクセスを許しちゃう。
+    res.set("Access-Control-Allow-Origin",accessControl );
+
+    res.json({
+      japaname_id:url_id,
+    });
+
+  }) .catch((err)=>{
+    res.set("Access-Control-Allow-Origin",accessControl );
+    res.status(500);
+    res.json({"error":err.message});
+  });
+});
+
 
 
 api_router.get("/crafti/japaname_frame.js", function(req, res, next) {
@@ -94,13 +185,11 @@ api_router.get("/crafti/names/:original_name", function(req, res, next) {
       original_name,
       name_objs
     });
-
   })
   .catch(function(err){
     next(err);
   });
 });
-
 
 api_router.get("/crafti/kanjis",(req,res,next)=>{
   var kanjis = atejilib.getKanjis();
@@ -131,6 +220,18 @@ api_router.get("/crafti/kanjis/random",(req,res,next)=>{
 
 
   return res.jsonp(selected_kanjis);
+});
+
+
+api_router.get("/crafti/kanjis/select",(req,res,next)=>{
+  co(function*(){
+    var kanjis_str = req.query.kanjis;
+    var kanjis_array = kanjis_str.split("");
+
+    var kanjis = atejilib.kanjiDocsToArray(yield Kanji.find({_id:{$in:kanjis_array}}).exec());
+
+    return res.jsonp(kanjis);
+  }).catch(err=>next(err));
 });
 
 

@@ -112,8 +112,11 @@ function updateSelectedName(){
   SELECTED_JAPANAME = namearray;
 
 
+  console.log(original_name);
+  console.log("original_name");
   window.parent.postMessage({
     type:"name_change",
+    original_name:original_name,
     kanji_string:str,
     kanji_array:SELECTED_JAPANAME
       

@@ -10,13 +10,22 @@ var _ = require("underscore");
 var AtemojiSchema = new mongoose.Schema({
   kana: String,
   kanji: String
-},{_id:false});
+},{
+  _id:false
+});
 
 
 var AtejiSchema = module.exports = new mongoose.Schema({
   //_id : ObjectId //あてもじsのハッシュ値にするワンチャンある。いまんとこはいいか
   
   atemojis:[AtemojiSchema]
+},{
+  toObject:{
+    virtuals:true,
+  },
+  toJSON:{
+    virtuals:true,
+  }
 });
 
 AtejiSchema.virtual('string').get(function () {
