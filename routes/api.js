@@ -194,6 +194,7 @@ api_router.get("/crafti/names/:original_name", function(req, res, next) {
 api_router.get("/crafti/kanjis",(req,res,next)=>{
   var kanjis = atejilib.getKanjis();
 
+  res.header("Access-Control-Allow-Origin","*");
 
   return res.jsonp(kanjis);
 });
