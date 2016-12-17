@@ -14,6 +14,8 @@ var mongoose = require("mongoose");
 var Kanji = mongoose.model("Kanji");
 var Japaname = mongoose.model("Japaname");
 
+var fs = require("fs");
+
 
 api_router.get("/",(req,res,next)=>{
 
@@ -111,9 +113,14 @@ api_router.post('/core/names', function(req, res, next) {
 });
 
 
-
 api_router.get("/crafti/japaname_frame.js", function(req, res, next) {
-  return res.sendFile(path.join(__dirname, "../public/crafti/", "japaname_frame.js"));
+  var filepath =path.join(__dirname, "../public/crafti/", "japaname_frame.js");
+  fs.readFile(filepath, "utf-8",function(error, text){
+    //japaname.jpへの依存を回避。どこにアクセスすればよいかおしえる。
+    res.send(text.replace(/japaname\.jp/,req.headers.host));
+    return res.end();
+  });
+
 });
 
 api_router.get("/crafti/japaname_frame.css", function(req, res, next) {

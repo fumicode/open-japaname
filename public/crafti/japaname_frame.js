@@ -1,5 +1,5 @@
 (function(wind){ 
-  var japaname_jp = "japaname.jp";
+  var japaname_jp = "japaname.jp";//送るときに入れ替えてもらえる。by router
   var japanameFrame = null;
   var japanameFrameId = null;
   var nameChangeHandler = function(){};
