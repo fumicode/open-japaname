@@ -182,16 +182,24 @@ var api_router = require("./routes/api");
 app.all('*', function(req, res, next){
   
   //nginxにやらせたい！
-  /*
-  if(req.hostname == "japaname.jp" && req.protocol == "http"){
-    return res.redirect("https://japaname.jp" + req.url);
-  }*/
+  //と思ってたけど、amazon load balancerが3001までやってくれるので、ぉk
+  
+  //リダイレクトの繰り返しになってしまう
+  //if(req.hostname == "japaname.jp" && req.protocol == "http"){
+    //return res.redirect("https://japaname.jp" + req.url);
+  //}
 
-  /*
-  if( host == "japaname.info" || host == "japaname.tokyo" || host == "ateji.me"){ //!!!!!! jika gaki yokunai.
-    return res.redirect("http://japaname.jp" + req.url);
+  var host = req.hostname;
+
+  console.log("req.protocol");
+  console.log(req.protocol);
+  
+  if(host == "japaname.jp" || 
+     host == "japaname.tokyo" || 
+     host == "ateji.me" 
+  ){ //!!!!!! jika gaki yokunai.
+    return res.redirect("http://japana.me" + req.url);
   }
-	*/
 
   next();
 }); 

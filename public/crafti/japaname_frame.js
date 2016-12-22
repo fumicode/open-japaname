@@ -1,5 +1,5 @@
 (function(wind){ 
-  var japaname_jp = "japaname.jp";
+  var japaname_jp = "japana.me";
   var japanameFrame = null;
   var japanameFrameId = null;
   var nameChangeHandler = function(){};
