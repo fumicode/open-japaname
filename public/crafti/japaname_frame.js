@@ -28,7 +28,7 @@
       japanameFrameId = id;
     },
     changeName:function(name){
-      var url = "http://"+japaname_jp+"/api/crafti/names/" + encodeURIComponent(name);
+      var url = "https://"+japaname_jp+"/api/crafti/names/" + encodeURIComponent(name);
 
 
       japanameFrame = document.getElementById(japanameFrameId)
@@ -42,7 +42,7 @@
     saveJapaname:function(obj){
       return $.ajax({
         type:"POST",
-        url:"http://"+japaname_jp+"/api/core/names",
+        url:"https://"+japaname_jp+"/api/core/names",
         data:{
           original_name: obj.original_name,
           ateji:JSON.stringify( obj.atemojis), //名前か得体
