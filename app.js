@@ -251,7 +251,7 @@ app.use('/api', api_router);
     url:japaname_jp,
     map:{
       '/': ['get'],
-      '/names/candidates': ['get'],
+      '/names': ['get'],
       '/characters': ['get'],
       '/characters/hiraganas': ['get'],
       '/characters/katakanas': ['get'],
@@ -264,7 +264,7 @@ app.use('/api', api_router);
       '/artworks': ['get'],
     },
     route: {
-        '/names/candidates': {
+        '/names': {
           priority:1.0,
           changefreq: 'monthly',
         },
