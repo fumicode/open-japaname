@@ -51,50 +51,7 @@ db.db_loaded_promise.then(function(){
   atejilib.loadKanjiDB().then(function(){
     console.log("loaded atejilib!!");
 
-
-
-    var name_db =  atejilib.getNames();
-    var mapobj = {
-        '/': ['get'],
-        '/characters/kanjis': ['get'],
-        '/35': ['get'],
-    };
-  
-    for(var group in name_db){
-      for(var name in name_db[group]){
-        mapobj["/names/candidates/" + name] = ["get"];
-      }
-    }
-  
-  
-    var sitemap = map({
-      
-      http:"https",
-      url:japaname_jp,
-     
-      map: mapobj,
-      route: {
-          '/foo': {
-              lastmod: '2014-06-20',
-              changefreq: 'always',
-              priority: 1.0,
-          },
-          '/admin': {
-              disallow: true,
-          },
-          '/auth': {
-              disallow: true,
-          },
-          '/artworks': {
-              disallow: true,
-          },
-      },
-    });
-
-    sitemap.XMLtoFile(path.join(__dirname,"/public/sitemap.xml"));
-    sitemap.TXTtoFile(path.join(__dirname,"/public/robots.txt"));
-  
-    }).catch((err)=>{
+        }).catch((err)=>{
       console.log(err.stack);
     });
 });
@@ -213,9 +170,7 @@ var loadUser = authModule.loadUser;
 var routes    = require('./routes/index');
 var users_router     = require('./routes/users');
 var names_router     = require('./routes/names');
-var characters_router= express.Router(); //新しく作った
-  var kanjis_router    = require('./routes/kanjis');
-  var words_router     = require('./routes/words');
+var characters_router= require("./routes/characters");
 var funding_router     = require('./routes/funding');
 var contents_router  = require('./routes/contents');
 var mypage_router    = require('./routes/mypage');
@@ -275,10 +230,7 @@ app.use('/', routes);
 app.use('/users', users_router);
 app.use('/names', names_router);
 app.use('/characters',characters_router);
-  characters_router.use('/kanjis',kanjis_router);
-  characters_router.use('/words',words_router);
-  //characters_router.use('/hiragana',words_router);
-  //characters_router.use('/katakana',words_router);
+
 app.use('/funding', funding_router);
 app.use('/contents', contents_router);
 app.use('/mypage', loginCheck, mypage_router);
@@ -292,6 +244,50 @@ app.use('/api', api_router);
 
 
 
+
+(function(){
+  var sitemap = map({
+    http:"https",
+    url:japaname_jp,
+    map:{
+      '/': ['get'],
+      '/names/candidates': ['get'],
+      '/characters': ['get'],
+      '/characters/hiraganas': ['get'],
+      '/characters/katakanas': ['get'],
+      '/characters/kanjis': ['get'],
+      '/stylesheets': ['get'],
+      '/javascripts': ['get'],
+      '/images': ['get'],
+      '/admin': ['get'],
+      '/auth': ['get'],
+      '/artworks': ['get'],
+    },
+    route: {
+        '/names/candidates': {
+          priority:1.0,
+          changefreq: 'monthly',
+        },
+        '/characters': {
+          priority:0.5,
+          changefreq: 'monthly',
+        },
+        '/admin': { disallow: true, },
+        '/auth': { disallow: true, },
+        '/artworks': { disallow: true, },
+        '/stylesheets': { disallow: true, },
+        '/javascripts': { disallow: true, },
+        '/images': { disallow: true, },
+    },
+  });
+
+
+
+  sitemap.XMLtoFile(path.join(__dirname,"/public/sitemap.xml"));
+  sitemap.TXTtoFile(path.join(__dirname,"/public/robots.txt"));
+
+}());
+  
 
 
 

@@ -21,6 +21,13 @@ console.log(artworks);
 
 
 
+names_router.get('/', function(req, res, next){//?original_name=james を想定
+  var name_db = atejilib.getNames();
+
+  res.render("names/index", {name_db})
+
+});
+
 
 names_router.get("/:japaname_id([0-9\-]+)", function(req, res, next){
   co(function*(){
@@ -87,7 +94,7 @@ names_router.get('/candidates/', function(req, res, next){//?original_name=james
   var original_name = req.query.original_name;
   //名前が空だったらtopにリダイレクト
   if(!original_name){
-    res.redirect("/");
+    next();
   }
 
   //数字が入力されたらidだと思って結果ページにそのままいく
@@ -101,9 +108,10 @@ names_router.get('/candidates/', function(req, res, next){//?original_name=james
     return;
   }
 
-
   res.redirect(req.baseUrl + "/candidates/" + encodeURIComponent(original_name));
 });
+
+
 
 //↑のコピペ中尉!!!!
 names_router.get('/api/', function(req, res, next){//?original_name=james を想定

@@ -1,0 +1,36 @@
+extends /template/sub_layout
+
+block variables
+  - title =  'Three kind of characters in Japanese';
+  - description = 'There are three kind of characters in Japanese. That is Hiragana, Katakana, and Kanji. Kanji is chinese character which was imported to Japan from China long ago. Hiragana and Katakana is made from Kanji in old Japan.';
+
+
+block sub-content
+  h1.text-center= title
+ 
+  p= description
+  ul
+    li
+      a(href="/characters/kanjis") Kanji 漢字 
+    li
+      a(href="/characters/hiraganas") Hiragana ひらがな
+
+    //
+      li
+        a(href="/characters/katakanas")
+
+
+    
+      
+
+
+
+    
+
+
+
+    
+
+
+
+    

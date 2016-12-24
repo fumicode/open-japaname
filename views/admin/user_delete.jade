@@ -24,7 +24,7 @@ block sub-content
       tr(id="#{user._id}")
         td= the_user.username
         td= the_user.authorities.join(', ')
-        td= the_user.my_japaname && theuser.my_japaname.string || "none"
+        td= the_user.my_japaname && the_user.my_japaname.string || "none"
 
 
   form(action="./?_method=delete" method="POST")

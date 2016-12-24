@@ -3,7 +3,7 @@ footer#page-footer
     div#contents
       h3 Contents
       // 受け渡したい
-      - var links = [ { url:"/characters/kanjis", name: "Kanji Database" },{ url:"https://www.facebook.com/japaname", name: "Facebook Page" }, ];
+      - var links = [ { url:"/characters/", name: "Three characters in Japanese" },{ url:"/characters/hiraganas", name: "Hiragana Database" },{ url:"/characters/kanjis", name: "Kanji Database" },{ url:"/names", name: "Name Database" },{ url:"https://www.facebook.com/japaname", name: "Facebook Page" }, ];
 
       div
         ul.n
@@ -16,9 +16,9 @@ footer#page-footer
       h3 Share
       include /include/sharebox.jade
       +sharebox(
-        tweet || "Get Your Japaname on japaname.jp! ", 
-        share_url || "http://japaname.jp",
-        hashtag || "Japaname")
+        tweet || "", 
+        share_url || "",
+        hashtag || "")
 
   div#copyright
     p Copyright &copy; 2016 fumicode. All Rights Reserved.

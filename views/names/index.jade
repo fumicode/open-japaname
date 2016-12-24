@@ -1,0 +1,22 @@
+extends /template/sub_layout
+
+block variables
+  //もっと練るべき !!!!
+  - title =  "Name database";
+  - description = 'This page shows name database on';
+  - body_id= "bg-white";
+
+
+block sub-content
+
+  h1.text-center #{title}
+  p #{description}
+
+  ul
+  each group,alphabet in name_db
+    li #{alphabet}
+      ul
+        each katakana_names,original_name  in group
+          li 
+            a(href="/names/candidates/#{original_name}") #{original_name} #{katakana_names[0]}
+    

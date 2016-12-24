@@ -1,0 +1,35 @@
+extends /template/sub_layout
+
+block variables
+  //もっと練るべき !!!!
+  - title =  "Hiragana database";
+  - description = 'There are about 50 hiragana characters in Japanese. This page shows all of them.';
+  - body_id= "bg-white";
+
+
+block sub-content
+
+  h1.text-center #{title}
+  p #{description}
+
+  table.charsTable(style="table-layout:fixed;width:100%")
+    thead
+      tr
+        td consonants\vowels
+        each vowel,v_index in vowels
+          th #{vowel}
+    tbody
+      each consonant,c_index in consonants
+        tr
+          th #{consonant}
+
+          each chara,chara_index in hiraganasTable[consonant]
+            td.charsTable__cell 
+              if chara
+                a(href="/characters/hiraganas/#{chara}") #{chara}
+              else 
+                | &nbsp;
+          
+        
+        
+        

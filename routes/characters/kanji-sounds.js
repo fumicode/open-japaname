@@ -3,12 +3,12 @@ var sounds_router = module.exports = express.Router();
 var mongoose = require("mongoose");
 var Kanji = mongoose.model("Kanji");
 
-var atejilib = require("../core/atejilib");
+var atejilib = require("../../core/atejilib");
 var _ = require("underscore");
 
-var authModule = require("../auth/authModule.js");
+var authModule = require("../../auth/authModule.js");
 
-var convertLinesToArray = require('../util/router_helper').convertLinesToArray;
+var convertLinesToArray = require('../../util/router_helper').convertLinesToArray;
 
 var co = require("co");
 

@@ -1,10 +1,10 @@
 extends /template/sub_layout
 
 block append variables
-  - title = "Japaname candidates of " + original_name;
-  - description = "Japaname candidates of "+ original_name +". You can select your Kanji from many candidates which fits your sound by meanings or shape of kanji.";
-  - tweet =  "Japaname candidates of " + original_name;
-  - share_url = "http://japaname.jp/names/candidates/" + original_name; //直書きよくないけどしゃーない！！！
+  - title = "" + original_name + " in kanji. Select from many candidates!";
+  - description = "Japaname candidates of "+ original_name +". Select kanji you like from many candidates which fits your name sound. You can choose your kanji by meanings or shape of kanji.";
+  - tweet =  "Kanji candidates of " + original_name;
+  - share_url = url; 
   - body_id = "bg-candidates";
 
 block sub-content

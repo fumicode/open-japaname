@@ -3,7 +3,14 @@ var _us = require('underscore');
 
 var db_obj = module.exports = {};
 
-var url = db_obj.db_url = 'mongodb://japaname:japaname13579@db.japaname.jp/ateji';
+//こいつをprocessに依存させるのはあんまりよくない。。
+if(process.env.DB == "local"){
+  var url = db_obj.db_url = "mongodb://localhost/ateji";
+}
+else{
+  var url = db_obj.db_url = 'mongodb://japaname:japaname13579@db.japaname.jp/ateji';
+}
+
 
 mongoose.Promise = global.Promise;
   

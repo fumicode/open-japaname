@@ -1,5 +1,5 @@
-var hiraganas         = require("./tables/hiraganas_table.json");
-var katakanas         = require("./tables/katakanas_table.json");
+var hiraganas         = require("./tables/hiraganas.json");
+var katakanas         = require("./tables/katakanas.json");
 var katakana2hiragana = require("./tables/katakana_to_hiragana.json");
 var hiragana2katakana = require("./tables/hiragana_to_katakana.json");
 
@@ -15,6 +15,8 @@ var co = require('co');
 
 
 var romajisToHiraganas = require("./romajisToHiraganas");
+var hiraganasTable = romajisToHiraganas.hiraganasTable;
+//var katakanasTable = romajisTokatakanas.katakanasTable;
 
 
 var kanjis = {};
@@ -263,6 +265,10 @@ atejilib.getKanjis = function(){
 
 atejilib.getNames = function(){
   return clone(name_db); //Deepコピーの方がいいなあ。。 マジ怖い
+};
+
+atejilib.getHiraganasTable= function(){
+  return clone(hiraganasTable); //Deepコピーの方がいいなあ。。 マジ怖い
 };
 
 

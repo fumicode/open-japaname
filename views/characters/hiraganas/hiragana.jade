@@ -1,0 +1,19 @@
+extends /template/sub_layout
+
+block variables
+  //もっと練るべき !!!!
+  - title =  'Hiragana'+' "'+kana+'"';
+  - description = 'The pronounciation of '+'hiragana'+' "'+kana+'" is composed of consonant "'+consonant+'" and vowel "'+vowel+'".';
+  - body_id= "bg-white";
+
+
+block sub-content
+
+  p
+    a(href="./") Go back to Hiraganas page
+  h1.text-center #{title}
+  p #{description}
+
+  p.bigChar #{kana}
+  p #{consonant}
+  p #{vowel}

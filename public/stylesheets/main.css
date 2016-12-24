@@ -1293,6 +1293,9 @@ input[type="search"].jnSearchBox__textbox {
   font-family: "ro-nikkatsu-sei-kai-std", serif;
   font-size: 10rem; }
 
+.charsTable__cell {
+  font-size: 20px; }
+
 html {
   box-sizing: border-box; }
 
