@@ -17,7 +17,10 @@ block append head-end
 block sub-content
   div.text-center
     include /include/ateji_box
-    h2.h4 The japaname of <wbr><strong style="text-transform:capitalize;color:red;">#{name.original}</strong><br>
+    h2.h4 The japaname of 
+      wbr
+      strong(style="text-transform:capitalize;color:red;") #{name.original}
+      br
     p The japaname code : 
       input.inline(type="text" value="#{japaname.code}") 
     
@@ -29,6 +32,15 @@ block sub-content
     include /include/sharebox.jade
     if !(user && user.haveRight("arton"))
       +sharebox(tweet, share_url, hashtag)
+
+  if user 
+    form(action="/mypage/japaname" method="post")
+      input(type="hidden" name="japaname_code" value="#{japaname.code}")
+      p(style="text-align:center")
+        input(type="submit" value="Use this japaname for me.")
+
+      
+
 
   if user && user.haveRight("arton")
     div(style="martin-top:2rem;background:white;text-align:center;")
@@ -52,7 +64,6 @@ block sub-content
                 img.teeComposite__image(src="/artworks/#{artwork.artwork_name}/#{japaname.code}/thumbnail" alt="")
 
 
-            //img.shopThumbs__icon(src="/artworks/#{artwork.artwork_name}/#{japaname.code}/thumbnail" alt="#{artwork.artwork_name}")
 
   if !user 
     div#login-ads

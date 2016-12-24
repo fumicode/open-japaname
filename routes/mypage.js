@@ -9,7 +9,7 @@ var co = require("co");
 // load up the user model
 var mongoose = require("mongoose");
 var User = mongoose.model("User");
-var Ateji = mongoose.model("Ateji");
+var Japaname = mongoose.model("Japaname");
 
 var Purchase = mongoose.model("Purchase");
 
@@ -40,23 +40,18 @@ mypage_router.route("/japaname").get(function(req, res, next) {
   }
 }).post(function(req, res, next) {
   co(function*(){
-    var old_ateji = req.user.ateji_id; //populated
-    var ateji_id = req.body.ateji_id;
+    var jc = req.body.japaname_code;
 
-    var ateji_obj = yield Ateji.findById(ateji_id).exec();
+    if(!Japaname.isJapanameCode(jc)){
+      return next(new Error("japaname code format is incorrect"));
+    }
 
-    if(ateji_obj){
-      req.user.ateji_id = ateji_obj._id;
-      req.user.save()
-      .then(function(user){
-        req.flash("success", "Changed your Ateji from "+old_ateji.ateji_name+" to "+ateji_obj.ateji_name+"!" );
-        res.redirect("/mypage");
-      });
-    }
-    else{
-      req.flash("alert", "Ateji " + ateji_id + " was not found");
-      res.redirect("/mypage");
-    }
+    req.user.my_japaname = Japaname.japanameDecode(jc);
+
+    var result = yield req.user.save();
+
+    res.redirect("/mypage");
+
   }).catch(function(err){
     next(err);
   });

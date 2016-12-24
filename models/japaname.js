@@ -170,7 +170,7 @@ JapanameSchema.statics.getLatestNames = function (num){
   
   return Japaname.find()
         .sort({"_id":-1})
-        .limit(5)
+        .limit(num || 5)
         .populate("names.ateji")
         .populate("names.ateji");
 };

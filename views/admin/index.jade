@@ -11,11 +11,16 @@ block variables
 block sub-content
   h1 管理ページ
 
-  h2 
-    a(href="/admin/requests") 未処理のリクエスト
+  
+  
 
-  //p= JSON.stringify(requests)
+  h2 最近作られたJapaname
+  ul
+    each japaname in japanames
+      li #{japaname.code}  #{japaname.names[0].original} #{japaname.names[0].ateji.string}
 
+
+  h2 最近の購入
   table.table
     thead
       tr
@@ -28,7 +33,7 @@ block sub-content
       each purchase in purchases
         if purchase.closed === false
           tr(id="#{purchase._id}")
-            td= purchase.buyer
+            td= purchase.buyer.username
             td= purchase.price
             td= purchase.artwork_name
             td= purchase.japaname
@@ -49,6 +54,7 @@ block sub-content
         tr(id="#{user._id}")
           td= user.username
           td= user.authorities.join(', ')
-          td= user.my_japaname 
+          td= user.my_japaname && user.my_japaname.code
           td
             a.button(href="/admin/users/#{user._id}") ユーザーページへ
+
