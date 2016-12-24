@@ -17,20 +17,15 @@ block sub-content
   table.table
     thead
       tr
-        th 認証方法
         th メールアドレス
-        th 名前
         th 権限
         th 登録当て字
-        th Webpay登録有無
     tbody
-      tr(id="#{the_user._id}")
-        td= the_user.userinfo.method
-        td= the_user.userinfo.email
-        td= the_user.name
+      tr(id="#{user._id}")
+        td= the_user.username
         td= the_user.authorities.join(', ')
-        td= the_user.ateji_id && user.ateji_id .ateji_name || "none"
-        td= !!user.webpay_cus_code
+        td= the_user.my_japaname && theuser.my_japaname.string || "none"
+
 
   form(action="./?_method=delete" method="POST")
     input(type="submit" value="ユーザーを削除")

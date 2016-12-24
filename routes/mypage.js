@@ -49,12 +49,12 @@ mypage_router.route("/japaname").get(function(req, res, next) {
       req.user.ateji_id = ateji_obj._id;
       req.user.save()
       .then(function(user){
-        req.flash("info", "Changed your Ateji from "+old_ateji.ateji_name+" to "+ateji_obj.ateji_name+"!" );
+        req.flash("success", "Changed your Ateji from "+old_ateji.ateji_name+" to "+ateji_obj.ateji_name+"!" );
         res.redirect("/mypage");
       });
     }
     else{
-      req.flash("info", "Ateji " + ateji_id + " was not found");
+      req.flash("alert", "Ateji " + ateji_id + " was not found");
       res.redirect("/mypage");
     }
   }).catch(function(err){
@@ -63,6 +63,7 @@ mypage_router.route("/japaname").get(function(req, res, next) {
 });
 
 
+/*
 mypage_router.get('/payment_info', function(req, res, next) {
   if(req.user.webpay_cus_code){
     console.log("user has cus code " + req.user.webpay_cus_code);
@@ -177,6 +178,7 @@ mypage_router.post('/payment_info', function(req, res, next) {
     });
   }
 });
+*/
 
 mypage_router.get('/user_info', function(req, res, next) {
   res.render("mypage/user_info",{data:"user_info"});
@@ -185,7 +187,7 @@ mypage_router.get('/user_info', function(req, res, next) {
 
 mypage_router.post('/user_info/email', function(req, res, next) {
 
-  req.assert("email","Invalid Email. Please check the format.").notEmpty(true).isEmail();
+  req.assert("username","Invalid Email. Please check the format.").notEmpty(true).isEmail();
 
   var errors = req.validationErrors();
 
@@ -193,22 +195,22 @@ mypage_router.post('/user_info/email', function(req, res, next) {
     console.log("errors");
     console.log(errors);
 
-    req.flash("info", "We couldn't change the email address.(format error)");
+    req.flash("error", "We couldn't change the email address.(format error)");
     res.redirect("/mypage/user_info");
     return;
   }
 
-  if(req.body.email == req.body.confirm_email){
-    req.user.userinfo.email = req.body.email;
+  if(req.body.username == req.body.confirm_username){
+    req.user.username= req.body.username ;
     req.user.save(function(){
-      req.flash("info", "You have changed email");
+      req.flash("success", "You have changed email to " + req.user.username);
       res.redirect("/mypage/user_info");
     });
     
     return;
   }
   else{
-    req.flash("info", "Enter same email address twice.");
+    req.flash("alert", "Enter same email address twice.");
     res.redirect("/mypage/user_info");
     return;
   }
@@ -233,8 +235,8 @@ mypage_router.post('/user_info/password', function(req, res, next) {
   //passwordがvalidで、
   req.check('password','Invalid Password. Password should not be empty'+
         ' and the length should be 6-20.').isLength(6,20);
+
   //文字種制限もしないとね
-  //
   var errors = req.validationErrors();
 
   console.log(5);
@@ -242,41 +244,41 @@ mypage_router.post('/user_info/password', function(req, res, next) {
     console.log("errors");
     console.log(errors);
 
-    req.flash("info", "The format of password is 6-20 string.");
+    req.flash("error", "The format of password is 6-20 string.");
     res.redirect("/mypage/user_info");
     return;
   }
 
-  //current_passwordが正しくて
-  //*
+  //current_passwordが正しいか
+  req.user.authenticate(current_password,function(error, user_doc){
+    if(error || !user_doc){
+      req.flash("error", "Given password is wrong.");
+      return res.redirect("/mypage/user_info");
+    }
 
-  console.log(4);
-  if(!req.user.passwordIsCorrect(current_password)){
-    req.flash("info", "Given password is wrong.");
-    res.redirect("/mypage/user_info");
-    return;
-  }
-  //*/
+    if(password != confirm_password){
+      req.flash("alert", "Enter same password address twice.");
+      return res.redirect("/mypage/user_info");
+    }
 
-  console.log(3);
-  if( password != confirm_password){
+    //passwordをセットする
+    req.user.setPassword(password,function(error, doc){
+      if(error){
+        req.flash("error", "Couldn't change the password");
+        return res.redirect("/mypage/user_info");
+      }
 
-    req.flash("info", "Enter same password address twice.");
-    res.redirect("/mypage/user_info");
-  }
+      doc.save().then(function(doc){
+        console.log("no set password error");
+        req.flash("success", "You have changed password");
+        return res.redirect("/mypage/user_info");
+      },function(err){
+        next(err);
+      });
 
-  console.log(2);
-  req.user.setPassword(password);
+    });
 
-  console.log(1);
-  req.user.save().then((user)=>{
-    req.flash("info", "You have changed password");
-    res.redirect("/mypage/user_info");
-  }, function(err){
-    req.flash("info", "Couldn't change the password");
-    res.redirect("/mypage/user_info");
   });
-
 });
 
 

@@ -14,23 +14,19 @@ block sub-content
   p
     a(href="/admin/users") ユーザー一覧ページへ戻る
 
-  h1 ユーザー: #{the_user.name}
+  h1 ユーザー: #{the_user.username}
 
   form(action="?_method=put" method="POST")
 
     table
       tr
-        th 認証方法
-        td= the_user.userinfo.method
-
-      tr
         th 名前
-        td= the_user.name
+        td= the_user.username
 
       tr
         th メールアドレス
         td 
-          input(type="text" name="email" value="#{the_user.userinfo.email}")
+          input(type="text" name="username" value="#{the_user.username}")
 
       tr
         th 権限
@@ -39,24 +35,21 @@ block sub-content
       tr
         th 登録当て字
         td
-          p 当て字IDを入力してください
-          input(type="text" name="ateji_id" value="#{the_user.ateji_id || ' '}")
+          p Japaname Code を入力してください
+          input(type="text" name="my_japaname" value="#{the_user.my_japaname || ' '}")
 
       tr
         th パスワード
         td 
           input(type="password" name="password")
 
-      tr
-        th Webpay登録有無
-        td= !!the_user.webpay_cus_code
-
     p
       input(type="submit" value="送信")
 
-  h2 このユーザーのリクエスト一覧
 
-  include /admin/include/requests_mixin.jade
-  +requests_table(requests)
+  if requests
+    h2 このユーザーのリクエスト一覧
+    include /admin/include/requests_mixin.jade
+    +requests_table(requests)
 
   a.button(href="/admin/users/#{the_user._id}/delete") ユーザーを削除

@@ -7,6 +7,7 @@ var router_helper = require("../util/router_helper");
 
 var mongoose = require('mongoose');
 var User = mongoose.model("User");
+var Japaname = mongoose.model("Japaname");
 
 
 user_router.get('/', function(req, res, next) {
@@ -14,8 +15,7 @@ user_router.get('/', function(req, res, next) {
     var the_user = req.the_user; //fetched in upper directory
 
     res.render("admin/user",{
-      the_user,
-      requests
+      the_user
     });
 
   }).catch(function(err){
@@ -29,14 +29,14 @@ user_router.put('/',function(req,res,next){
   co(function*(){
     req.checkBody({
       /*
-      'email': {
+      'username': {
         notEmpty: true,
         isEmail: {
           errorMessage: 'Invalid Email'
         }
       },
       'password': {
-        optional: true, // won't validate if field is empty
+        notEmpty: true,
         isLength: {
           options: [6, 20] // pass options to the validator with the options property as an array
         },
@@ -54,25 +54,29 @@ user_router.put('/',function(req,res,next){
       console.log(errors);
 
       req.flash("info", "some format error" +JSON.stringify( errors));
-      res.render("admin/user");
+      res.redirect("admin/users");
       return;
     }
 
-    if(req.body.email){
-      req.the_user.userinfo.email = req.body.email;
+    if(req.body.username){
+      req.the_user.username = req.body.username
     }
 
-
-    console.log("req.body.authorities");
-    console.log(req.body.authorities);
     if(req.body.authorities){
       req.the_user.authorities = router_helper.stringToArray(req.body.authorities,",");
-      console.log( req.the_user.authorities );
 
     }
 
-    if(req.body.ateji_id){
-      req.the_user.ateji_id = req.body.ateji_id;
+    if(req.body.my_japaname){
+      var my_japaname = req.body.my_japaname;
+
+
+      if(Japaname.isJapanameCode(my_japaname)){
+        var japaname_number = Japaname.japanameDecode(my_japaname);
+
+        req.the_user.my_japaname = japaname_number;
+      }
+
     }
 
     if(req.body.password){
@@ -83,9 +87,7 @@ user_router.put('/',function(req,res,next){
 
     req.flash("info","ユーザーの情報を編集しました.");
     res.redirect("./" + saved_user._id);
-  }).catch((err)=>{
-    next(err);
-  });
+  }).catch(err=>next(err));
 });
 
 user_router.get('/delete',function(req,res,next){
@@ -93,14 +95,16 @@ user_router.get('/delete',function(req,res,next){
 });
 
 user_router.delete('/',function(req,res,next){
-  User.findById(req.the_user._id).remove().exec()
-  .then((something)=>{
-    console.log("something");
-    console.log(something);
+  co(function*(){
+    var result = yield User.findById(req.the_user._id).remove().exec();
 
-    req.flash("info", "user has deleted");
+    console.log(result);
+    req.flash("info", "user "+req.the_user.username+" has deleted");
     res.redirect("/admin/users");
-  });
+  })
+  .catch(err=>next(err));
+
+
 
 });
 

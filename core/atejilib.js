@@ -62,7 +62,7 @@ atejilib.loadKanjiDB = function(){
     var db = require('../models/database.js');
     var Kanji = mongoose.model("Kanji");
 
-    var kanjis_ = yield Kanji.find().exec();
+    var kanjis_ = yield Kanji.find().exoc();
 
     //DB Documentから変換する
     kanjis_ = atejilib.kanjiDocsToArray(kanjis_);

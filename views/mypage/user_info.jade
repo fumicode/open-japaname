@@ -15,17 +15,14 @@ block sub-content
         |Go back to mypage.
 
   h1 Edit User Information
-  
-  p Log-in method is "#{user.userinfo.method}"
-
 
   div(style="height:100px")
   h2 Email
   form(action="/mypage/user_info/email" method="post")
-    input(type="text" name="email" placeholder="Enter email address" value=
-    "#{user.userinfo.email}")
-    input(type="text" name="confirm_email" placeholder="Re-Enter email address")
-    input(type="submit" value="Change Email")
+    input(type="text" name="username" placeholder="Enter email address" value=
+    "#{user.username}")
+    input(type="text" name="confirm_username" placeholder="Re-Enter email address")
+    input(type="submit" value="Change Email Address")
 
   div(style="height:100px") 
   h2 Password

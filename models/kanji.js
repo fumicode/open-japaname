@@ -31,7 +31,6 @@ KanjiSchema.post("save", function(doc){
 
 
 KanjiSchema.virtual('romaji_sounds').get(function () {
-  console.log("romaji--");
   return _us.map(this.sounds, function(sound){
     try{
       return atejilib.hiraganaToRomaji(sound);

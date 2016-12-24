@@ -8,7 +8,6 @@ var User = mongoose.model("User");
 
 var authorized_users = {
   "icymasa@gmail.com" : ["admin","kanji-edit", "arton"],
-  "arton.jp@gmail.com": ["arton","kanji-edit"]
 }
 
 function authorizeUser(username, authorities){
@@ -38,9 +37,8 @@ function authorizeUser(username, authorities){
 
 co(function*(){
   for(user in authorized_users) {
-    authorizeUser(user, authorized_users[user]);
+    authorization = authorizeUser(user, authorized_users[user])
   }
-
 });
 
 //dbが読み込まれたら、atejilibの方に読み込む
@@ -238,7 +236,7 @@ app.use('/thumbnail', thumbnail_router);
 app.use('/artworks', artworks_router ); // loginCheck ,
 app.use('/shops', shops_router ); // loginCheck ,
 app.use('/purchases', loginCheck, purchases_router); // loginCheck,
-app.use('/admin', authorize(["admin"]),  admin_router);
+app.use('/admin', authorize(["admin"]),admin_router);
 app.use('/api', api_router);
 
 

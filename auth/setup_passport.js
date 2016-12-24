@@ -83,23 +83,19 @@ module.exports = function(passport) {
   },
   // facebook will send back the token and profile
   function(token, refreshToken, profile, done) {
-
-console.log("-------------func-------------");
-console.log("token" + token);
-console.log("refreshToken" +  refreshToken);
-console.log("profile " + JSON.stringify(profile));
-console.log("done" + done);
+    console.log("-------------func-------------");
+    console.log("token" + token);
+    console.log("refreshToken" +  refreshToken);
+    console.log("profile " + JSON.stringify(profile));
+    console.log("done" + done);
 
     // asynchronous
     process.nextTick(function() {
-      
 
-console.log("tick");
 
       // find the user in the database based on their facebook id
       User.findOne({ 'userinfo.facebook.id' : profile.id }, function(err, user) {
 
-console.log("findone");
         // if there is an error, stop everything and return that
         // ie an error connecting to the database
         if (err)
@@ -108,20 +104,13 @@ console.log("findone");
         // if the user is found, then log them in
         if (user) {
 
-console.log("user found");
           return done(null, user); // user found, return that user
         } else {
 
-console.log("user register");
           // if there is no user found with that facebook id, create them
           var newUser            = new User();
           
 
-          console.log("facebook info");
-          console.log(profile.id);
-          console.log(token);
-          console.log(profile.name.givenName);
-          console.log(JSON.stringify(profile));
           // set all of the facebook information in our user model
           newUser.userinfo.facebook.id    = profile.id; // set the users facebook id
           newUser.userinfo.facebook.token = token; // we will save the token that facebook provides to the user

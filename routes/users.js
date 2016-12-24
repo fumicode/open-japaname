@@ -17,9 +17,7 @@ users_router.get('/', function(req, res, next) {
       users
     });
   })
-  .catch(function(err){
-    res.respondError("",err);
-  });
+  .catch(err=>next(err));
 });
 
 
