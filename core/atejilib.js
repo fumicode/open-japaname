@@ -261,6 +261,10 @@ atejilib.getKanjis = function(){
 };
 
 
+atejilib.getNames = function(){
+  return clone(name_db); //Deepコピーの方がいいなあ。。 マジ怖い
+};
+
 
 
 //@return array of hiragana nosmall

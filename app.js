@@ -1,4 +1,5 @@
 var co = require("co");
+var japaname_jp ="japana.me";
 
 //////////////////dbs//////////////////
 var mongoose = require('mongoose'); //はやめじゃないと
@@ -43,12 +44,59 @@ co(function*(){
 
 //dbが読み込まれたら、atejilibの方に読み込む
 db.db_loaded_promise.then(function(){
-  console.log("loading atejilib!!");
+  console.log("loading atejilib..");
   var atejilib = require("./core/atejilib.js");
+
+
   atejilib.loadKanjiDB().then(function(){
-  }).catch((err)=>{
-    console.log(err.stack);
-  });
+    console.log("loaded atejilib!!");
+
+
+
+    var name_db =  atejilib.getNames();
+    var mapobj = {
+        '/': ['get'],
+        '/characters/kanjis': ['get'],
+        '/35': ['get'],
+    };
+  
+    for(var group in name_db){
+      for(var name in name_db[group]){
+        mapobj["/names/candidates/" + name] = ["get"];
+      }
+    }
+  
+  
+    var sitemap = map({
+      
+      http:"https",
+      url:japaname_jp,
+     
+      map: mapobj,
+      route: {
+          '/foo': {
+              lastmod: '2014-06-20',
+              changefreq: 'always',
+              priority: 1.0,
+          },
+          '/admin': {
+              disallow: true,
+          },
+          '/auth': {
+              disallow: true,
+          },
+          '/artworks': {
+              disallow: true,
+          },
+      },
+    });
+
+    sitemap.XMLtoFile(path.join(__dirname,"/public/sitemap.xml"));
+    sitemap.TXTtoFile(path.join(__dirname,"/public/robots.txt"));
+  
+    }).catch((err)=>{
+      console.log(err.stack);
+    });
 });
 
 
@@ -60,6 +108,7 @@ var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var methodOverride= require('method-override');
+var map = require("express-sitemap");
 
 //var livereload = require('connect-livereload')
 
@@ -76,6 +125,7 @@ app.locals.basedir = path.join(__dirname, 'views');
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(validator({}));
@@ -84,6 +134,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 app.use(methodOverride("_method"));
 //app.use(livereload());
+
 
 
 //prevent 304
@@ -196,7 +247,7 @@ app.all('*', function(req, res, next){
      host == "japaname.tokyo" || 
      host == "ateji.me" 
   ){ //!!!!!! jika gaki yokunai.
-    return res.redirect("http://japana.me" + req.url);
+    return res.redirect("http://" + japaname_jp + req.url);
   }
 
   next();
@@ -238,6 +289,11 @@ app.use('/shops', shops_router ); // loginCheck ,
 app.use('/purchases', loginCheck, purchases_router); // loginCheck,
 app.use('/admin', authorize(["admin"]),admin_router);
 app.use('/api', api_router);
+
+
+
+
+
 
 
 // catch 404 and forward to error handler
