@@ -53,11 +53,37 @@ div#kanji-selected-wrapper{
         width:100%;
         white-space:normal;
         padding:1em;
-        background-image:url(/images/risumaru_yubi_right.png);
-        background-repeat:no-repeat;
-        background-position:right bottom;
-        background-size:contain;
+
+        @include media($medium-screen-up){
+
+          background-image:url(/images/risumaru_yubi_right.png);
+          background-repeat:no-repeat;
+          background-position:90% bottom;
+          background-size:contain;
+        }
+
+        animation-delay: 12s;
+        animation-duration: 1s;
+        animation-direction: alternate;
+        animation-iteration-count:infinite;
+
+        animation-name: gonext__blink
       }
+      @keyframes gonext__blink{
+        from{
+          background-color:$action-color;
+          background-position:90% 0%;
+
+        }
+        to {
+          background-color:lighten($action-color, 10%);
+          background-position:100% 0%;
+        }
+
+
+
+      }
+
     }
   }
 }

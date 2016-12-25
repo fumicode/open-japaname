@@ -18,53 +18,23 @@ $jsb: "jnSearchBox";
     top:0;
     bottom:0;
   padding:0 0.5em;
-  font-size:inherit;
-
   height:100%;
+
+  font-size:inherit;
+  border-radius:0;
 }
 
 input[type="search"].#{$jsb}__textbox{
   display:block;
-  width:100%;
+
   margin:0;
   padding:0 0.5em;
-  font-size:inherit;
-
   height:100%;
-}
-
-/*
-
-.#{$jsb}{
-  @include clearfix();
-
-  display:block;
-  position:relative;
-
-  font-size:2.4rem;
-}
-
-
-.#{$jsb}__button{
-  display:block;
-  position:absolute;
-    right:0;
-    top:0;
-    bottom:0;
-
-  font-size:inherit;
-}
-
-input[type="search"].#{$jsb}__textbox{
-  display:block;
-
   width:100%;
-  margin:0;
 
   font-size:inherit;
+  border-radius:0;
 }
-*/
-
 
 
 
