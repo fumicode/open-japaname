@@ -1,0 +1,63 @@
+$tsc : ".topSearchContainer";
+
+#{$tsc}{
+
+  text-align:center;
+
+  width:100%;
+}
+
+#{$tsc}__table{
+
+  margin:0;
+  padding:0;
+  border:0;
+
+}
+
+
+
+#{$tsc}__row{
+
+}
+#{$tsc}__cell{
+  margin:0;
+  padding:0;
+  border:0;
+
+
+  &--risumaru{
+    width:0%;
+
+  }
+
+  &--search{
+    width:100%;
+  }
+
+}
+
+@include media($medium-screen-up){
+  #{$tsc}{
+    margin:0 auto;
+
+    width:70%;
+  }
+
+  #{$tsc}__table{
+    margin-left:-10%;
+  }
+
+  #{$tsc}__cell{
+    &--risumaru{
+      width:20%
+
+    }
+    &--search{
+      width:80%
+    }
+  }
+}
+
+
+

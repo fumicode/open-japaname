@@ -1,0 +1,40 @@
+.risumaruSearch{
+  position:relative;
+
+  left:0px;
+
+
+  animation-delay: 15s;
+  animation-duration: 3s;
+  animation-iteration-count:infinite;
+
+  animation-fill-mode: forwards;
+  animation-name: risumaruSearch__tuntun;
+}
+
+
+@keyframes risumaruSearch__tuntun{
+  0%{
+    left:0px;
+  }
+
+  50%{
+    left:0px;
+  }
+
+  70% {
+    left:10px;
+  }
+
+  80% {
+    left:5px;
+  }
+
+  90% {
+    left:10px;
+  }
+
+  100% {
+    left:0px;
+  }
+}

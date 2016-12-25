@@ -1,4 +1,4 @@
-extends /template/sub_layout
+extends /template/basic_layout
 
 block append variables
   - title = "" + original_name + " in kanji. Select from many candidates!";
@@ -7,9 +7,12 @@ block append variables
   - share_url = url; 
   - body_id = "bg-candidates";
 
-block sub-content
+block topbar
+  topbar
 
-  img(src="/images/risumaru_hang_scope_right.png" style="position:absolute;left:0;top:0;width:20%;z-index:-1000;opacity:0.8")
+block content
+
+  img.hangingRisumaru.hangingRisumaru--left(src="/images/risumaru_hang_scope_right.png" )
 
   form(id="selected-form" method="POST" action="/names")
     input(type="hidden" name="original_name" value="#{original_name}")
@@ -59,9 +62,21 @@ block sub-content
       each name_obj in name_objs
         | #{name_obj.hiragana}  
 
-
+block footer
+  include /include/footer.jade
 
 block append body-end-scripts
+
+  script(src="/javascripts/riot.min.js")
+  script(src="/riotjs/japaname-searchbox.js")
+  script(src="/riotjs/topbar.js")
+  script.
+    var topbar = riot.mount("topbar", {
+      user: !{user ? JSON.stringify(user):"null" },
+      drawLogo: true,
+      drawSearchbox:true,
+      text:"#{original_name}"
+    })[0];
 
   script(src="/javascripts/myscript.js")
 

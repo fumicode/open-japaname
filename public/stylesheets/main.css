@@ -1124,48 +1124,19 @@ div#share-this-page {
   top: 0;
   bottom: 0;
   padding: 0 0.5em;
+  height: 100%;
   font-size: inherit;
-  height: 100%; }
+  border-radius: 0; }
 
 input[type="search"].jnSearchBox__textbox {
   display: block;
-  width: 100%;
   margin: 0;
   padding: 0 0.5em;
+  height: 100%;
+  width: 100%;
   font-size: inherit;
-  height: 100%; }
+  border-radius: 0; }
 
-/*
-
-.jnSearchBox{
-  @include clearfix();
-
-  display:block;
-  position:relative;
-
-  font-size:2.4rem;
-}
-
-
-.jnSearchBox__button{
-  display:block;
-  position:absolute;
-    right:0;
-    top:0;
-    bottom:0;
-
-  font-size:inherit;
-}
-
-input[type="search"].jnSearchBox__textbox{
-  display:block;
-
-  width:100%;
-  margin:0;
-
-  font-size:inherit;
-}
-*/
 .shopThumbs__list {
   max-width: 1200px;
   margin-left: auto;
@@ -1412,6 +1383,83 @@ input[type="search"].jnSearchBox__textbox{
 .charsTable__cell {
   font-size: 20px; }
 
+.topSearchContainer {
+  text-align: center;
+  width: 100%; }
+
+.topSearchContainer__table {
+  margin: 0;
+  padding: 0;
+  border: 0; }
+
+.topSearchContainer__cell {
+  margin: 0;
+  padding: 0;
+  border: 0; }
+  .topSearchContainer__cell--risumaru {
+    width: 0%; }
+  .topSearchContainer__cell--search {
+    width: 100%; }
+
+@media screen and (min-width: 600px) {
+  .topSearchContainer {
+    margin: 0 auto;
+    width: 70%; }
+  .topSearchContainer__table {
+    margin-left: -10%; }
+  .topSearchContainer__cell--risumaru {
+    width: 20%; }
+  .topSearchContainer__cell--search {
+    width: 80%; } }
+
+.hangingRisumaru {
+  position: absolute;
+  top: -100%;
+  width: 20%;
+  z-index: -1000;
+  animation-delay: 3s;
+  animation-duration: 4s;
+  animation-direction: alternate;
+  animation-iteration-count: 3;
+  animation-fill-mode: forwards;
+  animation-name: hangingRisumaru__guiin; }
+  .hangingRisumaru--right {
+    right: 0; }
+  .hangingRisumaru--left {
+    left: 0; }
+
+@keyframes hangingRisumaru__guiin {
+  from {
+    top: -100%; }
+  to {
+    top: 0px; } }
+
+.risumaruSearch {
+  position: relative;
+  left: 0px;
+  animation-delay: 15s;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
+  animation-name: risumaruSearch__tuntun; }
+
+@keyframes risumaruSearch__tuntun {
+  0% {
+    left: 0px; }
+  50% {
+    left: 0px; }
+  70% {
+    left: 10px; }
+  80% {
+    left: 5px; }
+  90% {
+    left: 10px; }
+  100% {
+    left: 0px; } }
+
+.subLayoutArticle {
+  margin-top: 1em; }
+
 html {
   box-sizing: border-box; }
 
@@ -1518,10 +1566,25 @@ div#kanji-selected-wrapper {
         width: 100%;
         white-space: normal;
         padding: 1em;
-        background-image: url(/images/risumaru_yubi_right.png);
-        background-repeat: no-repeat;
-        background-position: right bottom;
-        background-size: contain; }
+        animation-delay: 12s;
+        animation-duration: 1s;
+        animation-direction: alternate;
+        animation-iteration-count: infinite;
+        animation-name: gonext__blink; }
+        @media screen and (min-width: 600px) {
+          div#kanji-selected-wrapper div#kanji-selected-container div#kanji-button-container button.gonext {
+            background-image: url(/images/risumaru_yubi_right.png);
+            background-repeat: no-repeat;
+            background-position: 90% bottom;
+            background-size: contain; } }
+
+@keyframes gonext__blink {
+  from {
+    background-color: #d4371c;
+    background-position: 90% 0%; }
+  to {
+    background-color: #e5563e;
+    background-position: 100% 0%; } }
 
 div#kanji-selected-container-margin {
   height: 10rem; }
