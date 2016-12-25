@@ -91,7 +91,6 @@ function stateMachine(state, input, stack){
       };
     }
 
-    
     return;
   }
   //ニュートラルな状態の場合
@@ -213,6 +212,14 @@ function stateMachine(state, input, stack){
       output:hiragana,
       next_stack :"" //スタックはリセットされる 
     };//
+  }
+  //母音が期待されてる状況で子音がきて、スタックにrがつまれていたら mark 20161225
+  else if(strContains(state,"v") && _.contains(consonants,input) && strContains(stack,"r")){
+    //!! まだ、yがつづく場合がよろしくないけど、概ねOK
+    //yが続く場合は、ここにくるまでに処理されてしまっている
+    ret = stateMachine("e", input, "");
+    ret.output = "ー" + ret.output;
+    return ret;
   }
   else{ 
     throw new Error("couldn't respond expectation" + input);

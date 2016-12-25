@@ -23,8 +23,8 @@ testJapaneseSound("Michael bond");
 testJapaneseSound("hogehog");
 testJapaneseSound("man");
 testJapaneseSound("mash");
-testJapaneseSound("mak");
-testJapaneseSound("mach");
+testJapaneseSound("mark");
+testJapaneseSound("micky");
 
 testJapaneseSound("ひらがな");
 
