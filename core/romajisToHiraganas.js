@@ -76,6 +76,13 @@ function stateMachine(state, input, stack){
         next_stack :"" //もうどうでもいいけど
       };
     }
+    else if(strContains(state,"v")){//母音を期待してる子音で終わった場合、
+      return {
+        next_state : "e", //ニュートラルにもどる。//もうどうでもいいけど
+        output: consonantToHiragana[stack][2], //う行でおわる。 mac = マク
+        next_stack :"" //もうどうでもいいけど
+      }
+    }
     else{
       return {
         next_state : "e", //ニュートラルにもどる。//もうどうでもいいけど
