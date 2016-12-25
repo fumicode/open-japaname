@@ -20,7 +20,11 @@ testJapaneseSound("james");
 
 testJapaneseSound("Michael bond");
 
-testJapaneseSound("hogehoge");
+testJapaneseSound("hogehog");
+testJapaneseSound("man");
+testJapaneseSound("mash");
+testJapaneseSound("mak");
+testJapaneseSound("mach");
 
 testJapaneseSound("ひらがな");
 
