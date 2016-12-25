@@ -16,6 +16,14 @@ var NamePointerSchema = new Schema({
 var JapanameSchema = module.exports = new Schema({
   // _id : ObjectId
   names:[NamePointerSchema] //配列であることによって、たとえば自営無頭 グリーン ができる。
+},{
+  //オブジェクトやJSONに変換するときに、virtualも変換するように設定
+  toObject:{ 
+    virtuals:true,
+  },
+  toJSON:{
+    virtuals:true,
+  }
 });
 
 JapanameSchema.plugin(autoIncrement.plugin,{model:"Japaname"});

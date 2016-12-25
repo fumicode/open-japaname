@@ -20,6 +20,7 @@ var AtejiSchema = module.exports = new mongoose.Schema({
   
   atemojis:[AtemojiSchema]
 },{
+  //オブジェクトやJSONに変換するときに、virtualも変換するように設定
   toObject:{
     virtuals:true,
   },

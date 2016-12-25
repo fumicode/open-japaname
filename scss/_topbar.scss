@@ -1,4 +1,89 @@
+$tb :".topbar";
+
+$topbar-height:5rem;
+
+#{$tb}{
+  width:100%;
+  background: $topbar-color;
+  
+
+}
+#{$tb}__container{
+  @include outer-container;
+
+  position:relative;
+  height:$topbar-height;
+}
+
+#{$tb}__table{
+  margin:0;
+  padding:0;
+  border:0;
+
+  height:$topbar-height;
+  width:100%;
+}
+
+#{$tb}__sitelogo{
+  max-height:100%;
+}
+
+#{$tb}__cell{
+  height:$topbar-height;
+  margin:0;
+  padding:0;
+  border:0;
+  vertical-align:middle;
+  &--sitelogo{
+    @include span-columns(1 of 4);
+  }
+
+  &--search{
+    @include span-columns(2 of 4);
+  }
+
+  &--userinfo{
+    @include span-columns(1 of 4);
+  }
+}
+
+#{$tb}__search{
+  height:100%;
+
+  &--focused{
+    position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
+
+  }
+}
+
+#{$tb}__userinfo{
+  height:100%;
+  line-height:$topbar-height;
+
+
+  color:white;
+  a{
+    display:block;
+    height:100%;
+    color:white;
+    &:hover{
+      color:white;
+    }
+  }
+  text-align:right;
+
+
+}
+
+
+
+/*
 #topbar {
+  
   position:relative;
   z-index:100;
 
@@ -25,9 +110,14 @@
     }
   }
 
+
   div#topbar-container{
+    #ateji-logo-hanko {
+      height:100%;
+    }
     #japaname-logo-small{
-      height:3em;
+      max-height:100%;
+
     }
 
     @include outer-container();
@@ -113,4 +203,5 @@ div#topbar.searching{
     }
   }
 }
+*/
 

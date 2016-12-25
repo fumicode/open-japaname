@@ -1,9 +1,7 @@
-mixin ateji_search(original_name,  placeholder, button, focus)
-  form.jnSearchBox(role="search" method="get" action="/names/candidates/")
-    input.jnSearchBox__textbox(id="original_name" name="original_name" type="search" placeholder="#{placeholder || 'Enter Your Name'}" value ="#{original_name || ''}")
-
+mixin ateji_search(original_name,  placeholder, button, focus, fontSize, height)
+  form.jnSearchBox(role="search" method="get" action="/names/candidates/" style="font-size:#{fontSize ||'3rem' };height:#{height || '5rem'}")
     button.jnSearchBox__button(type="submit") #{button || "Go!"}
-
+    input.jnSearchBox__textbox(id="original_name" name="original_name" type="search" placeholder="#{placeholder || 'Enter Your Name'}" value ="#{original_name || ''}")
 
   if focus
     script(type="text/javascript").

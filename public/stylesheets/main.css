@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 /**
  * 1. Set default font family to sans-serif.
@@ -701,109 +702,203 @@ div form.ateji-search {
     padding: 0 0.75em;
     font-size: 0.8em; }
 
-#topbar {
-  position: relative;
-  z-index: 100;
-  margin-bottom: 1em;
+.topbar {
   width: 100%;
-  height: auto;
-  box-shadow: black 0px 0px 20px;
   background: #b28f44; }
-  #topbar.searching-topbar div#topbar-container #ateji-logo-hanko {
-    display: none; }
-  #topbar.searching-topbar div#topbar-container #topbar-ateji-search {
+
+.topbar__container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  height: 5rem; }
+  .topbar__container::after {
+    clear: both;
+    content: "";
+    display: table; }
+
+.topbar__table {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  height: 5rem;
+  width: 100%; }
+
+.topbar__sitelogo {
+  max-height: 100%; }
+
+.topbar__cell {
+  height: 5rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: middle; }
+  .topbar__cell--sitelogo {
     float: left;
     display: block;
     margin-right: 2.85714%;
-    width: 100%; }
-    #topbar.searching-topbar div#topbar-container #topbar-ateji-search:last-child {
+    width: 22.85714%; }
+    .topbar__cell--sitelogo:last-child {
       margin-right: 0; }
-  #topbar.searching-topbar div#topbar-container #user-info {
-    display: none; }
-  #topbar div#topbar-container {
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto; }
-    #topbar div#topbar-container #japaname-logo-small {
-      height: 3em; }
-    #topbar div#topbar-container::after {
-      clear: both;
-      content: "";
-      display: table; }
-    #topbar div#topbar-container #ateji-logo-hanko {
-      float: left;
-      display: block;
-      margin-right: 2.85714%;
-      width: 22.85714%;
-      height: 2em; }
-      #topbar div#topbar-container #ateji-logo-hanko:last-child {
-        margin-right: 0; }
-    #topbar div#topbar-container #topbar-ateji-search {
-      float: left;
-      display: block;
-      margin-right: 2.85714%;
-      width: 48.57143%; }
-      #topbar div#topbar-container #topbar-ateji-search:last-child {
-        margin-right: 0; }
-    #topbar div#topbar-container #user-info {
-      float: left;
-      display: block;
-      margin-right: 2.85714%;
-      width: 22.85714%;
-      margin-right: 0;
-      float: right; }
-      #topbar div#topbar-container #user-info:last-child {
-        margin-right: 0; }
-    @media screen and (min-width: 600px) {
-      #topbar div#topbar-container #ateji-logo-hanko {
-        float: left;
-        display: block;
-        margin-right: 2.85714%;
-        width: 22.85714%; }
-        #topbar div#topbar-container #ateji-logo-hanko:last-child {
-          margin-right: 0; }
-      #topbar div#topbar-container #topbar-ateji-search {
-        float: left;
-        display: block;
-        margin-right: 2.85714%;
-        width: 48.57143%;
-        display: block; }
-        #topbar div#topbar-container #topbar-ateji-search:last-child {
-          margin-right: 0; }
-      #topbar div#topbar-container #user-info {
-        float: left;
-        display: block;
-        margin-right: 2.85714%;
-        width: 22.85714%;
-        margin-right: 0;
-        float: right; }
-        #topbar div#topbar-container #user-info:last-child {
-          margin-right: 0; } }
-    #topbar div#topbar-container #user-info {
-      overflow: hidden;
-      white-space: nowrap;
-      line-height: auto;
-      text-align: right;
-      font-size: 2.1rem;
+  .topbar__cell--search {
+    float: left;
+    display: block;
+    margin-right: 2.85714%;
+    width: 48.57143%; }
+    .topbar__cell--search:last-child {
+      margin-right: 0; }
+  .topbar__cell--userinfo {
+    float: left;
+    display: block;
+    margin-right: 2.85714%;
+    width: 22.85714%; }
+    .topbar__cell--userinfo:last-child {
+      margin-right: 0; }
+
+.topbar__search {
+  height: 100%; }
+  .topbar__search--focused {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; }
+
+.topbar__userinfo {
+  height: 100%;
+  line-height: 5rem;
+  color: white;
+  text-align: right; }
+  .topbar__userinfo a {
+    display: block;
+    height: 100%;
+    color: white; }
+    .topbar__userinfo a:hover {
       color: white; }
-      #topbar div#topbar-container #user-info a {
-        padding-right: 1rem;
-        color: white; }
 
-div#topbar.searching div#topbar-container #ateji-logo-hanko {
-  display: none; }
+/*
+#topbar {
+  
+  position:relative;
+  z-index:100;
 
-div#topbar.searching div#topbar-container #topbar-ateji-search {
-  float: left;
-  display: block;
-  margin-right: 2.85714%;
-  width: 100%; }
-  div#topbar.searching div#topbar-container #topbar-ateji-search:last-child {
-    margin-right: 0; }
+  margin-bottom:1em;
+  width:100%;
+  height:$topbar-height;
 
-div#topbar.searching div#topbar-container #user-info {
-  display: none; }
+  box-shadow: black 0px 0px 20px;
+  background: $topbar-color;
 
+  &.searching-topbar{
+
+    div#topbar-container{
+      #ateji-logo-hanko {
+        display:none;
+      }
+      #topbar-ateji-search{
+        @include span-columns(4);
+
+      }
+      #user-info{
+        display:none;
+      }
+    }
+  }
+
+
+  div#topbar-container{
+    #ateji-logo-hanko {
+      height:100%;
+    }
+    #japaname-logo-small{
+      max-height:100%;
+
+    }
+
+    @include outer-container();
+
+    /////////////////layout settings///////////////////
+    #ateji-logo-hanko {
+      @include span-columns(1);
+
+      height:2em;
+    }
+    #topbar-ateji-search{
+      @include span-columns(2);
+    }
+    #user-info{
+      @include span-columns(1);
+      @include omega;
+      float:right;
+    }
+
+
+    @include media($medium-screen-up){ //4
+      #ateji-logo-hanko {
+        @include span-columns(1);
+      }
+      #topbar-ateji-search{
+        @include span-columns(2);
+        display:block;
+      }
+      #user-info{
+        @include span-columns(1);
+        @include omega;
+        float:right;
+      }
+
+    }
+
+
+    ///////////////other styles////////////////////
+
+
+    #topbar-ateji-search{
+
+      form{
+        input[type="text"]{
+        }
+        button{
+        }
+      }
+
+    }
+
+    #user-info{
+
+      overflow:hidden;
+      white-space: nowrap;
+        
+      line-height:$topbar-height; //上下センタリング
+      text-align:right;
+      font-size:2.1rem;
+
+      color:white;
+      a{
+        padding-right:$body-side-margin;
+        color:white;
+      }
+    }
+
+
+  }
+}
+
+div#topbar.searching{
+
+  div#topbar-container{
+    #ateji-logo-hanko {
+      display:none;
+    }
+    #topbar-ateji-search{
+      @include span-columns(4);
+    }
+    #user-info{
+      display:none;
+    }
+  }
+}
+*/
 footer#page-footer {
   display: block;
   padding-left: 1rem;
@@ -1015,41 +1110,62 @@ div#share-this-page {
       color: black; }
 
 .jnSearchBox {
-  padding: 0;
-  border-bottom: 2px solid;
-  font-size: 3rem;
-  background: white;
-  position: relative;
-  overflow: hidden; }
+  display: block;
+  position: relative; }
   .jnSearchBox::after {
     clear: both;
     content: "";
     display: table; }
-
-input[type="search"].jnSearchBox__textbox {
-  display: block;
-  border: 0;
-  box-shadow: none;
-  border-radius: 0;
-  width: auto;
-  padding: 0.9rem;
-  margin: 0;
-  height: 4.8rem;
-  line-height: 1;
-  font-size: 3rem; }
 
 .jnSearchBox__button {
   display: block;
   position: absolute;
   right: 0;
   top: 0;
-  box-sizing: border-box;
-  border-radius: 0;
-  height: 4.8rem;
-  padding: 0.9rem;
-  width: auto;
-  line-height: 1; }
+  bottom: 0;
+  padding: 0 0.5em;
+  font-size: inherit;
+  height: 100%; }
 
+input[type="search"].jnSearchBox__textbox {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0 0.5em;
+  font-size: inherit;
+  height: 100%; }
+
+/*
+
+.jnSearchBox{
+  @include clearfix();
+
+  display:block;
+  position:relative;
+
+  font-size:2.4rem;
+}
+
+
+.jnSearchBox__button{
+  display:block;
+  position:absolute;
+    right:0;
+    top:0;
+    bottom:0;
+
+  font-size:inherit;
+}
+
+input[type="search"].jnSearchBox__textbox{
+  display:block;
+
+  width:100%;
+  margin:0;
+
+  font-size:inherit;
+}
+*/
 .shopThumbs__list {
   max-width: 1200px;
   margin-left: auto;
@@ -1356,7 +1472,7 @@ div#index-logo-container {
 
 div#kanji-selected-wrapper {
   position: fixed;
-  top: auto;
+  top: 5rem;
   left: 0;
   right: 0;
   z-index: 900;

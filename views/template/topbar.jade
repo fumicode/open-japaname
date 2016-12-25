@@ -1,49 +1,37 @@
-mixin topbar(logo_hanko, search_box, original_name) 
-  div#topbar 
-    div#topbar-container
-      //トップなどではオフにする
-      //if logo_hanko 
-      div#ateji-logo-hanko
-        if logo_hanko
-          a(href="/")
-            img#japaname-logo-small(src="/images/japaname_logo_1024.png" alt="Go to top")
-      //検索
-      div#topbar-ateji-search
-        if search_box
-          include /include/ateji_search
-          +ateji_search(original_name || "" )
+mixin topbar(logo, search_box, original_name) 
+  div.topbar 
+    div.topbar__container
+      table.topbar__table
+        tr
+          td.topbar__cell.topbar__cell--sitelogo
+            if logo
+              a(href="/")
+                img.topbar__sitelogo(src="/images/japaname_logo_1024.png" alt="Go to top")
+          td.topbar__cell.topbar__cell--search
+            div.topbar__search
+              if search_box
+                include /include/ateji_search
+                +ateji_search(original_name || "",  null , null, false, "3rem", "100%")
 
-      //右上のユーザー
-      div#user-info
-        if debugging
-          |debug mode
-        if user
-          a(href="/mypage") #{user.my_japaname && user.my_japaname.string || user.username }
-          span(style="font-size:0.7em") 様
-
-        else
-          a(href="/auth")
-            |Guest
-
+          td.topbar__cell.topbar__cell--userinfo
+            div.topbar__userinfo
+              if user
+                a(href="/mypage") #{user.my_japaname && user.my_japaname.string || user.username }
+                span(style="font-size:0.7em") 様
+              else
+                a(href="/auth")
+                  |Guest
+        
 
 
   script(type="text/javascript ").
-    function ready_func (){
-      //読み込み後ならjqueryつかってよし
-      var $topbar = $("#topbar");
-      var $searchbox = $("#topbar").find("#original_name");
+    var searchBox = document.getElementsByClassName("topbar__search")[0];
+    var searchText = document.getElementsByClassName("jnSearchBox__textbox")[0];
+    var searchButton= document.getElementsByClassName("jnSearchBox__button")[0];
 
-      $searchbox.focus(function(){
-        $topbar.addClass("searching");
-      })
-      .blur(function(){
-        $topbar.removeClass("searching");
-      });
+    searchText.onfocus =  function(){
+      searchBox.className = "topbar__search topbar__search--focused";
     }
-    if( window.addEventListener ){
-      window.addEventListener('load', ready_func);
-    }else if( window.attachEvent ){
-      window.attachEvent('onload', ready_func);
-    }
+
 
 

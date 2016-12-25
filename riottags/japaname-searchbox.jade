@@ -1,0 +1,18 @@
+japaname-searchbox
+  form.jnSearchBox(role="search" method="get" action="/names/candidates/" style="font-size:{opts.fontSize ||'3rem' };height:{opts.height || '5rem'}")
+    button.jnSearchBox__button(type="submit" name="japaname_search_button" onfocus="{buttonFocused}") {opts.button || "Go!"}
+    input.jnSearchBox__textbox(id="original_name" name="original_name" 
+      type="search" placeholder="{opts.placeholder || 'Enter Your Name'}" 
+      value="{opts.text || ''}" onfocus="{opts.onfocus}" onblur="{opts.onblur}")
+
+  script.
+    if(opts.focus){
+      window.onload = function(){
+        this.original_name.focus();
+      }
+    }
+
+    buttonFocused(e){
+      this.japaname_search_button.click();
+    }
+

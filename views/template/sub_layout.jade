@@ -5,8 +5,7 @@ block append variables
   - body_class = (body_class || "") + " topbar-margin";
 
 block topbar
-  include /template/topbar
-  +topbar(true, true, original_name)
+  topbar
 
 block content 
   include /template/flash_messages
@@ -20,3 +19,14 @@ block footer
 
 
 block append body-end-scripts
+
+  script(src="/javascripts/riot.min.js")
+  script(src="/riotjs/japaname-searchbox.js")
+  script(src="/riotjs/topbar.js")
+  script.
+    var topbar = riot.mount("topbar", {
+      user: !{user ? JSON.stringify(user):"null" },
+      drawLogo: true,
+      drawSearchbox:true,
+      text:"#{original_name}"
+    })[0];
