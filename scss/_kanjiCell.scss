@@ -1,0 +1,35 @@
+.kanjiCell{
+
+  width:1.5em;
+
+  vertical-align:top;
+  font-size:80px;
+  text-align:center;
+  line-height:1;
+
+  border-radius:40px;
+  &--using{
+    background:rgba(255,255,255,0.4);
+  }
+}
+
+
+.kanjiCell__meanings{
+  display:none;
+  font-size:20px;
+}
+
+//例外的だが、入れ子の書き方
+.syllablesTable__headRow--using {
+  .kanjiCell__meanings{
+    display:block;
+  }
+}
+
+//例外的だが、入れ子の書き方
+.kanjiCell--using {
+  .kanjiCell__meanings{
+    display:block;
+  }
+}
+

@@ -1,0 +1,76 @@
+
+extends /template/basic_layout
+
+block append variables
+  - title = "" + original_name + " in kanji. Select from many candidates!";
+  - description = "Japaname candidates of "+ original_name +". Select kanji you like from many candidates which fits your name sound. You can choose your kanji by meanings or shape of kanji.";
+  - tweet =  "Kanji candidates of " + original_name;
+  - share_url = url; 
+  - body_id = "bg-candidates";
+
+block topbar
+  topbar
+
+block content
+
+
+
+
+
+  candidate-table
+
+    
+
+
+block footer
+  include /include/footer.jade
+
+block append body-end-scripts
+
+  script(src="/javascripts/riot.min.js")
+  script(src="/riotjs/japaname-searchbox.js")
+  script(src="/riotjs/topbar.js")
+  script.
+    var topbar = riot.mount("topbar", {
+      user: !{user ? JSON.stringify(user):"null" },
+      drawLogo: true,
+      drawSearchbox:true,
+      text:"#{original_name}"
+    })[0];
+
+  script(src="/riotjs/candidate-table.js")
+
+  script.
+    var candidateTable = riot.mount("candidate-table", {
+      syllables: !{JSON.stringify(name_objs[0].syllables)}
+    });
+    
+
+
+  // なぜかいきなりトップにもどるスクロール我発生する謎のバグ
+  // Bitters いれたらなったきがする。ガチで意味分からん。むかつく。
+
+  script.
+    $(function(){
+
+      $topbar = $("#topbar");
+      $kanjiSelected = $("#kanji-selected-wrapper");
+      $body = $("body");
+
+      $(window).scroll(function () {
+        var scrolltop = $(window).scrollTop(); 
+        
+        if(scrolltop > 0) {
+          //トップバーを消す
+          $topbar.hide();
+          $kanjiSelected.addClass("notopbar");
+        } else {
+          //トップバーを復活
+          $topbar.show();
+          $kanjiSelected.removeClass("notopbar");
+        }
+      });
+    });
+
+  script(src="https://use.typekit.net/yjx8eou.js")
+  script try{Typekit.load({ async: true });}catch(e){}

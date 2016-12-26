@@ -1,0 +1,26 @@
+
+.syllablesTable{
+  width:100%;
+  margin:0;padding:0;border:0;
+}
+
+.syllablesTable__headRow{
+  &--using{
+  }
+
+  .syllablesTable__headCell{
+    text-align:center;
+    margin:0;padding:0;border:0;
+  }
+}
+
+.syllablesTable__kanjisRow{
+
+  .syllablesTable__kanjisCell{
+    margin:0;padding:0;border:0;
+    width:100%;
+    overflow-x:scroll;
+    text-align:center;
+  }
+}
+

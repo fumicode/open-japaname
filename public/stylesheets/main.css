@@ -1126,7 +1126,8 @@ div#share-this-page {
   padding: 0 0.5em;
   height: 100%;
   font-size: inherit;
-  border-radius: 0; }
+  border-radius: 0;
+  -webkit-appearance: none; }
 
 input[type="search"].jnSearchBox__textbox {
   display: block;
@@ -1135,7 +1136,8 @@ input[type="search"].jnSearchBox__textbox {
   height: 100%;
   width: 100%;
   font-size: inherit;
-  border-radius: 0; }
+  border-radius: 0;
+  -webkit-appearance: none; }
 
 .shopThumbs__list {
   max-width: 1200px;
@@ -1459,6 +1461,60 @@ input[type="search"].jnSearchBox__textbox {
 
 .subLayoutArticle {
   margin-top: 1em; }
+
+.syllablesTable {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0; }
+
+.syllablesTable__headRow .syllablesTable__headCell {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  border: 0; }
+
+.syllablesTable__kanjisRow .syllablesTable__kanjisCell {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: 100%;
+  overflow-x: scroll;
+  text-align: center; }
+
+.kanjisList {
+  overflow: hidden;
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  width: auto;
+  table-layout: fixed; }
+
+.kanjisList__item {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: 1.5em; }
+
+.kanjiCell {
+  width: 1.5em;
+  vertical-align: top;
+  font-size: 80px;
+  text-align: center;
+  line-height: 1;
+  border-radius: 40px; }
+  .kanjiCell--using {
+    background: rgba(255, 255, 255, 0.4); }
+
+.kanjiCell__meanings {
+  display: none;
+  font-size: 20px; }
+
+.syllablesTable__headRow--using .kanjiCell__meanings {
+  display: block; }
+
+.kanjiCell--using .kanjiCell__meanings {
+  display: block; }
 
 html {
   box-sizing: border-box; }
