@@ -13,13 +13,7 @@ block topbar
 
 block content
 
-
-
-
-
   candidate-table
-
-    
 
 
 block footer
@@ -27,6 +21,7 @@ block footer
 
 block append body-end-scripts
 
+  script(src="/javascripts/underscore-min.js")
   script(src="/javascripts/riot.min.js")
   script(src="/riotjs/japaname-searchbox.js")
   script(src="/riotjs/topbar.js")
@@ -39,10 +34,15 @@ block append body-end-scripts
     })[0];
 
   script(src="/riotjs/candidate-table.js")
+  script(src="/javascripts/AtejiSelector.js")
 
   script.
+    var syllables = !{JSON.stringify(name_objs[0].syllables)};
+
+    var atejiSelector = new AtejiSelector(syllables);
+
     var candidateTable = riot.mount("candidate-table", {
-      syllables: !{JSON.stringify(name_objs[0].syllables)}
+      syllables: syllables
     });
     
 
@@ -74,3 +74,4 @@ block append body-end-scripts
 
   script(src="https://use.typekit.net/yjx8eou.js")
   script try{Typekit.load({ async: true });}catch(e){}
+

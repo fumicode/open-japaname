@@ -1516,6 +1516,12 @@ input[type="search"].jnSearchBox__textbox {
 .kanjiCell--using .kanjiCell__meanings {
   display: block; }
 
+.otherSyllableCell {
+  height: 100%;
+  width: 80px;
+  vertical-align: top;
+  background: red; }
+
 html {
   box-sizing: border-box; }
 
