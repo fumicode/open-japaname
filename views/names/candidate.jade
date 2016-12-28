@@ -42,7 +42,7 @@ block append body-end-scripts
     var atejiSelector = new AtejiSelector(syllables);
 
     var candidateTable = riot.mount("candidate-table", {
-      syllables: syllables
+      atejiSelector: atejiSelector
     });
     
 
