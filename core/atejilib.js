@@ -748,6 +748,7 @@ atejilib.meaningsOfKanji= function (kanji){
   return {kanji:kanji, meanings:meanings};
 };
 
+
 atejilib.addMeaningToSyllables = function(syllables){
   for(var i = 0; i < syllables.length; i++){
     var syllable = syllables[i];
@@ -763,11 +764,11 @@ atejilib.addMeaningToSyllables = function(syllables){
 };
 
 atejilib.addMeaningsToAtejis =function (atejis){
-  _(atejis).each(function(ateji){
+  (atejis).each(function(ateji){
     ateji.meanings = atejilib.meaningsOfKanji(ateji.kanji).meanings; 
   });
 
-  return;
+  return atejis;
 };
 
 atejilib.convertKanaToRomajiOfAtejis = function(atejis){

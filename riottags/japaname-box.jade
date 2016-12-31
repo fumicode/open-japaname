@@ -1,6 +1,7 @@
 japaname-box
   table.atejiBox
-    col.atejiBox__col(each="{ji in atejis}" span="1")
+    col.atejiBox__col(each="{syllable in syllables}" span="1" 
+      class="{syllable == usingSyllable ? 'atejiBox__col--using':''}")
     tbody
       tr.atejiBox__line
         td.atejiBox__cell.atejiBox__cell--kanji(each="{ji in atejis}") {ji.kanji} 
@@ -15,11 +16,19 @@ japaname-box
     console.log("-----japaname box mounting-----");
     console.log(opts);
 
+    if(!opts.atejiSelector){
+      return;
+    }
+
     this.atejiSelector = opts.atejiSelector;
     this.showMeanings = opts.showMeanings === undefined ? true:!!opts.showMeanings;
 
     this.atejis = this.atejiSelector.getCurrentKanjis();
-    
+
+
+    this.syllables = this.atejiSelector.getSelectedSyllables();
+    this.usingSyllable = this.atejiSelector.getUsingSyllable();
+
 
     var this_tag = this;
     this.atejiSelector.on("kanjichanged",function(atejis){
@@ -29,5 +38,7 @@ japaname-box
 
 
     this.on("update",function(){
+      this.syllables = this.atejiSelector.getSelectedSyllables();
+      this.usingSyllable = this.atejiSelector.getUsingSyllable();
     });
 

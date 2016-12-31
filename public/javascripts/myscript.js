@@ -9,7 +9,6 @@ $(function(){
 
     $that.trigger("change2", {checked:true}); //true
 
-
     var otherColumn = $(".kana-radiobox[name=" + name + "]").not($that);
     otherColumn.trigger("change2", {checked:false}); //true
 

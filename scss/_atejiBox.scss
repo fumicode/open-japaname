@@ -9,7 +9,27 @@ $kanji-font-family:serif;
 }
 
 .atejiBox__col{
+
+  &--using{
+    background:#fff2cc;
+
+
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+    animation-name: usingKanji__suun;
+  }
+
 }
+
+@keyframes usingKanji__suun{
+  from{
+    background:rgba(255,250,130,1.0);
+  }
+  to{
+    background:rgba(255,250,130,0.0);
+  }
+}
+
 
 .atejiBox__col:last-of-type{
 }

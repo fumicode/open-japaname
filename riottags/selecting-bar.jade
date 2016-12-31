@@ -1,13 +1,57 @@
 selecting-bar
-  div.selectingKanji
+  div.selectingKanji(class="{ontop ? 'selectingKanji--ontop':''}")
     div.selectingKanji__container
-      div.selectingKanji__col--box
-        yield(from="content")
+      div.selectingKanji__col--box(onclick="{toggle}")
+        p.selectingKanji__original {opts.original_name} &raquo; 
+
+        div.horizonScroller
+          japaname-box
 
       div.selectingKanji__col--button
-        button.goNextButton &raquo;Go<br>Next!
+        gonext-button
 
   script.
-    console.log("selecting bar mounting");
-    console.log(opts);
+    this.ontop = true;
+    this.on("mount",function(){
+      var japanameBox = riot.mount("japaname-box",{
+        atejiSelector:opts.atejiSelector,
+        showMeanings:opts.showMeanings
+      })[0];
+      console.log("japaame box mounted");
+      console.log(japanameBox);
+    });
+
+    var this_tag = this;
+
+    window.onscroll = function(){
+      var scrollTop = window.pageYOffset;
+      if(scrollTop != 0){
+        this_tag.ontop = true;
+      }
+      else{
+        this_tag.ontop = false;
+      }
+      this_tag.update();
+    }
+
+    open(){
+      this.ontop = false;
+      window.scrollTo(0,0);
+    }
     
+    close(){
+      this.ontop = true;
+      window.scrollTo(0,1);
+    }
+
+    toggle(){
+      if(this.ontop){
+        this.open();
+      }
+      else{
+        this.close();
+      }
+    }
+
+
+

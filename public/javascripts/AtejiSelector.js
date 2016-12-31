@@ -1,6 +1,7 @@
 class AtejiSelector{
-  constructor(syllables){
+  constructor(syllables, original_name){
     riot.observable(this);
+    this.original_name = original_name;
 
     this.syllables = syllables;
 
@@ -19,12 +20,22 @@ class AtejiSelector{
 
   }
 
+  getOriginalName(){
+    return this.original_name;
+  }
+
   getSelectedSyllables(){
     return this.selectedSyllables;
   }
 
+  getUsingSyllable(){
+    return this.usingSyllable;
+  }
+
   useSyllable(syllable) {
     this.usingSyllable = syllable;
+
+    this.trigger("kanjichanged",this.getCurrentKanjis());
   }
 
   useKanji(syllable, kanji){
@@ -38,6 +49,7 @@ class AtejiSelector{
       return {
         kanji: syllable.usingKanji.kanji,
         romaji: syllable.romaji,
+        kana: syllable.kana,
         meanings: syllable.usingKanji.meanings,
       };
     });
@@ -47,6 +59,16 @@ class AtejiSelector{
   changeSyllable(needed_syllable){
     this.selectedSyllables = AtejiSelector._changeSyllable(this.selectedSyllables, needed_syllable, this.index2Sylls)
 
+  }
+
+  getSubmitKanjis(e){
+    var kanjis = _(this.getCurrentKanjis()).map(function(kanji){
+      return {
+        kana: kanji.kana ,
+        kanji:kanji.kanji
+      }
+    });
+    return kanjis;
   }
 
   static _changeSyllable(current_route, needed_syllable, index2Sylls){
@@ -100,10 +122,6 @@ class AtejiSelector{
     }
 
     return new_route;
-  }
-
-  getUsingSyllable(){
-    return this.usingSyllable;
   }
 
   static getOtherSylls(syll, index2Sylls){

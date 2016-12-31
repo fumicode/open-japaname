@@ -11,23 +11,19 @@ block topbar
   topbar
 
 block content
-
   div.selectingKanji__margin(style="height:10rem")
 
+
+
   selecting-bar 
-    #{'yield'}(to="content")
-      p.selectingKanji__original #{original_name} &raquo; 
-
-  div.horizonScroller
-    japaname-box
-
   candidate-table
+  gonext-button
+
 
 block footer
-  include /include/footer.jade
+  //include /include/footer.jade
 
 block append body-end-scripts
-
   script(src="/javascripts/underscore-min.js")
   script(src="/javascripts/riot.min.js")
   script(src="/riotjs/japaname-searchbox.js")
@@ -35,55 +31,48 @@ block append body-end-scripts
   script(src="/riotjs/japaname-box.js")
   script(src="/riotjs/candidate-table.js")
   script(src="/riotjs/selecting-bar.js")
+  script(src="/riotjs/gonext-button.js")
   script(src="/javascripts/AtejiSelector.js")
 
   script.
     var topbar = riot.mount("topbar", {
       user: !{user ? JSON.stringify(user):"null" },
       drawLogo: true,
-      drawSearchbox:true,
-      text:"#{original_name}"
+      buttonText: "Change",
+      searchFontSize: "2rem",
+      drawSearchbox: true,
+      text: "#{original_name}"
     })[0];
 
     var syllables = !{JSON.stringify(name_objs[0].syllables)};
-    var atejiSelector = new AtejiSelector(syllables);
+    var atejiSelector = new AtejiSelector(syllables,"#{original_name}");
 
-    var japanameBox = riot.mount("japaname-box",{
+    var selectingBar = riot.mount("selecting-bar",{
+      original_name:"#{original_name}",
       atejiSelector:atejiSelector,
       showMeanings:false
-    })[0];
-
-    var selectingBar = riot.mount("selecting-bar")[0]; 
-
+      
+    })[0]; 
 
     var candidateTable = riot.mount("candidate-table", {
       atejiSelector: atejiSelector
     });
 
+    var gonextButto = riot.mount("gonext-button", {
+      atejiSelector: atejiSelector
+    });
+
+    window.onload=function(){
+      setTimeout(function(){
+        window.scrollTo(0,1);
+
+      },100);
+    }
+
   // なぜかいきなりトップにもどるスクロール我発生する謎のバグ
   // Bitters いれたらなったきがする。ガチで意味分からん。むかつく。
 
-  script.
-    $(function(){
-
-      $topbar = $("#topbar");
-      $kanjiSelected = $("#kanji-selected-wrapper");
-      $body = $("body");
-
-      $(window).scroll(function () {
-        var scrolltop = $(window).scrollTop(); 
-        
-        if(scrolltop > 0) {
-          //トップバーを消す
-          $topbar.hide();
-          $kanjiSelected.addClass("notopbar");
-        } else {
-          //トップバーを復活
-          $topbar.show();
-          $kanjiSelected.removeClass("notopbar");
-        }
-      });
-    });
+    
 
   script(src="https://use.typekit.net/yjx8eou.js")
   script try{Typekit.load({ async: true });}catch(e){}

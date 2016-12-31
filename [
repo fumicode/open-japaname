@@ -1,0 +1,24 @@
+gonext-button
+  form(id="gonext-form" method="POST" action="/names")
+    input(type="hidden" name="original_name" value="#{original_name}")
+    input(type="hidden" name="ateji_json"  value="")
+
+  button.goNextButton(onclick="{registerAteji}") &raquo;Go<br>Next!
+
+
+  script.
+
+    var this_tag = this;
+    this.atejiSelector  = opts.atejiSelector;
+
+    ateji
+
+    registerAteji(){
+      var submitKanji = this_tag.atejiSelector.getSubmitKanjis();
+
+      submitKanji()
+      this_tag["original_name"] = "jonathan";
+      this_tag["ateji_json"] = JSON.stringify(submitKanji);
+
+      this_tag["gonext-form"].submit();
+    }

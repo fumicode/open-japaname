@@ -72,7 +72,7 @@ names_router.post('/', function(req, res, next) {
     //atejiってのも、atemojisが正確な表現
 
     var original_name = req.body.original_name;
-    var ateji         = JSON.parse(req.body.ateji);
+    var ateji         = JSON.parse(req.body.ateji_json);
 
     console.log(ateji); //JSON [{kana,kanji,sylindex}]
     var newJapaname = yield Japaname.createNew([{original:original_name, ateji}]);
@@ -125,17 +125,13 @@ names_router.get('/candidates/:original_name', function(req, res, next) {
       return;
     }
 
-
     var original_names = original_name.split(/[ ,　,\,,\|,\\,\/]+/);
-
     var nullify = err => Promise.resolve(null); 
-
     var translated_names = yield _(original_names).map(function(original_name){
       return atejilib.toJapaneseSound(original_name).catch(nullify);
     });
 
     var succeeded_names = _(translated_names).filter(a=>a); //falseになるもの(null)は排除される
-
     if(succeeded_names.length < 1){
       return res.render("japaname_not_found", {original_name});
     }
@@ -150,19 +146,12 @@ names_router.get('/candidates/:original_name', function(req, res, next) {
 
       //ローマ字 ほんとはこんなに単純じゃないけど
       var romajis_array = _(hiragana_nosmall).map(atejilib.hiraganasToRomajis);
-      
-
       var obj = atejilib.atejiSyllables(hiragana);
-      // obj =   length syllables hiragana_str_nosmall
-    
       var syllables = obj.syllables;
-
-
       atejilib.addMeaningToSyllables(syllables);
 
       //テーブルをつくる そんなことはクライアントでriotでよろしくやるさ
       //var syllablesTable = atejilib.arrangeSyllablesTable(syllables, obj.length);
-
       return {
         original_name,
         hiragana,

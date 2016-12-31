@@ -7,10 +7,17 @@ $sk :".selectingKanji";
     right:0;
     z-index:900;
 
-  background-color:rgba(255,255,255,0.8);
+  background-color:rgba(255,255,255,0.9);
 
+  transition-property: top;
+  transition-duration: 0.3s;
+
+  &--ontop{
+    top:0;
+
+    transition-property: top;
+  }
 }
-
 
 
 #{$sk}__container {
