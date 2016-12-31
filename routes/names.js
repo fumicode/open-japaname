@@ -173,6 +173,7 @@ names_router.get('/candidates/:original_name', function(req, res, next) {
     });
 
     res.render("names/candidate",{
+      original_name,
       name_objs
     });
 

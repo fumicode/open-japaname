@@ -15,6 +15,11 @@
 }
 
 .syllablesTable__kanjisRow{
+  color:#aaa;
+
+  &--using{
+    color:#000;
+  }
 
   .syllablesTable__kanjisCell{
     margin:0;padding:0;border:0;

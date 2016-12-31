@@ -1,0 +1,23 @@
+
+.goNextButton {
+  text-align:left;
+  box-sizing:border-box;
+  width:100%;
+  white-space:normal;
+  padding:1em;
+
+  @include media($medium-screen-up){
+
+    background-image:url(/images/risumaru_yubi_right.png);
+    background-repeat:no-repeat;
+    background-position:90% bottom;
+    background-size:contain;
+  }
+
+  animation-delay: 12s;
+  animation-duration: 1s;
+  animation-direction: alternate;
+  animation-iteration-count:infinite;
+
+  animation-name: gonext__blink
+}

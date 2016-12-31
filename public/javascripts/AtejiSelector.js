@@ -1,7 +1,8 @@
 class AtejiSelector{
   constructor(syllables){
-    this.syllables = syllables;
+    riot.observable(this);
 
+    this.syllables = syllables;
 
     var twin = AtejiSelector.generateIndex2Sylls(this.syllables);
     this.index2Sylls = twin.index2Sylls ;
@@ -28,7 +29,20 @@ class AtejiSelector{
 
   useKanji(syllable, kanji){
     syllable.usingKanji = kanji;
+
+    this.trigger("kanjichanged",this.getCurrentKanjis());
   }
+
+  getCurrentKanjis(){
+    return  _(this.selectedSyllables).map((syllable)=>{
+      return {
+        kanji: syllable.usingKanji.kanji,
+        romaji: syllable.romaji,
+        meanings: syllable.usingKanji.meanings,
+      };
+    });
+  }
+
 
   changeSyllable(needed_syllable){
     this.selectedSyllables = AtejiSelector._changeSyllable(this.selectedSyllables, needed_syllable, this.index2Sylls)

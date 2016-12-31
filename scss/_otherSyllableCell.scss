@@ -3,5 +3,11 @@
   width:80px;
 
   vertical-align:top;
-  background:red;
+
+  &__part{
+    background:#999;
+    border-radius:5px;
+    margin-bottom:2px;
+    
+  }
 }

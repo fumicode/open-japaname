@@ -1,0 +1,13 @@
+selecting-bar
+  div.selectingKanji
+    div.selectingKanji__container
+      div.selectingKanji__col--box
+        yield(from="content")
+
+      div.selectingKanji__col--button
+        button.goNextButton &raquo;Go<br>Next!
+
+  script.
+    console.log("selecting bar mounting");
+    console.log(opts);
+    

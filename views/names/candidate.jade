@@ -1,4 +1,3 @@
-
 extends /template/basic_layout
 
 block append variables
@@ -6,15 +5,23 @@ block append variables
   - description = "Japaname candidates of "+ original_name +". Select kanji you like from many candidates which fits your name sound. You can choose your kanji by meanings or shape of kanji.";
   - tweet =  "Kanji candidates of " + original_name;
   - share_url = url; 
-  - body_id = "bg-candidates";
+  - body_id = "bg-white";
 
 block topbar
   topbar
 
 block content
 
-  candidate-table
+  div.selectingKanji__margin(style="height:10rem")
 
+  selecting-bar 
+    #{'yield'}(to="content")
+      p.selectingKanji__original #{original_name} &raquo; 
+
+  div.horizonScroller
+    japaname-box
+
+  candidate-table
 
 block footer
   include /include/footer.jade
@@ -25,6 +32,11 @@ block append body-end-scripts
   script(src="/javascripts/riot.min.js")
   script(src="/riotjs/japaname-searchbox.js")
   script(src="/riotjs/topbar.js")
+  script(src="/riotjs/japaname-box.js")
+  script(src="/riotjs/candidate-table.js")
+  script(src="/riotjs/selecting-bar.js")
+  script(src="/javascripts/AtejiSelector.js")
+
   script.
     var topbar = riot.mount("topbar", {
       user: !{user ? JSON.stringify(user):"null" },
@@ -33,19 +45,20 @@ block append body-end-scripts
       text:"#{original_name}"
     })[0];
 
-  script(src="/riotjs/candidate-table.js")
-  script(src="/javascripts/AtejiSelector.js")
-
-  script.
     var syllables = !{JSON.stringify(name_objs[0].syllables)};
-
     var atejiSelector = new AtejiSelector(syllables);
+
+    var japanameBox = riot.mount("japaname-box",{
+      atejiSelector:atejiSelector,
+      showMeanings:false
+    })[0];
+
+    var selectingBar = riot.mount("selecting-bar")[0]; 
+
 
     var candidateTable = riot.mount("candidate-table", {
       atejiSelector: atejiSelector
     });
-    
-
 
   // なぜかいきなりトップにもどるスクロール我発生する謎のバグ
   // Bitters いれたらなったきがする。ガチで意味分からん。むかつく。

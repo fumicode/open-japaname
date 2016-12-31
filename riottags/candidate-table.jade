@@ -3,29 +3,36 @@ candidate-table
     tbody(each="{syllable in selectedSyllables}" onclick="{parent.syllableSelected}")
       tr.syllablesTable__headRow(class="{syllable == usingSyllable ? 'syllablesTable__headRow--using':''}")
         th.syllablesTable__headCell {syllable.romaji} - {syllable.kana}
-      tr.syllablesTable__kanjisRow(class="{syllable == usingSyllable ? 'syllablesTable__headRow--using':''}")
+      tr.syllablesTable__kanjisRow(class="{syllable == usingSyllable ? 'syllablesTable__kanjisRow--using':''}")
         td.syllablesTable__kanjisCell 
           table.kanjisList
             tr.kanjisList__row
               td.kanjisList__item(each="{kanji in syllable.atejis}" ) 
-                div.kanjiCell(class="{kanji == syllable.usingKanji ? 'kanjiCell--using':''}" onclick="{parent.parent.kanjiSelected}") {kanji.kanji}
+                div.kanjiCell(class="{kanji == syllable.usingKanji ? 'kanjiCell--using':''}" 
+                  onclick="{parent.parent.kanjiSelected}")
+                  div.kanjiCell__char {kanji.kanji}
                   div.kanjiCell__meanings {kanji.meanings.join("\n")}
 
-              td.kanjisList__item(each="{other_syllable_path in syllable.siblings}" onclick="{parent.parent.changeSyllable}")
-                div.otherSyllableCell {JSON.stringify(other_syllable_path.length)}
+              td.kanjisList__item(each="{other_syllable_path in syllable.siblings}" 
+                onclick="{parent.parent.changeSyllable}")
+                div.otherSyllableCell 
                   div.otherSyllableCell__part(each="{other_syllable in other_syllable_path}") {other_syllable.romaji}
                     span(each="{kanji in other_syllable.atejis.slice(0,3)}") {kanji.kanji}
 
   script.
     this_tag = this;
+    console.log(opts);
     this.atejiSelector = opts.atejiSelector;
 
-    //あとでのために、kanjiに自分の親を覚えさせる
-    this.on("update", function(){
+    this.selectedSyllables = atejiSelector.getSelectedSyllables();
+    this.usingSyllable = atejiSelector.getUsingSyllable();
+    
+    this.on("update",function(){
       this.selectedSyllables = atejiSelector.getSelectedSyllables();
       this.usingSyllable = atejiSelector.getUsingSyllable();
-
+      console.log("hello");
     });
+
 
     syllableSelected(e){
       this.atejiSelector.useSyllable(e.item.syllable);

@@ -1,0 +1,36 @@
+$sk :".selectingKanji";
+
+#{$sk} {
+  position:fixed;
+    top:$topbar-height; //topbar のしたに表示
+    left:0;
+    right:0;
+    z-index:900;
+
+  background-color:rgba(255,255,255,0.8);
+
+}
+
+
+
+#{$sk}__container {
+  width:100%;
+  @include outer-container;
+  padding:1rem;
+}
+
+#{$sk}__col{
+  &--box{
+    @include span-columns(3 of 4);
+  }
+
+  &--button{
+    @include span-columns(1 of 4);
+  }
+}
+
+.selectingKanji__original {
+  font-size:1rem;
+  margin:0;
+
+}

@@ -1,0 +1,33 @@
+$kanji-font-size:3rem;
+$kana-font-size:1rem;
+$kanji-font-family:serif;
+
+.atejiBox{
+  table-layout:fixed;
+  margin: 0 auto;
+  text-align:center;
+}
+
+.atejiBox__col{
+}
+
+.atejiBox__col:last-of-type{
+}
+
+.atejiBox__cell{
+  margin:0;
+  padding:0;
+  border-bottom:0;
+  line-height:1;
+
+  &.atejiBox__cell--kanji{
+    font-size: $kanji-font-size;
+    font-family:$kanji-font-family;
+  }
+
+  &.atejiBox__cell--kana{
+    font-size: $kana-font-size;
+    font-family:$kanji-font-family;
+  }
+}
+
