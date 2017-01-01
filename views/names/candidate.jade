@@ -17,7 +17,9 @@ block content
 
   selecting-bar 
   candidate-table
-  gonext-button
+
+  div.goNextButton__container
+    gonext-button#goNextButtonCenter
 
 
 block footer
@@ -58,8 +60,9 @@ block append body-end-scripts
       atejiSelector: atejiSelector
     });
 
-    var gonextButto = riot.mount("gonext-button", {
-      atejiSelector: atejiSelector
+    var gonextButton = riot.mount("#goNextButtonCenter", "gonext-button", {
+      atejiSelector: atejiSelector,
+      center:true
     });
 
     window.onload=function(){

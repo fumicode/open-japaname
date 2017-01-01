@@ -1586,10 +1586,7 @@ input[type="search"].jnSearchBox__textbox {
   text-align: center; }
 
 .atejiBox__col--using {
-  background: #fff2cc;
-  animation-duration: 3s;
-  animation-fill-mode: forwards;
-  animation-name: usingKanji__suun; }
+  background: #fff2cc; }
 
 @keyframes usingKanji__suun {
   from {
@@ -1610,6 +1607,7 @@ input[type="search"].jnSearchBox__textbox {
     font-family: serif; }
 
 .goNextButton {
+  display: block;
   text-align: left;
   box-sizing: border-box;
   width: 100%;
@@ -1620,6 +1618,11 @@ input[type="search"].jnSearchBox__textbox {
   animation-direction: alternate;
   animation-iteration-count: infinite;
   animation-name: gonext__blink; }
+  .goNextButton--center {
+    background-image: url(/images/risumaru_yubi_right.png);
+    background-repeat: no-repeat;
+    background-position: 90% bottom;
+    background-size: contain; }
   @media screen and (min-width: 600px) {
     .goNextButton {
       background-image: url(/images/risumaru_yubi_right.png);
@@ -1627,9 +1630,24 @@ input[type="search"].jnSearchBox__textbox {
       background-position: 90% bottom;
       background-size: contain; } }
 
+.goNextButton__container {
+  margin: 2em auto;
+  width: 20rem; }
+
 .horizonScroller {
   width: 100%;
   overflow-x: auto; }
+
+.namesContainer {
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  text-align: center; }
+
+.namesContainer__cell {
+  margin: 0;
+  padding: 0;
+  border: 0; }
 
 html {
   box-sizing: border-box; }

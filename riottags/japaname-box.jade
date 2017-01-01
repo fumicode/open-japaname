@@ -2,26 +2,29 @@ japaname-box
   table.atejiBox
     col.atejiBox__col(each="{syllable in syllables}" span="1" 
       class="{syllable == usingSyllable ? 'atejiBox__col--using':''}")
+
     tbody
       tr.atejiBox__line
-        td.atejiBox__cell.atejiBox__cell--kanji(each="{ji in atejis}") {ji.kanji} 
-      tr.atejiBox__line
         td.atejiBox__cell.atejiBox__cell--kana(each="{ji in atejis}") {ji.romaji} 
+      tr.atejiBox__line
+        td.atejiBox__cell.atejiBox__cell--kanji(each="{ji in atejis}") {ji.kanji} 
       tr.atejiBox__line(if="{showMeanings}")
         td.atejiBox__cell.atejiBox__cell--meanings(each="{ji in atejis}") {ji.meanings[0]}
           //全部表示したい場合
           virtual(each="{meaning in ji.meanings}") {meaning}
             br
+
   script.
     console.log("-----japaname box mounting-----");
     console.log(opts);
 
-    if(!opts.atejiSelector){
-      return;
-    }
+    this.atejiSelector = opts.ateji_selector;
 
-    this.atejiSelector = opts.atejiSelector;
-    this.showMeanings = opts.showMeanings === undefined ? true:!!opts.showMeanings;
+
+    this.showMeanings = opts.show_meanings === undefined ? true:!!opts.show_meanings;
+
+    console.log(this.atejiSelector);
+    console.log(this.showMeanings);
 
     this.atejis = this.atejiSelector.getCurrentKanjis();
 
@@ -36,9 +39,9 @@ japaname-box
       this_tag.update();
     });
 
-
     this.on("update",function(){
       this.syllables = this.atejiSelector.getSelectedSyllables();
       this.usingSyllable = this.atejiSelector.getUsingSyllable();
     });
+
 

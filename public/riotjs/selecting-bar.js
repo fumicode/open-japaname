@@ -1,13 +1,8 @@
 
-riot.tag2('selecting-bar', '<div class="selectingKanji {ontop ? \'selectingKanji--ontop\':\'\'}"> <div class="selectingKanji__container"> <div class="selectingKanji__col--box" onclick="{toggle}"> <p class="selectingKanji__original">{opts.original_name} &raquo; </p> <div class="horizonScroller"> <japaname-box></japaname-box> </div> </div> <div class="selectingKanji__col--button"> <gonext-button></gonext-button> </div> </div> </div>', '', '', function(opts) {
+riot.tag2('selecting-bar', '<div class="selectingKanji {ontop ? \'selectingKanji--ontop\':\'\'}"> <div class="selectingKanji__container"> <div class="selectingKanji__col--box" onclick="{toggle}"> <div class="horizonScroller"> <table class="namesContainer"> <tr class="namesContainer__row"> <td class="namesContainer__cell"> <p class="selectingKanji__original">{opts.original_name} &raquo; </p> <japaname-box ateji_selector="{opts.atejiSelector}" show_meanings="{opts.showMeanings}"></japaname-box> </td> </tr> </table> </div> </div> <div class="selectingKanji__col--button"> <gonext-button center="{false}"></gonext-button> </div> </div> </div>', '', '', function(opts) {
     this.ontop = true;
     this.on("mount",function(){
-      var japanameBox = riot.mount("japaname-box",{
-        atejiSelector:opts.atejiSelector,
-        showMeanings:opts.showMeanings
-      })[0];
-      console.log("japaame box mounted");
-      console.log(japanameBox);
+
     });
 
     var this_tag = this;

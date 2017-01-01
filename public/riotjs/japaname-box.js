@@ -1,14 +1,14 @@
 
-riot.tag2('japaname-box', '<table class="atejiBox"> <col class="atejiBox__col {syllable == usingSyllable ? \'atejiBox__col--using\':\'\'}" each="{syllable in syllables}" span="1"> <tbody> <tr class="atejiBox__line"> <td class="atejiBox__cell atejiBox__cell--kanji" each="{ji in atejis}">{ji.kanji} </td> </tr> <tr class="atejiBox__line"> <td class="atejiBox__cell atejiBox__cell--kana" each="{ji in atejis}">{ji.romaji} </td> </tr> <tr class="atejiBox__line" if="{showMeanings}"> <td class="atejiBox__cell atejiBox__cell--meanings" each="{ji in atejis}">{ji.meanings[0]} <virtual each="{meaning in ji.meanings}">{meaning}<br></virtual> </td> </tr> </tbody> </table>', '', '', function(opts) {
+riot.tag2('japaname-box', '<table class="atejiBox"> <col class="atejiBox__col {syllable == usingSyllable ? \'atejiBox__col--using\':\'\'}" each="{syllable in syllables}" span="1"> <tbody> <tr class="atejiBox__line"> <td class="atejiBox__cell atejiBox__cell--kana" each="{ji in atejis}">{ji.romaji} </td> </tr> <tr class="atejiBox__line"> <td class="atejiBox__cell atejiBox__cell--kanji" each="{ji in atejis}">{ji.kanji} </td> </tr> <tr class="atejiBox__line" if="{showMeanings}"> <td class="atejiBox__cell atejiBox__cell--meanings" each="{ji in atejis}">{ji.meanings[0]} <virtual each="{meaning in ji.meanings}">{meaning}<br></virtual> </td> </tr> </tbody> </table>', '', '', function(opts) {
     console.log("-----japaname box mounting-----");
     console.log(opts);
 
-    if(!opts.atejiSelector){
-      return;
-    }
+    this.atejiSelector = opts.ateji_selector;
 
-    this.atejiSelector = opts.atejiSelector;
-    this.showMeanings = opts.showMeanings === undefined ? true:!!opts.showMeanings;
+    this.showMeanings = opts.show_meanings === undefined ? true:!!opts.show_meanings;
+
+    console.log(this.atejiSelector);
+    console.log(this.showMeanings);
 
     this.atejis = this.atejiSelector.getCurrentKanjis();
 
