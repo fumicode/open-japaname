@@ -100,10 +100,8 @@ class AtejiSelector{
       var next = _.intersection(next_candidates, current_route);
 
       if(next.length == 1){
-        console.log("sameas current route");
 
         var syllable = next[0];
-        console.log(syllable);
         var syllable_index = current_route.indexOf(syllable);
 
         new_route = new_route.concat(current_route.slice(syllable_index));

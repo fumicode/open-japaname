@@ -13,8 +13,6 @@ block topbar
 block content
   div.selectingKanji__margin(style="height:10rem")
 
-
-
   selecting-bar 
   candidate-table
 
@@ -35,40 +33,42 @@ block append body-end-scripts
   script(src="/riotjs/selecting-bar.js")
   script(src="/riotjs/gonext-button.js")
   script(src="/javascripts/AtejiSelector.js")
+  script(src="/javascripts/NamesSelector.js")
 
   script.
+    var names = !{JSON.stringify(name_objs)};
+
     var topbar = riot.mount("topbar", {
       user: !{user ? JSON.stringify(user):"null" },
       drawLogo: true,
       buttonText: "Change",
       searchFontSize: "2rem",
       drawSearchbox: true,
-      text: "#{original_name}"
+      text: _(names).map(name_obj=> name_obj.original_name).join(" ")
     })[0];
 
-    var syllables = !{JSON.stringify(name_objs[0].syllables)};
-    var atejiSelector = new AtejiSelector(syllables,"#{original_name}");
+    console.log(names);
+    namesSelector = new NamesSelector(names);
+
+    console.log(namesSelector);
 
     var selectingBar = riot.mount("selecting-bar",{
-      original_name:"#{original_name}",
-      atejiSelector:atejiSelector,
+      names_selector:namesSelector,
       showMeanings:false
-      
-    })[0]; 
+    })[0];
 
     var candidateTable = riot.mount("candidate-table", {
-      atejiSelector: atejiSelector
+      atejiSelector:namesSelector.getAtejiSelector(0),
     });
 
     var gonextButton = riot.mount("#goNextButtonCenter", "gonext-button", {
-      atejiSelector: atejiSelector,
+      ateji_selector:namesSelector.getAtejiSelector(0),
       center:true
     });
 
     window.onload=function(){
       setTimeout(function(){
         window.scrollTo(0,1);
-
       },100);
     }
 

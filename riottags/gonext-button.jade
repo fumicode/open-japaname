@@ -5,18 +5,12 @@ gonext-button
 
   button.goNextButton(onclick="{registerAteji}" class="{opts.center ? 'goNextButton--center' :''}") &raquo;Go<br>Next!
 
-
   script.
-
     var this_tag = this;
-    this.atejiSelector  = opts.atejiSelector;
-    console.log("opts.center");
-    console.log(opts.center);
+    this.atejiSelector  = opts.ateji_selector;
 
     registerAteji(){
       var submitKanjis = this_tag.atejiSelector.getSubmitKanjis();
-
-      console.log(this_tag.refs);
 
       this_tag.refs["original_name_input"].value = this.atejiSelector.getOriginalName();
       this_tag.refs["ateji_json_input"].value = JSON.stringify(submitKanjis);

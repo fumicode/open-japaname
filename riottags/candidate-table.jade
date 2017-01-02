@@ -21,16 +21,14 @@ candidate-table
 
   script.
     this_tag = this;
-    console.log(opts);
     this.atejiSelector = opts.atejiSelector;
 
-    this.selectedSyllables = atejiSelector.getSelectedSyllables();
-    this.usingSyllable = atejiSelector.getUsingSyllable();
+    this.selectedSyllables = this.atejiSelector.getSelectedSyllables();
+    this.usingSyllable = this.atejiSelector.getUsingSyllable();
     
     this.on("update",function(){
-      this.selectedSyllables = atejiSelector.getSelectedSyllables();
-      this.usingSyllable = atejiSelector.getUsingSyllable();
-      console.log("hello");
+      this.selectedSyllables = this.atejiSelector.getSelectedSyllables();
+      this.usingSyllable = this.atejiSelector.getUsingSyllable();
     });
 
 

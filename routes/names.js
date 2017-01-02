@@ -16,8 +16,6 @@ var loginCheck = authModule.loginCheck;
 
 var artworks = require("../models/artworks.js");
 
-console.log("artworks");
-console.log(artworks);
 
 
 
@@ -33,7 +31,6 @@ names_router.get("/:japaname_id([0-9\-]+)", function(req, res, next){
   co(function*(){
     var japaname_id = Japaname.japanameDecode(req.params.japaname_id);
 
-    console.log("trying to find japaname" + japaname_id);
 
     try{
       var japaname = yield Japaname.findById(japaname_id)
@@ -49,8 +46,6 @@ names_router.get("/:japaname_id([0-9\-]+)", function(req, res, next){
 
 
     var artworks_list = artworks.getList(); 
-    console.log(artworks);
-    console.log(artworks_list);
 
     res.render("atejis/selected", {
       japaname,
@@ -74,7 +69,6 @@ names_router.post('/', function(req, res, next) {
     var original_name = req.body.original_name;
     var ateji         = JSON.parse(req.body.ateji_json);
 
-    console.log(ateji); //JSON [{kana,kanji,sylindex}]
     var newJapaname = yield Japaname.createNew([{original:original_name, ateji}]);
     var url_id = Japaname.japanameEncode(newJapaname._id);
 
@@ -136,7 +130,6 @@ names_router.get('/candidates/:original_name', function(req, res, next) {
       return res.render("japaname_not_found", {original_name});
     }
 
-    console.log(succeeded_names);
 
     var name_objs = _(succeeded_names).map(function(name_obj,index){
       var original_name = name_obj.original_name;
@@ -150,8 +143,6 @@ names_router.get('/candidates/:original_name', function(req, res, next) {
       var syllables = obj.syllables;
       atejilib.addMeaningToSyllables(syllables);
 
-      //テーブルをつくる そんなことはクライアントでriotでよろしくやるさ
-      //var syllablesTable = atejilib.arrangeSyllablesTable(syllables, obj.length);
       return {
         original_name,
         hiragana,
@@ -162,7 +153,6 @@ names_router.get('/candidates/:original_name', function(req, res, next) {
     });
 
     res.render("names/candidate",{
-      original_name,
       name_objs
     });
 

@@ -1,9 +1,6 @@
 
-riot.tag2('selecting-bar', '<div class="selectingKanji {ontop ? \'selectingKanji--ontop\':\'\'}"> <div class="selectingKanji__container"> <div class="selectingKanji__col--box" onclick="{toggle}"> <div class="horizonScroller"> <table class="namesContainer"> <tr class="namesContainer__row"> <td class="namesContainer__cell"> <p class="selectingKanji__original">{opts.original_name} &raquo; </p> <japaname-box ateji_selector="{opts.atejiSelector}" show_meanings="{opts.showMeanings}"></japaname-box> </td> </tr> </table> </div> </div> <div class="selectingKanji__col--button"> <gonext-button center="{false}"></gonext-button> </div> </div> </div>', '', '', function(opts) {
+riot.tag2('selecting-bar', '<div class="selectingKanji {ontop ? \'selectingKanji--ontop\':\'\'}"> <div class="selectingKanji__container"> <div class="selectingKanji__col--box" onclick="{toggle}"> <div class="horizonScroller"> <table class="namesContainer"> <tr class="namesContainer__row"> <td class="namesContainer__cell" each="{name in opts.names_selector.names}"> <p class="selectingKanji__original">{name.original_name} &raquo; </p> <japaname-box ateji_selector="{name.atejiSelector}" show_meanings="{opts.showMeanings}"></japaname-box> </td> </tr> </table> </div> </div> <div class="selectingKanji__col--button"> <gonext-button center="{false}" ateji_selector="{opts.names_selector.names[0].atejiSelector}"></gonext-button> </div> </div> </div>', '', '', function(opts) {
     this.ontop = true;
-    this.on("mount",function(){
-
-    });
 
     var this_tag = this;
 
