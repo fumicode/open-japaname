@@ -1,4 +1,4 @@
-class NamesSelector {
+class NamesSelector extends Array{
   /*
   [{
     original_name:string,
@@ -10,13 +10,16 @@ class NamesSelector {
   */
 
   constructor(names){
+    super(names.length);
     this.names = names;
 
     for(var i = 0 ; i < this.names.length; i ++){
       var name = this.names[i];
       this.names[i].atejiSelector = new AtejiSelector(name.syllables, name.original_name);
 
+      this[i] = this.names[i];
     }
+
 
     /*
     this.length = this.names.length;

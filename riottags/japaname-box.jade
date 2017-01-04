@@ -15,16 +15,12 @@ japaname-box
             br
 
   script.
-    console.log("-----japaname box mounting-----");
-    console.log(opts);
 
     this.atejiSelector = opts.ateji_selector;
 
 
     this.showMeanings = opts.show_meanings === undefined ? true:!!opts.show_meanings;
 
-    console.log(this.atejiSelector);
-    console.log(this.showMeanings);
 
     this.atejis = this.atejiSelector.getCurrentKanjis();
 

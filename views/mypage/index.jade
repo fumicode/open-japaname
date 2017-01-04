@@ -21,10 +21,10 @@ block sub-content
         |Mypage of 
         wbr
         strong(style="text-transform:capitalize;color:red;")
-          |#{user.my_japaname.names[0].ateji.string}
+          |#{user.my_japaname.string}
 
     include /include/ateji_box
-    mixin ateji_box(user.my_japaname.names[0].ateji.populated_atemojis)
+    mixin ateji_box(user.my_japaname.names)
 
   else
     p You haven't registered ATEJI name.

@@ -14,7 +14,8 @@ block content
   div.selectingKanji__margin(style="height:10rem")
 
   selecting-bar 
-  candidate-table
+
+  candidate-tables
 
   div.goNextButton__container
     gonext-button#goNextButtonCenter
@@ -30,6 +31,7 @@ block append body-end-scripts
   script(src="/riotjs/topbar.js")
   script(src="/riotjs/japaname-box.js")
   script(src="/riotjs/candidate-table.js")
+  script(src="/riotjs/candidate-tables.js")
   script(src="/riotjs/selecting-bar.js")
   script(src="/riotjs/gonext-button.js")
   script(src="/javascripts/AtejiSelector.js")
@@ -57,12 +59,12 @@ block append body-end-scripts
       showMeanings:false
     })[0];
 
-    var candidateTable = riot.mount("candidate-table", {
-      atejiSelector:namesSelector.getAtejiSelector(0),
+    var candidateTables = riot.mount("candidate-tables", {
+      names_selector:namesSelector
     });
 
     var gonextButton = riot.mount("#goNextButtonCenter", "gonext-button", {
-      ateji_selector:namesSelector.getAtejiSelector(0),
+      names_selector:namesSelector,
       center:true
     });
 

@@ -1,0 +1,77 @@
+extends /template/sub_layout
+
+block append variables
+  - title = japaname.string +" --- japaname of " + japaname.original;
+
+  - tweet = 'Got a japaname"'+ japaname.string +'" from my name "'+ japaname.original+'" on ';
+  - hashtag = "japaname";
+  - share_url = "http://" + "japaname.jp" +"/" + japaname.code;
+  - description = tweet + " " +  share_url + " #" + hashtag;
+  - body_id= "bg-selected";
+  - og_image = ""; //!!!!open graph image is required
+
+block append head-end
+  //link(rel='stylesheet', href='/stylesheets/webfont.css') 
+
+block sub-content
+  article.text-center
+    include /include/ateji_box
+    h1.h4 The japaname of 
+      wbr
+      strong(style="text-transform:capitalize;color:red;") #{japaname.original}
+
+    p The japaname code : 
+      input.inline(type="text" value="#{japaname.code}") 
+
+    mixin ateji_box(japaname.names)
+
+    p.text-center Click each kanji and see detail!<br>
+
+  div(style="height:3rem;")
+  div
+    include /include/sharebox.jade
+    if !(user && user.haveRight("arton"))
+      +sharebox(tweet, share_url, hashtag)
+
+  if user 
+    form(action="/mypage/japaname" method="post")
+      input(type="hidden" name="japaname_code" value="#{japaname.code}")
+      p(style="text-align:center")
+        input(type="submit" value="Use this japaname for me.")
+
+      
+
+
+  if user && user.haveRight("arton")
+    div(style="martin-top:2rem;background:white;text-align:center;")
+      each artwork in artworks
+        a(href="/artworks/#{artwork.artwork_name}/#{japaname.code}") 
+          img(src="/artworks/#{artwork.artwork_name}/#{japaname.code}/thumbnail" alt="#{artwork.artwork_name}" style="width:50mm;height:#{artwork.ratio * 50}mm")
+          | #{artwork.jp_name}
+
+  div.shopThumbs
+    ul.shopThumbs__list
+      li.shopThumbs__item
+        a.shopThumbs__link(href="/shops/arton/")
+          img.shopThumbs__icon(src="/images/arton_logo.png" alt="ARTON")
+
+      each artwork in artworks
+        if artwork.artwork_name !== "risumaru_ofuda"
+          li.shopThumbs__item
+            a.shopThumbs__link(href="/shops/arton/")
+              div.shopThumbs__icon.teeComposite
+                img.teeComposite__tee(src="/images/white-tee.jpg" alt="tee thumbnail")
+                img.teeComposite__image(src="/artworks/#{artwork.artwork_name}/#{japaname.code}/thumbnail" alt="")
+
+
+
+  if !user 
+    div#login-ads
+      h1 Log-in and Save your japaname
+      a.button(href="/auth")  Log in!
+
+
+block append body-end-scripts
+  script(src="https://use.typekit.net/yjx8eou.js")
+  script try{Typekit.load({ async: true });}catch(e){}
+

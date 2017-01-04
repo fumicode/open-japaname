@@ -47,7 +47,7 @@ names_router.get("/:japaname_id([0-9\-]+)", function(req, res, next){
 
     var artworks_list = artworks.getList(); 
 
-    res.render("atejis/selected", {
+    res.render("names/name", {
       japaname,
       artworks:artworks_list,
     })
@@ -66,23 +66,20 @@ names_router.post('/', function(req, res, next) {
     //crafti/japaname_frame.あとでかえる。
     //atejiってのも、atemojisが正確な表現
 
-    var original_name = req.body.original_name;
-    var ateji         = JSON.parse(req.body.ateji_json);
+    //var original_name = req.body.original_name;
+    //var ateji         = JSON.parse(req.body.ateji_json);
+    var names = JSON.parse(req.body.names);
 
-    var newJapaname = yield Japaname.createNew([{original:original_name, ateji}]);
+    var newJapaname = yield Japaname.createNew(names);
     var url_id = Japaname.japanameEncode(newJapaname._id);
 
     //超危険！ どこからでもアクセスを許しちゃう。
-    res.set("Access-Control-Allow-Origin","*");
-
+    //res.set("Access-Control-Allow-Origin","*");
     res.redirect(/*req.baseUrl +*/ "/" + url_id); //短縮URL
-
-  }) .catch((err)=>{
+  }).catch((err)=>{
     return next(err);
   });
 });
-
-
 
 names_router.get('/candidates/', function(req, res, next){//?original_name=james を想定
   var original_name = req.query.original_name;
@@ -153,7 +150,8 @@ names_router.get('/candidates/:original_name', function(req, res, next) {
     });
 
     res.render("names/candidate",{
-      name_objs
+      original_name:_(name_objs).map(name_obj => name_obj.original_name).join(" "),
+      name_objs,
     });
 
   }).catch(err=> next(err));
