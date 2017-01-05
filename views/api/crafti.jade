@@ -7,9 +7,9 @@ block head_content
   
 block body_content
   div#kanji-selected-wrapper
-    table(riot-tag="ateji-box")
+    table(data-is="ateji-box")
 
-  div#ateji-cands-container
+  div#ateaaji-cands-container
     include crafti_candidates_table.jade
 
     each name_obj in name_objs
