@@ -1,0 +1,84 @@
+extends /template/basic_layout
+
+block append variables
+  - title = "" + original_name + " in kanji. Select from many candidates!";
+  - description = "Japaname candidates of "+ original_name +". Select kanji you like from many candidates which fits your name sound. You can choose your kanji by meanings or shape of kanji.";
+  - tweet =  "Kanji candidates of " + original_name;
+  - share_url = url; 
+  - body_id = "bg-white";
+
+block topbar
+  topbar
+
+block content
+  div.selectingKanji__margin(style="height:10rem")
+
+  selecting-bar 
+
+  candidate-tables
+
+  div.goNextButton__container
+    gonext-button#goNextButtonCenter
+
+
+block footer
+  //include /include/footer.jade
+
+block append body-end-scripts
+  script(src="/javascripts/underscore-min.js")
+  script(src="/javascripts/riot.min.js")
+  script(src="/riotjs/japaname-searchbox.js")
+  script(src="/riotjs/topbar.js")
+  script(src="/riotjs/japaname-box.js")
+  script(src="/riotjs/candidate-table.js")
+  script(src="/riotjs/candidate-tables.js")
+  script(src="/riotjs/selecting-bar.js")
+  script(src="/riotjs/gonext-button.js")
+  script(src="/javascripts/AtejiSelector.js")
+  script(src="/javascripts/NamesSelector.js")
+
+  script.
+    var names = !{JSON.stringify(name_objs)};
+
+    var topbar = riot.mount("topbar", {
+      user: !{user ? JSON.stringify(user):"null" },
+      drawLogo: true,
+      buttonText: "Change",
+      searchFontSize: "2rem",
+      drawSearchbox: true,
+      text: _(names).map(name_obj=> name_obj.original_name).join(" ")
+    })[0];
+
+    console.log(names);
+    namesSelector = new NamesSelector(names);
+
+    console.log(namesSelector);
+
+    var selectingBar = riot.mount("selecting-bar",{
+      names_selector:namesSelector,
+      showMeanings:false
+    })[0];
+
+    var candidateTables = riot.mount("candidate-tables", {
+      names_selector:namesSelector
+    });
+
+    var gonextButton = riot.mount("#goNextButtonCenter", "gonext-button", {
+      names_selector:namesSelector,
+      center:true
+    });
+
+    window.onload=function(){
+      setTimeout(function(){
+        window.scrollTo(0,1);
+      },100);
+    }
+
+  // なぜかいきなりトップにもどるスクロール我発生する謎のバグ
+  // Bitters いれたらなったきがする。ガチで意味分からん。むかつく。
+
+    
+
+  script(src="https://use.typekit.net/yjx8eou.js")
+  script try{Typekit.load({ async: true });}catch(e){}
+

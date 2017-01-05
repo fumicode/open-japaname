@@ -65,8 +65,6 @@ AtejiSchema.virtual('populated_atemojis').get(function () {
       romaji_kana:atejilib.hiraganaToRomaji(atemoji.kana)
     }
   });
-  console.log("populated atemojis");
-  console.log(populated_atemojis);
 
   return populated_atemojis;
 });

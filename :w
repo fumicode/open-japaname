@@ -1,0 +1,99 @@
+candidate-table
+  table.syllablesTable
+    tbody(each="{syllable in selectedSylls}" onclick="{syllableSelected}")
+      tr.syllablesTable__headRow(class="{syllable == usingSyllable ? 'syllablesTable__headRow--using':''}")
+        th.syllablesTable__headCell {syllable.romaji} - {syllable.kana}
+      tr.syllablesTable__kanjisRow(class="{syllable == usingSyllable ? 'syllablesTable__headRow--using':''}")
+        td.syllablesTable__kanjisCell 
+          table.kanjisList
+            tr.kanjisList__row
+              td.kanjisList__item(each="{ateji in syllable.atejis}") 
+                div.kanjiCell {ateji.kanji}
+                  div.kanjisList__meanings {ateji.meanings.join("\n")}
+
+
+  script.
+
+    this_tag = this;
+    this.syllables = opts.syllables;
+
+    (function(){
+      var index2Sylls= [];
+      var index2SyllsRev= [];
+      for(var i in this_tag.syllables){
+        var syll = this_tag.syllables[i];
+        console.log(syll + "z");
+
+        if(!index2Sylls[syll.index]){
+          index2Sylls[syll.index] = [];
+        }
+        index2Sylls[syll.index].push(syll);
+
+
+        if(!index2SyllsRev[syll.next_index-1]){
+          index2SyllsRev[syll.next_index-1] = [];
+        }
+        index2SyllsRev[syll.next_index-1].push(syll);
+      }
+
+      this_tag.index2Sylls = index2Sylls ;
+      this_tag.index2SyllsRev = index2SyllsRev ;
+
+    }());
+
+
+    var route = randomRoute(this.index2Sylls);
+
+    this_tag.usingSyllable = route[0];
+    this_tag.selectedSylls= route;
+
+    function randomRoute(index2Sylls){
+      var route = [];
+      var index = 0;
+      while(index < index2Sylls.length){
+        var sylls = index2Sylls[index];
+        var selected_i= Math.floor(Math.random() * sylls.length);
+        var syll = sylls[selected_i];
+        route.push(syll);
+        index = syll.next_index;
+      }
+      return route;
+    }
+
+    function shortestRoute(index2Sylls){
+      var route = [];
+      var index = 0;
+      while(index < index2Sylls.length){
+        var sylls = index2Sylls[index];
+
+        var max_next_index = index;
+        var max_next = null;
+        for(var syll_i in sylls){
+          if(sylls[syll_i].next_index > max_next){
+            max_next_index = sylls[syll_i].next_index;
+            max_next = sylls[syll_i];
+          }
+        }
+
+        var syll = max_next;
+        route.push(syll);
+        index = syll.next_index;
+      }
+      return route;
+    }
+
+
+    this.on("update", function(){
+
+    });
+
+    syllableSelected(e){
+      console.log("clicked")
+      console.log(e.item)
+
+      this_tag.usingSyllable = e.item;
+    }
+
+
+
+

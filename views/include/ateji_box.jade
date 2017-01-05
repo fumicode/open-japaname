@@ -1,25 +1,31 @@
-mixin ateji_box(atejis)
+mixin ateji_box(names)
   div#ateji-scroller
     div#ateji-block
 
-      table.japanameTable
-        tr.japanameTable__kanjiRow
-          th.japanameTable__heading Kanji
-          each ateji,index in atejis
-            td.japanameTable__kanjiCell
-              a(href="/characters/kanjis/#{ateji.kanji}")=ateji.kanji
-        tr.japanameTable__kanaRow
-          th.japanameTable__heading Sound
-          each ateji in atejis
-            td #{ateji.romaji_kana}
 
+      //
+        th.japanameTable__heading Sound
+        th.japanameTable__heading Kanji
+        th.japanameTable__heading Meanings
 
-        tr.japanameTable__meaningsRow
-          th.japanameTable__heading Meanings
-          each ateji in atejis
-            td 
-              each meaning in ateji.meanings
-                | #{meaning}
-                br
+    ul.namesContainer
+      each name in names
+        - var atejis = name.ateji.populated_atemojis;
+        li.namesContainer__cell
+          h4.japanameTable__original #{name.original} &raquo; 
 
-    img(src="/images/risumaru_jump_left.png" style="height:50mm;margin-right:-20mm")
+          table.japanameTable
+            tr.japanameTable__kanaRow
+              each ateji in atejis
+                td #{ateji.romaji_kana}
+            tr.japanameTable__kanjiRow
+              each ateji in atejis 
+                td.japanameTable__kanjiCell
+                  a(href="/characters/kanjis/#{ateji.kanji}")=ateji.kanji
+            tr.japanameTable__meaningRow
+              each ateji in atejis
+                td.japanameTable__meaningCell
+                  each meaning in ateji.meanings
+                    | #{meaning}
+                    br
+      img(src="/images/risumaru_jump_left.png" style="height:50mm;margin-right:-20mm")

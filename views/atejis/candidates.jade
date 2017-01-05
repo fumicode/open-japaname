@@ -78,7 +78,7 @@ block append body-end-scripts
       text:"#{original_name}"
     })[0];
 
-  script(src="/javascripts/myscript.js")
+  //script(src="/javascripts/myscript.js")
 
   // なぜかいきなりトップにもどるスクロール我発生する謎のバグ
   // Bitters いれたらなったきがする。ガチで意味分からん。むかつく。
@@ -86,11 +86,9 @@ block append body-end-scripts
 
   script.
     $(function(){
-
       $topbar = $("#topbar");
       $kanjiSelected = $("#kanji-selected-wrapper");
       $body = $("body");
-
       $(window).scroll(function () {
         var scrolltop = $(window).scrollTop(); 
         
@@ -109,3 +107,5 @@ block append body-end-scripts
 
   script(src="https://use.typekit.net/yjx8eou.js")
   script try{Typekit.load({ async: true });}catch(e){}
+
+

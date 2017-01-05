@@ -133,7 +133,7 @@ var session = require("express-session");
 var MongoDBStore = require("connect-mongodb-session")(session); //なんでここでsessionいれるのか謎
 
 var store = new MongoDBStore({
-  uri : 'mongodb://localhost/ateji',
+  uri : db.db_url,
   collection: 'mySessions',
   //clear_interval: 60
 });

@@ -127,7 +127,6 @@ api_router.get("/crafti/japaname_frame.css", function(req, res, next) {
   return res.sendFile(path.join(__dirname, "../public/crafti/", "japaname_frame.css"));
 });
 
-
 api_router.get("/crafti/names/",(req,res,next)=>{
   var original_name = req.query.original_name;
   
