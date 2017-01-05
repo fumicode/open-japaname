@@ -1,6 +1,5 @@
 $kanji-font-size:3rem;
 $kana-font-size:1rem;
-$kanji-font-family:serif;
 
 .atejiBox{
   table-layout:fixed;
@@ -44,7 +43,6 @@ $kanji-font-family:serif;
 
   &.atejiBox__cell--kana{
     font-size: $kana-font-size;
-    font-family:$kanji-font-family;
   }
 }
 

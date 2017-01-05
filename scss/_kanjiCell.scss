@@ -1,7 +1,11 @@
 .kanjiCell{
   &--using{
   }
+  &:hover{
+    
+  }
 }
+
 
 .kanjiCell__char{
   $cellsize:1.4em; 
@@ -12,7 +16,8 @@
 
   vertical-align:middle;
 
-  font-size:80px;
+  font-family:"ro-nikkatsu-sei-kai-std";
+  font-size:7rem;
   text-align:center;
   line-height:$cellsize;
 
@@ -21,6 +26,7 @@
 }
 
 .kanjiCell__meanings{
+  text-align:center;
   display:none;
   font-size:2rem;
   line-height:1.2;
@@ -29,10 +35,18 @@
 }
 
 //例外的だが、入れ子の書き方
-.syllablesTable__kanjisRow--using{
+.syllablesTable__item--using{
   .kanjiCell__meanings{
     display:block;
   }
+}
+
+.kanjiCell:hover{
+  .kanjiCell__char{
+    background:rgba(220,220,255,0.4);
+
+  }
+
 }
 
 //例外的だが、入れ子の書き方

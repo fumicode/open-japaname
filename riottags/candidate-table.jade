@@ -1,23 +1,25 @@
 candidate-table
-  table.syllablesTable
-    tbody(each="{syllable in selectedSyllables}" onclick="{parent.syllableSelected}")
-      tr.syllablesTable__headRow(class="{syllable == usingSyllable ? 'syllablesTable__headRow--using':''}")
-        th.syllablesTable__headCell {syllable.romaji} - {syllable.kana}
-      tr.syllablesTable__kanjisRow(class="{syllable == usingSyllable ? 'syllablesTable__kanjisRow--using':''}")
-        td.syllablesTable__kanjisCell 
-          table.kanjisList
-            tr.kanjisList__row
-              td.kanjisList__item(each="{kanji in syllable.atejis}" ) 
-                div.kanjiCell(class="{kanji == syllable.usingKanji ? 'kanjiCell--using':''}" 
-                  onclick="{parent.parent.kanjiSelected}")
-                  div.kanjiCell__char {kanji.kanji}
-                  div.kanjiCell__meanings {kanji.meanings.join("\n")}
+  div.syllablesTable
+    div.syllablesTable__item(each="{syllable in selectedSyllables}" 
+      onmouseover="{parent.syllableSelected}" 
+      ontouchstart="{parent.syllableSelected}" 
+      class="{syllable == usingSyllable ? 'syllablesTable__item--using':''}")
+      h3.syllablesTable__head
+        | {syllable.romaji} - {syllable.kana}
+      div.syllablesTable__kanjis
+        table.kanjisList
+          tr.kanjisList__row
+            td.kanjisList__item(each="{kanji in syllable.atejis}" ) 
+              div.kanjiCell(class="{kanji == syllable.usingKanji ? 'kanjiCell--using':''}" 
+                onclick="{parent.parent.kanjiSelected}")
+                div.kanjiCell__char {kanji.kanji}
+                div.kanjiCell__meanings {kanji.meanings.join("\n")}
 
-              td.kanjisList__item(each="{other_syllable_path in syllable.siblings}" 
-                onclick="{parent.parent.changeSyllable}")
-                div.otherSyllableCell 
-                  div.otherSyllableCell__part(each="{other_syllable in other_syllable_path}") {other_syllable.romaji}
-                    span(each="{kanji in other_syllable.atejis.slice(0,3)}") {kanji.kanji}
+            td.kanjisList__item(each="{other_syllable_path in syllable.siblings}" 
+              onclick="{parent.parent.changeSyllable}")
+              div.otherSyllableCell 
+                div.otherSyllableCell__part(each="{other_syllable in other_syllable_path}") {other_syllable.romaji}
+                  span(each="{kanji in other_syllable.atejis.slice(0,3)}") {kanji.kanji}
 
   script.
     this_tag = this;

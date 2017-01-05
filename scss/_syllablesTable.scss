@@ -4,28 +4,32 @@
   margin:0;padding:0;border:0;
 }
 
-.syllablesTable__headRow{
+.syllablesTable__item{
+  border-radius:5px;
+  background:white;
   &--using{
-  }
-
-  .syllablesTable__headCell{
-    text-align:center;
-    margin:0;padding:0;border:0;
+    box-shadow: 0px 5px 30px rgba(0,0,0,0.4);
   }
 }
 
-.syllablesTable__kanjisRow{
+.syllablesTable__head{
+
+  text-align:center;
+  margin:0;padding:0;border:0;
+}
+
+.syllablesTable__kanjis{
   color:#aaa;
+  margin:0;
+  margin-bottom:1em;
+  padding:0;
+  border:0;
+  width:100%;
+  overflow-x:scroll;
+  text-align:center;
 
   &--using{
     color:#000;
-  }
-
-  .syllablesTable__kanjisCell{
-    margin:0;padding:0;border:0;
-    width:100%;
-    overflow-x:scroll;
-    text-align:center;
   }
 }
 
