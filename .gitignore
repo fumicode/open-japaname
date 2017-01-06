@@ -33,7 +33,6 @@ jspm_packages
 # Generated files
 public/sitemap.xml
 public/robots.txt
-public/riotjs/*
 
 # Optional npm cache directory
 .npm
