@@ -1,9 +1,6 @@
 .kanjiCell{
   &--using{
   }
-  &:hover{
-    
-  }
 }
 
 
@@ -39,14 +36,6 @@
   .kanjiCell__meanings{
     display:block;
   }
-}
-
-.kanjiCell:hover{
-  .kanjiCell__char{
-    background:rgba(220,220,255,0.4);
-
-  }
-
 }
 
 //例外的だが、入れ子の書き方

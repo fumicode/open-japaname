@@ -1544,9 +1544,6 @@ input[type="search"].jnSearchBox__textbox {
 .syllablesTable__item--using .kanjiCell__meanings {
   display: block; }
 
-.kanjiCell:hover .kanjiCell__char {
-  background: rgba(220, 220, 255, 0.4); }
-
 .kanjiCell--using {
   color: #000; }
   .kanjiCell--using .kanjiCell__char {
