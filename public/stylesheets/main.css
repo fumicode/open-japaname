@@ -1541,6 +1541,9 @@ input[type="search"].jnSearchBox__textbox {
   line-height: 1.2;
   margin-top: -1em; }
 
+.syllablesTable__item--using .kanjiCell__char {
+  color: black; }
+
 .syllablesTable__item--using .kanjiCell__meanings {
   display: block; }
 

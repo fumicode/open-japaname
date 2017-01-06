@@ -188,6 +188,8 @@ atejilib.translateByDict = function(alphabet_str){ //str any string
       console.log("found " + katakana_name); 
       var hiragana = atejilib.katakanasToHiraganas(katakana_name);
 
+      console.log("hiragana " + hiragana); 
+
       console.log(alphabet_str);
       return new JapaneseSound({
         hiragana,
@@ -232,7 +234,7 @@ atejilib.katakanasToHiraganas = function (katakanas){ //hiraganas: expected to b
 
     //va vu vo!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-    hiraganas += katakana2hiragana[katakana];
+    hiraganas += katakana2hiragana[katakana] || "";
   }
 
   return hiraganas;
@@ -612,6 +614,8 @@ atejilib.toJapaneseSound= function(name){
 		if(atejilib.isAlphabets(lower_name)){//check the name is alphabets
 			try{
 				var jap_sound_obj = yield atejilib.translateByDict(lower_name); //まずは辞書を探してみる
+        console.log("jap_sound_obj");
+        console.log(jap_sound_obj);
 				return jap_sound_obj;
 			}
 			catch(err){

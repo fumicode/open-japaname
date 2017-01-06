@@ -92,10 +92,10 @@ api_router.post('/core/names', function(req, res, next) {
     //atejiってのも、atemojisが正確な表現
 
     var original_name = req.body.original_name;
-    var ateji         = JSON.parse(req.body.ateji);
+    var atejis         = JSON.parse(req.body.ateji);
 
-    console.log(ateji); //JSON [{kana,kanji,sylindex}]
-    var newJapaname = yield Japaname.createNew([{original:original_name, ateji}]);
+    console.log(atejis); //JSON [{kana,kanji,sylindex}]
+    var newJapaname = yield Japaname.createNew([{original:original_name, atejis}]);
     var url_id = Japaname.japanameEncode(newJapaname._id);
 
     //超危険！ どこからでもアクセスを許しちゃう。

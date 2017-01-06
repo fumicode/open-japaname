@@ -136,6 +136,8 @@ names_router.get('/candidates/:original_name', function(req, res, next) {
 
       //ローマ字 ほんとはこんなに単純じゃないけど
       var romajis_array = _(hiragana_nosmall).map(atejilib.hiraganasToRomajis);
+      console.log(hiragana);
+      console.log(hiragana);
       var obj = atejilib.atejiSyllables(hiragana);
       var syllables = obj.syllables;
       atejilib.addMeaningToSyllables(syllables);

@@ -33,6 +33,10 @@
 
 //例外的だが、入れ子の書き方
 .syllablesTable__item--using{
+  .kanjiCell__char{
+    color:black;
+
+  }
   .kanjiCell__meanings{
     display:block;
   }
