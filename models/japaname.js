@@ -34,11 +34,12 @@ JapanameSchema.virtual("code").get(function(){
 });
 
 JapanameSchema.virtual("string").get(function(){
-  return this.names[0].ateji.string;
+
+  return _(this.names).map(name=>name.ateji.string).join(" ");
 });
 
 JapanameSchema.virtual("original").get(function(){
-  return this.names[0].original;
+  return _(this.names).map(name=>name.original).join(" ");
 });
 
 
@@ -107,68 +108,71 @@ JapanameSchema.statics.createNew = function(names){
   var Japaname = this;
   return co(function*(){
 
-    var first_name = names[0];
+    // yield [promise]  == [ateji]
+    var atejis = yield _(names).map((name)=>{
+        var atemojis = name.atejis;
 
-    if(first_name.ateji){
-      var atemojis = first_name.ateji;
-      var Ateji = mongoose.model("Ateji");
+        var Ateji = mongoose.model("Ateji");
 
-      //!!!! atemojis のバリデーション
+        //!!!! atemojis のバリデーション
+        var newAteji = new Ateji({atemojis});
 
-      var newAteji = new Ateji({atemojis});
+        return newAteji.save();//returns promise
+    });
 
-      try{
-        var savedAteji = yield newAteji.save();
+
+
+
+    var japaname_params = _(atejis).map((ateji, index)=>{
+      var name = names[index]
+      return {
+        original:name.original,
+        ateji:ateji._id,
+        kana:null
       }
-      catch(err){
-        console.error("couldn't save kana. ");
-        throw err;
+    });
+
+
+    var newJapaname = new Japaname({
+      //_id:auto increment
+      names:japaname_params
+    });
+
+    return newJapaname.save();
+
+    /*
+      else if(first_name.kana){
+        var text = atemojis_or_text;
+        var Kana = mongoose.model("Kana");
+
+        var newKana = new Kana({type:"hira",text:text});
+
+        try{
+          var savedKana = yield newKana.save();
+        }
+        catch(err){
+          console.error("couldn't save kana. ");
+          throw err;
+        }
+
+        var kana_id = savedKana._id;
+        var newJapaname = new Japaname({
+          //_id:auto increment
+          original_names,
+          names:[{
+            original:first_name.original,
+            ateji:null,
+            kana:kana_id
+          }]
+        });
+
+        var savedJapaname = yield newJapaname.save();
+        return savedJapaname;
       }
-
-      var ateji_id = savedAteji._id;
-      var newJapaname = new Japaname({
-        //_id:auto increment
-        names:[{
-          original:first_name.original,
-          ateji:ateji_id,
-          kana:null
-        }]
-      });
-
-      var savedJapaname = yield newJapaname.save();
-      return savedJapaname;
-    }
-    else if(first_name.kana){
-      var text = atemojis_or_text;
-      var Kana = mongoose.model("Kana");
-
-      var newKana = new Kana({type:"hira",text:text});
-
-      try{
-        var savedKana = yield newKana.save();
+      else {
+        throw new Error("japaname data incorrect");
       }
-      catch(err){
-        console.error("couldn't save kana. ");
-        throw err;
-      }
-
-      var kana_id = savedKana._id;
-      var newJapaname = new Japaname({
-        //_id:auto increment
-        original_names,
-        names:[{
-          original:first_name.original,
-          ateji:null,
-          kana:kana_id
-        }]
-      });
-
-      var savedJapaname = yield newJapaname.save();
-      return savedJapaname;
-    }
-    else {
-      throw new Error("japaname data incorrect");
-    }
+    */
   });
 }
 

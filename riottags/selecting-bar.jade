@@ -1,0 +1,53 @@
+selecting-bar
+  div.selectingKanji(class="{ontop ? 'selectingKanji--ontop':''}")
+    div.selectingKanji__container
+      div.selectingKanji__col--box(onclick="{toggle}")
+
+        div.horizonScroller
+          ul.namesContainer
+            li.namesContainer__cell(each="{name in opts.names_selector}")
+              h4.atejiBox__original {name.original_name} &raquo; 
+              japaname-box(ateji_selector="{name.atejiSelector}" show_meanings="{opts.showMeanings}")
+
+
+      div.selectingKanji__col--button
+        gonext-button(center="{false}" names_selector="{opts.names_selector}")
+
+  script.
+
+    this.ontop = true;
+
+    var this_tag = this;
+
+    window.onscroll = function(){
+      var scrollTop = window.pageYOffset;
+      if(scrollTop != 0){
+        this_tag.ontop = true;
+      }
+      else{
+        this_tag.ontop = false;
+      }
+      this_tag.update();
+    }
+
+    open(){
+      this.ontop = false;
+      window.scrollTo(0,0);
+    }
+    
+    close(){
+      this.ontop = true;
+      window.scrollTo(0,1);
+    }
+
+    toggle(){
+      if(this.ontop){
+        this.open();
+      }
+      else{
+        this.close();
+      }
+    }
+
+
+

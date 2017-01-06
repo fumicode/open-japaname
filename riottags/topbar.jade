@@ -1,5 +1,4 @@
 topbar
-  //(logo, search_box, original_name) 
   div.topbar 
     div.topbar__container
       table.topbar__table
@@ -10,7 +9,8 @@ topbar
           td.topbar__cell.topbar__cell--search
             div.topbar__search(class="{search_focused ? 'topbar__search--focused':''}")
               japaname-searchbox(text="{opts.text}" if="{opts.drawSearchbox}"
-                placeholder=null, button=null, focus=false fontSize="3rem" height="100%"
+                placeholder=null, button="{opts.buttonText}", focus=false 
+                font_size="{opts.searchFontSize}" height="100%"
                 onfocus="{focused}" onblur="{blured}")
 
           td.topbar__cell.topbar__cell--userinfo
@@ -23,6 +23,7 @@ topbar
                   |Guest
 
   script.
+    console.log(opts);
 
     focused(e){
       console.log("focused");

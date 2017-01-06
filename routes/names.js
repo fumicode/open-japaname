@@ -16,8 +16,6 @@ var loginCheck = authModule.loginCheck;
 
 var artworks = require("../models/artworks.js");
 
-console.log("artworks");
-console.log(artworks);
 
 
 
@@ -33,7 +31,6 @@ names_router.get("/:japaname_id([0-9\-]+)", function(req, res, next){
   co(function*(){
     var japaname_id = Japaname.japanameDecode(req.params.japaname_id);
 
-    console.log("trying to find japaname" + japaname_id);
 
     try{
       var japaname = yield Japaname.findById(japaname_id)
@@ -49,10 +46,8 @@ names_router.get("/:japaname_id([0-9\-]+)", function(req, res, next){
 
 
     var artworks_list = artworks.getList(); 
-    console.log(artworks);
-    console.log(artworks_list);
 
-    res.render("atejis/selected", {
+    res.render("names/name", {
       japaname,
       artworks:artworks_list,
     })
@@ -71,30 +66,26 @@ names_router.post('/', function(req, res, next) {
     //crafti/japaname_frame.あとでかえる。
     //atejiってのも、atemojisが正確な表現
 
-    var original_name = req.body.original_name;
-    var ateji         = JSON.parse(req.body.ateji);
+    //var original_name = req.body.original_name;
+    //var ateji         = JSON.parse(req.body.ateji_json);
+    var names = JSON.parse(req.body.names);
 
-    console.log(ateji); //JSON [{kana,kanji,sylindex}]
-    var newJapaname = yield Japaname.createNew([{original:original_name, ateji}]);
+    var newJapaname = yield Japaname.createNew(names);
     var url_id = Japaname.japanameEncode(newJapaname._id);
 
     //超危険！ どこからでもアクセスを許しちゃう。
-    res.set("Access-Control-Allow-Origin","*");
-
+    //res.set("Access-Control-Allow-Origin","*");
     res.redirect(/*req.baseUrl +*/ "/" + url_id); //短縮URL
-
-  }) .catch((err)=>{
+  }).catch((err)=>{
     return next(err);
   });
 });
-
-
 
 names_router.get('/candidates/', function(req, res, next){//?original_name=james を想定
   var original_name = req.query.original_name;
   //名前が空だったらtopにリダイレクト
   if(!original_name){
-    next();
+    return res.redirect("/");
   }
 
   //数字が入力されたらidだと思って結果ページにそのままいく
@@ -112,32 +103,12 @@ names_router.get('/candidates/', function(req, res, next){//?original_name=james
 });
 
 
-
-//↑のコピペ中尉!!!!
-names_router.get('/api/', function(req, res, next){//?original_name=james を想定
-  var original_name = req.query.original_name;
-  //名前が空だったらtopにリダイレクト
-  
-  if(!original_name){
-
-    return res.render("api/crafti",{
-      original_name,
-      name_objs
-    });
-  }
-
-  res.redirect(req.baseUrl + "/api/" + encodeURIComponent(original_name));
-});
-
-
 function isNumber(num_str){
   return !! num_str.match(/^\d+$/);
 }
 
 names_router.get('/candidates/:original_name', function(req, res, next) {
-
   co(function*(){
-
     var original_name = req.params.original_name;
     //名前が空だったらtopにリダイレクト
     if(!original_name){
@@ -145,237 +116,53 @@ names_router.get('/candidates/:original_name', function(req, res, next) {
       return;
     }
 
-
     var original_names = original_name.split(/[ ,　,\,,\|,\\,\/]+/);
-
     var nullify = err => Promise.resolve(null); 
-
     var translated_names = yield _(original_names).map(function(original_name){
       return atejilib.toJapaneseSound(original_name).catch(nullify);
     });
 
     var succeeded_names = _(translated_names).filter(a=>a); //falseになるもの(null)は排除される
-
     if(succeeded_names.length < 1){
       return res.render("japaname_not_found", {original_name});
     }
 
-    console.log(succeeded_names);
 
     var name_objs = _(succeeded_names).map(function(name_obj,index){
-      name_obj.hiragana_nosmall = atejilib.hiraganaToNosmall(name_obj.hiragana);
+      var original_name = name_obj.original_name;
+      var hiragana      = name_obj.hiragana;
+      var katakana      = name_obj.katakana;
+      var hiragana_nosmall = atejilib.hiraganaToNosmall(hiragana);
 
-      //ローマ字
-      name_obj.romajis_array = _(name_obj.hiragana_nosmall).map(atejilib.hiraganasToRomajis);
-      
-
-      var obj = atejilib.atejiSyllables(name_obj.hiragana);
-      // obj =   length syllables hiragana_str_nosmall
-    
+      //ローマ字 ほんとはこんなに単純じゃないけど
+      var romajis_array = _(hiragana_nosmall).map(atejilib.hiraganasToRomajis);
+      var obj = atejilib.atejiSyllables(hiragana);
       var syllables = obj.syllables;
-
-
       atejilib.addMeaningToSyllables(syllables);
 
-      //テーブルをつくる
-      name_obj.syllables_table = atejilib.arrangeSyllablesTable(syllables, obj.length);
-
-      return name_obj;
+      return {
+        original_name,
+        hiragana,
+        katakana,
+        hiragana_nosmall,
+        syllables,
+      };
     });
 
-    res.render("atejis/candidates",{
-      original_name,
-      name_objs
+    res.render("names/candidate",{
+      original_name:_(name_objs).map(name_obj => name_obj.original_name).join(" "),
+      name_objs,
     });
 
-  })
-  .catch(function(err){
-    next(err);
-  });
-
-});
-
-
-//candidates とほとんど同じ
-names_router.get('/api/:original_name', function(req, res, next) {
-
-  co(function*(){
-
-    var original_name = req.params.original_name;
-    //名前が空だったらtopにリダイレクト
-    if(!original_name){
-      res.redirect("/");
-      return;
-    }
-
-
-    var original_names = original_name.split(/[ ,　,\,,\|,\\,\/]+/);
-
-    var nullify = err => Promise.resolve(null); 
-
-    var translated_names = yield _(original_names).map(function(original_name){
-      return atejilib.toJapaneseSound(original_name).catch(nullify);
-    });
-
-    var succeeded_names = _(translated_names).filter(a=>a); //falseになるもの(null)は排除される
-
-    if(succeeded_names.length < 1){
-      return res.render("japaname_not_found", {original_name});
-    }
-
-    console.log(succeeded_names);
-
-    var name_objs = _(succeeded_names).map(function(name_obj,index){
-      name_obj.hiragana_nosmall = atejilib.hiraganaToNosmall(name_obj.hiragana);
-
-      //ローマ字
-      name_obj.romajis_array = _(name_obj.hiragana_nosmall).map(atejilib.hiraganasToRomajis);
-      
-
-      var obj = atejilib.atejiSyllables(name_obj.hiragana);
-      // obj =   length syllables hiragana_str_nosmall
-    
-      var syllables = name_obj.syllables = obj.syllables;
-
-      atejilib.addMeaningToSyllables(syllables);
-
-      //テーブルをつくる
-      name_obj.syllables_table = atejilib.arrangeSyllablesTable(syllables, obj.length);
-
-      return name_obj;
-    });
-
-    res.render("api/crafti",{
-      original_name,
-      name_objs
-    });
-
-  })
-  .catch(function(err){
-    next(err);
-  });
-});
-
-
-
-
-
-
-//returns {chars: [{kana,kanji}] ,atejiname}
-names_router.parseAtejiUrl = function (atejiquery){ 
-  // atejiArg = _じ-次_えい-英_むず-難 
-  // atejiArg = じ-次_えい-英_むず-難 
-  // atejiArg = じ-次,えい-英,むず-難 
-
-  var atejis = atejiquery.split("_");// or , |
-  var atejis_res = [];
-  var ateji_name = "";
-
-  for(var i = 0; i < atejis.length; i++){
-    var ateji = atejis[i].split("-");
-
-    console.log(ateji);
-
-    if(ateji.length < 2){
-      continue;
-    }
-    var kana = ateji[0];
-    var kanji = ateji[1];
-
-
-    atejis_res.push({kana: kana, kanji: kanji});
-    ateji_name += ateji[1];
-  }
-
-  return {chars: atejis_res , ateji_name :ateji_name };
-};
-
-
-
-
-
-
-names_router.get('/hiragana_str/enum', function(req, res, next) {
+  }).catch(err=> next(err));
 
 });
 
 
 
 
-/* URI *
-names_router.get('/:hiragana_str', function(req, res, next) {
-
-  var hiragana_str = req.params.hiragana_str;
-  console.log(hiragana_str);
-
-  var ateji_candidates = atejilib.atejiCandidates(hiragana_str);
-
-  res.format({
-    'application/json':function(){ res.json({
-        hiragana: hiragana_str,
-        atejis: ateji_candidates
-      });
-    },
-    'text/html':function(){
-      res.render("atejis",{
-        hiragana: hiragana_str,
-        atejis: ateji_candidates
-      });
-    }
-  });
-
-});
-//*/
 
 
-
-//atode nandakke
-names_router.get('/:hiragana_str/enum', function(req, res, next) {
-
-  var ateji_candidates = atejilib.atejiCandidates(req.params.hiragana_str);
-
-  console.log(ateji_candidates);
-
-  res.json({
-    hiragana: req.params.hiragana_str,
-    atejis:ateji_candidates
-  });
-
-});
-
-
-
-names_router.get('/session', function(req, res, next) {
-  var sess = req.session;
-
-
-
-
-  res.write('<p>views: ' + sess.views + '</p>');
-  if (sess.views) {
-    sess.views++;
-    if(sess.info && sess.info.sex){
-      sess.info.sex.push("sayaka");
-    }
-    res.write('<p>views: ' + sess.views + '</p>');
-    res.write('<p>expires in: ' + (sess.cookie.maxAge / 1000) + 's</p>');
-    res.write('<p>sex: ' + sess.sex+'</p>');
-    res.write('<p>object: ' + JSON.stringify(sess.info)+'</p>');
-    res.end();
-  } else {
-    sess.views = 1;
-
-    sess.sex = "male";
-    sess.info = {
-      sorm:"m",
-      hentai: true,
-      sex: ["hinako", "sayaka", "shiho"]
-    };
-
-    res.end('welcome to the session demo. refresh!');
-  }
-
-});
 
 
 

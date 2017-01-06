@@ -1,4 +1,3 @@
-
 $jt:".japanameTable";
 
 #{$jt}{
@@ -9,11 +8,8 @@ $jt:".japanameTable";
   td,th{
     margin:0;
     padding:0;
-    border-bottom:1px solid $ateji-lightgray-color ;
+    border:0;
 
-  }
-  @include media($medium-screen-up){ //thを表示させるため
-    margin-left:-8rem;
   }
 }
 
@@ -31,18 +27,41 @@ $jt:".japanameTable";
 }
 
 #{$jt}__kanjiRow{
+
 }
 
 #{$jt}__kanjiCell{
   padding:0;
   font-family:$kanji-font-family;
   font-size:10rem;
+  line-height:1;
 }
 
 #{$jt}__kanaRow{
 
 }
+
 #{$jt}__meaningRow{
+  vertical-align:top;
 }
+
+#{$jt}__meaningCell{
+  vertical-align:top;
+}
+
+#{$jt}__original{
+  margin:0;
+  padding:0;
+  border:0;
+
+  text-transform:capitalize;
+  text-align:left;
+  font-size:1.4rem;
+
+
+}
+
+
+
 
 

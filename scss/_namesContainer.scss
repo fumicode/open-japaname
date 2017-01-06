@@ -1,0 +1,34 @@
+$nc:".namesContainer";
+
+#{$nc}{
+  margin:0 auto;
+  padding:0;
+  border:0;
+
+  //width:100%;
+
+  text-align:center;
+
+
+  overflow-x:auto;
+  overflow-y:hidden;
+
+
+
+  white-space:nowrap;
+}
+
+#{$nc}__cell{
+
+  display:inline-block;
+  margin:0;
+  padding:0;
+  padding-left:1em;
+  border:0;
+
+  vertical-align:top;
+  white-space:normal;
+
+  //text-align:left;
+}
+
