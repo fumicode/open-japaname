@@ -22,11 +22,9 @@ candidate-table
                 div.kanjiCell__meanings {kanji.meanings.join("\n")}
 
   script.
-    this_tag = this;
+    var this_tag = this;
     this.atejiSelector = opts.ateji_selector;
     this.syllableChanger = opts.syllable_changer;
-    console.log("this.syllableChanger ");
-    console.log(this.syllableChanger );
 
 
     this.selectedSyllables = this.atejiSelector.getSelectedSyllables();
@@ -54,21 +52,23 @@ candidate-table
       //0バンめとはかぎらない！！
       var syllableChanger = this.syllableChanger;
 
-      console.log("open sep button");
 
-      syllableChanger.update({
-        //from_syllable:,
-        syllable_path:e.item.other_syllable_path,
-        opened:true,
-        x: e.pageX,
-        y: e.pageY,
-        onOK:function(syllable_path){
-          this_tag.atejiSelector.changeSyllable(syllable_path[0]);
-          this_tag.update();
+      (function(){
+        //スコープを作る
+        syllableChanger.update({
+          //from_syllable:,
+          syllable_path:e.item.other_syllable_path,
+          opened:true,
+          x: e.pageX,
+          y: e.pageY,
+          onOK:function(syllable_path){
+            this_tag.atejiSelector.changeSyllable(syllable_path[0]);
+            this_tag.update();
 
-          syllableChanger.update({ opened:false});
-        }
-      });
+            syllableChanger.update({ opened:false});
+          }
+        });
+      }());
       e.stopPropagation();
     }
 
