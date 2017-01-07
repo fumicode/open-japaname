@@ -1,13 +1,48 @@
+
 .otherSyllableCell {
-  height:100%;
-  width:80px;
+  position:relative;
+
+  box-sizing:border-box;
+  width:$kanji-cell-size;
+  height:$kanji-cell-size;
+  padding:$kanji-cell-size/6;
+  background:#f3f3f3;
+
+  border-radius:$kanji-cell-size/2;
 
   vertical-align:top;
 
+
+
   &__part{
-    background:#999;
-    border-radius:5px;
+    color:black;
     margin-bottom:2px;
+    border-bottom:1px solid;
+    &:last-child{
+      border-bottom:0;
+    }
+  }
+
+  &__board{
+    display:none;
+    position:absolute;
+      top:0;
+      left:0;
     
+
+    width:300px;
+    height:100%;
+
+    background:rgba(240,240,240,0.95);
+    color:black;
+    border-radius:5px;
+    
+    
+    
+  }
+  &:hover{
+    .otherSyllableCell__board{
+      display:block;
+    }
   }
 }

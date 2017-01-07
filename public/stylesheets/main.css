@@ -1504,12 +1504,12 @@ input[type="search"].jnSearchBox__textbox {
   border: 0;
   width: 100%;
   overflow-x: scroll;
+  overflow-y: hidden;
   text-align: center; }
   .syllablesTable__kanjis--using {
     color: #000; }
 
 .kanjisList {
-  overflow: hidden;
   margin: 0 auto;
   padding: 0;
   border: 0;
@@ -1524,15 +1524,15 @@ input[type="search"].jnSearchBox__textbox {
   vertical-align: top; }
 
 .kanjiCell__char {
-  width: 1.4em;
-  height: 1.4em;
+  width: 9rem;
+  height: 9rem;
   padding: 0;
   vertical-align: middle;
   font-family: "ro-nikkatsu-sei-kai-std";
   font-size: 7rem;
   text-align: center;
-  line-height: 1.4em;
-  border-radius: 0.7em; }
+  line-height: 9rem;
+  border-radius: 4.5rem; }
 
 .kanjiCell__meanings {
   text-align: center;
@@ -1555,13 +1555,32 @@ input[type="search"].jnSearchBox__textbox {
     display: block; }
 
 .otherSyllableCell {
-  height: 100%;
-  width: 80px;
+  position: relative;
+  box-sizing: border-box;
+  width: 9rem;
+  height: 9rem;
+  padding: 1.5rem;
+  background: #f3f3f3;
+  border-radius: 4.5rem;
   vertical-align: top; }
   .otherSyllableCell__part {
-    background: #999;
-    border-radius: 5px;
-    margin-bottom: 2px; }
+    color: black;
+    margin-bottom: 2px;
+    border-bottom: 1px solid; }
+    .otherSyllableCell__part:last-child {
+      border-bottom: 0; }
+  .otherSyllableCell__board {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 100%;
+    background: rgba(240, 240, 240, 0.95);
+    color: black;
+    border-radius: 5px; }
+  .otherSyllableCell:hover .otherSyllableCell__board {
+    display: block; }
 
 .selectingKanji {
   position: fixed;

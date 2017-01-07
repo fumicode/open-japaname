@@ -9,17 +9,23 @@ candidate-table
       div.syllablesTable__kanjis
         table.kanjisList
           tr.kanjisList__row
+            td.kanjisList__item(each="{other_syllable_path in syllable.siblings}" 
+              onclick="{parent.parent.changeSyllable}")
+              div.otherSyllableCell 
+                ul
+                  li.otherSyllableCell__part(each="{other_syllable in other_syllable_path}") {other_syllable.romaji}
+                div.otherSyllableCell__board
+                  p Change syllable separation to
+                  ul
+                    li(each="{other_syllable in other_syllable_path}") {other_syllable.romaji}
+                      span(each="{kanji in other_syllable.atejis.slice(0,3)}") {kanji.kanji}
+
             td.kanjisList__item(each="{kanji in syllable.atejis}" ) 
               div.kanjiCell(class="{kanji == syllable.usingKanji ? 'kanjiCell--using':''}" 
                 onclick="{parent.parent.kanjiSelected}")
                 div.kanjiCell__char {kanji.kanji}
                 div.kanjiCell__meanings {kanji.meanings.join("\n")}
 
-            td.kanjisList__item(each="{other_syllable_path in syllable.siblings}" 
-              onclick="{parent.parent.changeSyllable}")
-              div.otherSyllableCell 
-                div.otherSyllableCell__part(each="{other_syllable in other_syllable_path}") {other_syllable.romaji}
-                  span(each="{kanji in other_syllable.atejis.slice(0,3)}") {kanji.kanji}
 
   script.
     this_tag = this;

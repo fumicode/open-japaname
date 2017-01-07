@@ -5,20 +5,18 @@
 
 
 .kanjiCell__char{
-  $cellsize:1.4em; 
 
-  width:$cellsize;
-  height:$cellsize;
+  width:$kanji-cell-size;
+  height:$kanji-cell-size;
   padding:0;
 
   vertical-align:middle;
 
   font-family:"ro-nikkatsu-sei-kai-std";
-  font-size:7rem;
+  font-size:$kanji-cell-font-size;
   text-align:center;
-  line-height:$cellsize;
-
-  border-radius:$cellsize/2;
+  line-height:$kanji-cell-size;
+  border-radius:$kanji-cell-size/2;
 
 }
 
