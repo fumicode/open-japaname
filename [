@@ -25,7 +25,6 @@ candidate-table
     this_tag = this;
     this.atejiSelector = opts.ateji_selector;
     this.syllableChanger = opts.syllable_changer;
-    console.log("this.syllableChanger ");
     console.log(this.syllableChanger );
 
 
@@ -54,14 +53,11 @@ candidate-table
       //0バンめとはかぎらない！！
       var syllableChanger = this.syllableChanger;
 
-      console.log("open sep button");
-
+      console.log(syllableChanger );
+      
       syllableChanger.update({
-        //from_syllable:,
         syllable_path:e.item.other_syllable_path,
         opened:true,
-        x: e.pageX,
-        y: e.pageY,
         onOK:function(syllable_path){
           this_tag.atejiSelector.changeSyllable(syllable_path[0]);
           this_tag.update();

@@ -1,0 +1,36 @@
+$sc:".syllableChanger";
+
+#{$sc}{
+  position:absolute;
+    top:00px;
+    left:0;
+  
+  padding:5px;
+
+  width:300px;
+
+  background:rgba(240,240,240,0.95);
+  color:black;
+  border-radius:5px;
+  
+}
+
+#{$sc}__buttonsContainer{
+  @include outer-container();
+}
+
+#{$sc}__sentence{
+  margin:0;
+}
+#{$sc}__changeButton{
+  display:block;
+  @include span-columns(2 of 3);
+}
+
+#{$sc}__cancelButton{
+  display:block;
+  padding-left:0;
+  padding-right:0;
+  @include span-columns(1 of 3);
+}
+

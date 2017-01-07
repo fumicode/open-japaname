@@ -1563,24 +1563,15 @@ input[type="search"].jnSearchBox__textbox {
   background: #f3f3f3;
   border-radius: 4.5rem;
   vertical-align: top; }
-  .otherSyllableCell__part {
-    color: black;
-    margin-bottom: 2px;
-    border-bottom: 1px solid; }
-    .otherSyllableCell__part:last-child {
-      border-bottom: 0; }
-  .otherSyllableCell__board {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 300px;
-    height: 100%;
-    background: rgba(240, 240, 240, 0.95);
-    color: black;
-    border-radius: 5px; }
-  .otherSyllableCell:hover .otherSyllableCell__board {
+  .otherSyllableCell--activated .otherSyllableCell__board {
     display: block; }
+
+.otherSyllableCell__part {
+  color: black;
+  margin-bottom: 2px;
+  border-bottom: 1px solid; }
+  .otherSyllableCell__part:last-child {
+    border-bottom: 0; }
 
 .selectingKanji {
   position: fixed;
@@ -1708,6 +1699,48 @@ input[type="search"].jnSearchBox__textbox {
   border: 0;
   vertical-align: top;
   white-space: normal; }
+
+.syllableChanger {
+  position: absolute;
+  top: 00px;
+  left: 0;
+  padding: 5px;
+  width: 300px;
+  background: rgba(240, 240, 240, 0.95);
+  color: black;
+  border-radius: 5px; }
+
+.syllableChanger__buttonsContainer {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto; }
+  .syllableChanger__buttonsContainer::after {
+    clear: both;
+    content: "";
+    display: table; }
+
+.syllableChanger__sentence {
+  margin: 0; }
+
+.syllableChanger__changeButton {
+  display: block;
+  float: left;
+  display: block;
+  margin-right: 3.84615%;
+  width: 65.38462%; }
+  .syllableChanger__changeButton:last-child {
+    margin-right: 0; }
+
+.syllableChanger__cancelButton {
+  display: block;
+  padding-left: 0;
+  padding-right: 0;
+  float: left;
+  display: block;
+  margin-right: 3.84615%;
+  width: 30.76923%; }
+  .syllableChanger__cancelButton:last-child {
+    margin-right: 0; }
 
 html {
   box-sizing: border-box; }

@@ -22,6 +22,7 @@ block content
 
 
 block footer
+  syllable-changer
   //include /include/footer.jade
 
 block append body-end-scripts
@@ -34,6 +35,7 @@ block append body-end-scripts
   script(src="/riotjs/candidate-tables.js")
   script(src="/riotjs/selecting-bar.js")
   script(src="/riotjs/gonext-button.js")
+  script(src="/riotjs/syllable-changer.js")
   script(src="/javascripts/AtejiSelector.js")
   script(src="/javascripts/NamesSelector.js")
 
@@ -59,9 +61,15 @@ block append body-end-scripts
       showMeanings:false
     })[0];
 
+    var syllableChanger = riot.mount("syllable-changer")[0];
+    console.log("syllableChanger");
+    console.log(syllableChanger);
+
     var candidateTables = riot.mount("candidate-tables", {
-      names_selector:namesSelector
-    });
+      names_selector:namesSelector,
+      syllable_changer:syllableChanger
+    })[0] ;
+
 
     var gonextButton = riot.mount("#goNextButtonCenter", "gonext-button", {
       names_selector:namesSelector,
@@ -76,8 +84,6 @@ block append body-end-scripts
 
   // なぜかいきなりトップにもどるスクロール我発生する謎のバグ
   // Bitters いれたらなったきがする。ガチで意味分からん。むかつく。
-
-    
 
   script(src="https://use.typekit.net/yjx8eou.js")
   script try{Typekit.load({ async: true });}catch(e){}
