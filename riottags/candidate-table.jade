@@ -1,7 +1,7 @@
 candidate-table
   div.syllablesTable
     div.syllablesTable__item(each="{syllable in selectedSyllables}" 
-      onmouseover="{parent.syllableSelected}" 
+      onclick="{parent.syllableSelected}" 
       ontouchstart="{parent.syllableSelected}" 
       class="{syllable == usingSyllable ? 'syllablesTable__item--using':''}")
       h3.syllablesTable__head
