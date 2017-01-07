@@ -1,5 +1,5 @@
 syllable-changer
-  div.syllableChanger(if="{opened}" style="top:{y}px; left:{x}px;" onclick="{stopPropagation}")
+  div.syllableChanger(if="{opened}" style="top:{y}px; left:{x}px;" onclick="{OKPushed}")
     p.syllableChanger__sentence Change syllable separation?
     ul
       li(each="{syllable in syllable_path}") {syllable.romaji}
@@ -54,10 +54,9 @@ syllable-changer
       if(this.onOK && typeof this.onOK ==="function"){
         this.onOK(this.syllable_path);
       }
-    }
 
-    stopPropagation(e){
       e.stopPropagation();
     }
+
 
 

@@ -1,6 +1,6 @@
 candidate-table
   div.syllablesTable
-    div.syllablesTable__item(each="{syllable in selectedSyllables}" 
+    div.syllablesTable__item.syllablesTable__item--basic(each="{syllable in selectedSyllables}" 
       onclick="{parent.syllableSelected}" 
       ontouchstart="{parent.syllableSelected}" 
       class="{syllable == usingSyllable ? 'syllablesTable__item--using':''}")

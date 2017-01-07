@@ -1486,9 +1486,23 @@ input[type="search"].jnSearchBox__textbox {
 
 .syllablesTable__item {
   border-radius: 5px;
-  background: white; }
+  background: white;
+  margin-bottom: 1em;
+  overflow: hidden;
+  max-height: 100vh;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-name: nyoki; }
   .syllablesTable__item--using {
     box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.4); }
+
+@keyframes nyoki {
+  from {
+    max-height: 0;
+    background: #fff2cc; }
+  to {
+    max-height: 100vh;
+    background: white; } }
 
 .syllablesTable__head {
   text-align: center;
@@ -1499,7 +1513,6 @@ input[type="search"].jnSearchBox__textbox {
 .syllablesTable__kanjis {
   color: #aaa;
   margin: 0;
-  margin-bottom: 1em;
   padding: 0;
   border: 0;
   width: 100%;

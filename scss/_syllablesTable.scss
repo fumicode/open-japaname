@@ -9,10 +9,36 @@
 .syllablesTable__item{
   border-radius:5px;
   background:white;
+  margin-bottom:1em;
+
+  overflow:hidden;
+
+  max-height:100vh;//上限を使うことで、具体的な数値なので、アニメーションに使える。
+
   &--using{
+
+    //height:200px;
     box-shadow: 0px 5px 30px rgba(0,0,0,0.4);
   }
+
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-name: nyoki;
 }
+
+
+@keyframes nyoki{
+  from {
+    max-height:0;
+    background:$ateji-hada-color;
+  }
+
+  to {
+    max-height:100vh;
+    background:white;
+  }
+}
+
 
 .syllablesTable__head{
 
@@ -23,7 +49,6 @@
 .syllablesTable__kanjis{
   color:#aaa;
   margin:0;
-  margin-bottom:1em;
   padding:0;
   border:0;
   width:100%;
