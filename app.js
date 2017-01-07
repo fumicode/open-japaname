@@ -210,8 +210,8 @@ app.all('*', function(req, res, next){
 
 app.all('*', loadUser); //load user to res.locals.user !!! to show it in topbar
 app.all('*', function(req, res, next){
-  res.locals.url = req.protocol + '://' + req.hostname + req.url;
-  res.locals.originalUrl = req.protocol + '://' + req.hostname + req.originalUrl;
+  res.locals.url = 'https://' + req.hostname + req.url;
+  res.locals.originalUrl = 'https://' + req.hostname + req.originalUrl;
 
   res.locals.path = req.url;
   res.locals.originalPath = req.originalUrl;
@@ -280,8 +280,6 @@ app.use('/api', api_router);
         '/images': { disallow: true, },
     },
   });
-
-
 
   sitemap.XMLtoFile(path.join(__dirname,"/public/sitemap.xml"));
   sitemap.TXTtoFile(path.join(__dirname,"/public/robots.txt"));
