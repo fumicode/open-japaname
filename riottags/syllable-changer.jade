@@ -1,5 +1,6 @@
 syllable-changer
-  div.syllableChanger(if="{opened}" style="top:{y}px; left:{x}px;" onclick="{OKPushed}")
+  div.syllableChanger__cover(class="{opened ? 'syllableChanger__cover--visible':''}" onclick="{hide}")
+  div.syllableChanger(if="{opened}" style="top:{y}px"  onclick="{OKPushed}")
     p.syllableChanger__sentence Change syllable separation?
     ul
       li(each="{syllable in syllable_path}") {syllable.romaji}
@@ -20,15 +21,18 @@ syllable-changer
     this.y = 0;
 
     this.on("update",function(){
+    /*
       if(this.opened){
         this.addBodyEvent();
       }
       else{
         this.removeBodyEvent();
       }
+      */
 
     });
 
+    /*
     this.addBodyEvent = function(){
       var body = document.getElementsByTagName("body")[0];
       body.addEventListener("click",this_tag.bodyEventListener)
@@ -43,11 +47,13 @@ syllable-changer
     this.bodyEventListener = function(){
       this_tag.update({opened:false});
     }
+    */
 
 
 
     hide(e){
       this.opened=false;
+      e.stopPropagation();
     }
 
     OKPushed(e){

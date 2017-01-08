@@ -1715,8 +1715,11 @@ input[type="search"].jnSearchBox__textbox {
 
 .syllableChanger {
   position: absolute;
-  top: 00px;
-  left: 0;
+  top: 50%;
+  left: 50%;
+  z-index: 201;
+  margin-left: -150px;
+  margin-top: -100px;
   padding: 5px;
   width: 300px;
   background: rgba(240, 240, 240, 0.95);
@@ -1754,6 +1757,27 @@ input[type="search"].jnSearchBox__textbox {
   width: 30.76923%; }
   .syllableChanger__cancelButton:last-child {
     margin-right: 0; }
+
+body {
+  position: relative; }
+
+.syllableChanger__cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  display: none;
+  background: black;
+  opacity: 0.0;
+  transition-property: opacity;
+  transition-duration: 1s; }
+  .syllableChanger__cover--visible {
+    display: block;
+    transition-property: opacity;
+    transition-duration: 1s;
+    opacity: 0.7; }
 
 html {
   box-sizing: border-box; }
