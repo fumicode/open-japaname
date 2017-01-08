@@ -167,7 +167,7 @@ artworks_router.get("/:artwork_name/:japaname_code/thumbnail",(req,res,next)=>{
 
 
       res.setHeader('Content-Type', 'image/svg+xml');
-      res.render("artworks.ejs/"+artwork.artwork_name+".ejs", {japaname,share_url:"http://japaname.jp/" + japaname.code});
+      res.render("artworks.ejs/"+artwork.artwork_name+".ejs", {japaname,share_url:"http://japana.me/" + japaname.code});
     }
     catch(err){
       console.log(err)

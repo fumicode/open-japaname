@@ -1591,7 +1591,7 @@ input[type="search"].jnSearchBox__textbox {
   top: 5rem;
   left: 0;
   right: 0;
-  z-index: 900;
+  z-index: 100;
   background-color: rgba(255, 255, 255, 0.9);
   transition-property: top;
   transition-duration: 0.3s; }

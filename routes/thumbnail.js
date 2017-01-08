@@ -15,7 +15,7 @@ var co = require("co");
 var ejs = require("ejs");
 var path = require("path");
 
-//var Rsvg = require("librsvg").Rsvg;
+var Rsvg = require("librsvg").Rsvg;
 
 
 
@@ -42,7 +42,6 @@ thumbnail_router.get("/svg/:japaname_code",(req,res,next)=>{
       return next();
     }
 
-
     res.setHeader('Content-Type', 'image/svg+xml');
     res.render("artworks.ejs/risumaru_ofuda.ejs", {japaname,share_url:"http://japaname.jp/" + japaname.code});
 
@@ -50,7 +49,6 @@ thumbnail_router.get("/svg/:japaname_code",(req,res,next)=>{
     next(err);
   });
 });
-
 
 //direct svg rendering by ejs
 thumbnail_router.get("/png/:japaname_code",(req,res,next)=>{
@@ -81,9 +79,7 @@ thumbnail_router.get("/png/:japaname_code",(req,res,next)=>{
 
 function ejs2svg2png(ejspath, japaname){
   return new Promise((resolve,reject)=>{
-    ejs.renderFile(ejspath, {japaname},
-      {}, function(err, str){
-
+    ejs.renderFile(ejspath, {japaname}, {}, function(err, str){
       var svg = new Rsvg();
       svg.write(str);
 
@@ -114,24 +110,17 @@ thumbnail_router.get("/server/:name",(req,res,next)=>{
   //Canvas.registerFont(
   //    __dirname + '../core/image/honoka-min/font_1_honokamin.ttf'
   //);
-  
 
   var compositeIconName = require("../core/image/imageProcessing").compositeIconName;
 
-
   fs.readFile(__dirname + '/../public/images/thumbnail-image.jpg', function(err, squid){
-
     if (err) throw err;
       img = new Image;
-
     img.src = squid;
 
     console.log("canvas.font" , Font);
-
     compositeIconName(canvas, img, name, Canvas.Font);
-
     var dataurl = canvas.toDataURL();
-
     res.render("thumbnail_server", {dataurl});
   });
 
