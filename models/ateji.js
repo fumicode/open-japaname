@@ -9,7 +9,8 @@ var _ = require("underscore");
 
 var AtemojiSchema = new mongoose.Schema({
   kana: String,
-  kanji: String
+  kanji: String,
+    comment: String,
 },{
   _id:false
 });
