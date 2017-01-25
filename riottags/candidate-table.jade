@@ -20,6 +20,8 @@ candidate-table
                 onclick="{parent.parent.kanjiSelected}")
                 div.kanjiCell__char {kanji.kanji}
                 div.kanjiCell__meanings {kanji.meanings.join("\n")}
+      div.syllablesTable__kanjiDetail(if="{syllable == usingSyllable}")
+        kanji-detail(ateji_selector="{atejiSelector}" current_syllable="{syllable}")
 
   script.
     var this_tag = this;
