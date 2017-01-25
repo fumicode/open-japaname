@@ -4,7 +4,13 @@ riot.tag2('kanji-detail', '<div class="kanjiDetail {opened ? \'kanjiDetail--open
     this.currentSyllable = opts.current_syllable;
     this.favoriteKanjis = opts.favoriteKanjis;
 
+    this.kanji = this.atejiSelector.getCurrentKanjiInSyllable(this.currentSyllable)
+
     var this_tag = this;
+
+    this.atejiSelector.on("kanjichanged",function(){
+      this_tag.update();
+    });
 
     this.on("update",function(){
       this.kanji = this.atejiSelector.getCurrentKanjiInSyllable(this.currentSyllable)
@@ -18,7 +24,6 @@ riot.tag2('kanji-detail', '<div class="kanjiDetail {opened ? \'kanjiDetail--open
       else{
         this.opened = false;
       }
-
     });
 
     var this_tag = this;
