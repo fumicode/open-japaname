@@ -15,7 +15,7 @@ var co = require("co");
 var ejs = require("ejs");
 var path = require("path");
 
-var Rsvg = require("librsvg").Rsvg;
+//var Rsvg = require("librsvg").Rsvg;
 
 
 
