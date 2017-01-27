@@ -1,0 +1,10 @@
+{
+  "test":{
+    "secret_key":"sk_test_5y7JP31NV5eYLrP3w3MWtWlY",
+    "public_key":"pk_test_NnuXdv4LMltI5HExVZ2qGS7d"
+  },
+  "live":{
+    "secret_key":"sk_live_XlL0iSOnK0d9oQ8dUAawEO1C",
+    "public_key":"pk_live_MKkOKo3NE0awFnoLDEO427eB"
+  }
+}

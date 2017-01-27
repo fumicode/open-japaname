@@ -179,8 +179,12 @@ var thumbnail_router      = require('./routes/thumbnail');
 var artworks_router     = require('./routes/artworks');
 var shops_router = require('./routes/shops');
 var purchases_router = require('./routes/purchases');
+var payment_router = require('./routes/payment');
 var admin_router     = require('./routes/admin');
 var api_router = require("./routes/api");
+
+//change keys by env param
+payment_router.setKeys(app);
 
 
 app.all('*', function(req, res, next){
@@ -239,6 +243,7 @@ app.use('/thumbnail', thumbnail_router);
 app.use('/artworks', artworks_router ); // loginCheck ,
 app.use('/shops', shops_router ); // loginCheck ,
 app.use('/purchases', loginCheck, purchases_router); // loginCheck,
+app.use('/payment',  payment_router); // loginCheck,
 app.use('/admin', authorize(["admin"]),admin_router);
 app.use('/api', api_router);
 

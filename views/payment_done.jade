@@ -1,0 +1,25 @@
+extends /template/sub_layout
+
+block sub-content
+
+  if err
+    h1 エラーが発生しました。
+    p= err.message
+    p icymasa@gmail.com までエラー内容と時刻をお伝えください。
+    
+
+  else
+    h1 ふみコードへのお支払いが完了しました。
+
+
+    table
+      tr
+        th カード番号(下四桁)
+        td= charge.source.last4
+      tr
+        th 金額
+        td= charge.amount + charge.currency
+
+
+
+    
