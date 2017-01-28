@@ -1,7 +1,6 @@
 var express = require('express');
 var payment_router = module.exports = express.Router();
 
-
 //mongoose
 //
 var _ = require("underscore");
@@ -55,16 +54,10 @@ payment_router.post("/",(req,res,next)=>{
     amount: 60000,
     source: token,
   }, function(err, charge) {
-
     if(err){
-
       res.render("payment_done", {err});
       return ;
     }
-
     res.render("payment_done", {charge});
-
   });
-
-
 });
