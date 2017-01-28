@@ -8,9 +8,9 @@ ateji-box.atejiBox
       td.atejiBox__cell.atejiBox__cell--kanji(each="{ji in atejis}") {ji.kanji} 
     tr.atejiBox__line 
       td.atejiBox__cell.atejiBox__cell--meanings(each="{ji in atejis}") {ji.meanings[0]}
-        //全部表示したい場合
-          virtual(each="{meaning in ji.meanings}") {meaning}
-            br
+    //一時的
+    tr.atejiBox__line 
+      td.atejiBox__cell.atejiBox__cell--comment(each="{ji in atejis}") {ji.comment}
 
 
   script.
