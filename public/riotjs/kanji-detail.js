@@ -1,5 +1,5 @@
 
-riot.tag2('kanji-detail', '<div class="kanjiDetail {opened ? \'kanjiDetail--opened\':\'\'}"> <div class="kanjiDetail__inner"> <div class="kanjiDetail__leftColumn"> <div class="kanjiDetail__bigKanji"> <span class="kanjiDetail__bigKanjiInner">{thekanji} </span></div> </div> <div class="kanjiDetail__centerColumn"> <div class="kanjiDetail__sounds"> <virtual each="{sound in romaji_sounds}">[{sound}]</virtual> </div> <div class="kanjiDetail__meaning">{meaning}</div> <p>{kanji.comment}</p> </div> <div class="kanjiDetail__rightColumn"> <form onsubmit="{addComment}"> <textarea rows="3" style="width:80%" ref="comment_input"></textarea> <input type="submit" value="コ メ ン ト を 追 加"> </form> </div> </div> </div>', '', '', function(opts) {
+riot.tag2('kanji-detail', '<div class="kanjiDetail {opened ? \'kanjiDetail--opened\':\'\'}"> <div class="kanjiDetail__inner"> <div class="kanjiDetail__leftColumn"> <div class="kanjiDetail__bigKanji"> <span class="kanjiDetail__bigKanjiInner">{thekanji} </span></div> </div> <div class="kanjiDetail__centerColumn"> <div class="kanjiDetail__sounds"> <virtual each="{sound in romaji_sounds}">[{sound}]</virtual> </div> <div class="kanjiDetail__meaning">{meaning}</div> <p>{kanji.comment}</p> </div> <div class="kanjiDetail__rightColumn"> <form onsubmit="{addComment}"> <textarea class="comment-textarea" rows="3" style="width:80%"></textarea> <input type="submit" value="コ メ ン ト を 追 加"> </form> </div> </div> </div>', '', '', function(opts) {
     this.atejiSelector = opts.ateji_selector;
     this.currentSyllable = opts.current_syllable;
     this.favoriteKanjis = opts.favoriteKanjis;
@@ -27,11 +27,19 @@ riot.tag2('kanji-detail', '<div class="kanjiDetail {opened ? \'kanjiDetail--open
     });
 
     this.addComment = function(e){
-      var comment_text = this.refs.comment_input.value;
-      this.atejiSelector.addCommentToKanji(this.currentSyllable, comment_text);
-      this.refs.comment_input.value = "";
-      this.update();
       e.preventDefault();
+
+      var comment_textarea = this.root.getElementsByClassName("comment-textarea")[0];
+      var comment_text = comment_textarea.value;
+
+      console.log("this.refs.comment_textarea");
+      console.log(comment_textarea);
+      console.log(comment_text);
+
+      this.atejiSelector.addCommentToKanji(this.currentSyllable, comment_text);
+      comment_textarea.value = "";
+      this.update();
+
     }.bind(this)
 
     var this_tag = this;
