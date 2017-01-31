@@ -1,0 +1,11 @@
+.japanameTableVerticalContainer{
+  @extend .horizonScroller;
+
+  @include media($large-screen-up){
+    width:60%;
+    margin:0 auto;
+  }
+
+
+  
+}

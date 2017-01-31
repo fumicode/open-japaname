@@ -1374,7 +1374,7 @@ input[type="search"].jnSearchBox__textbox {
     .japanameTable__heading {
       display: table-cell; } }
 
-.japanameTable__kanjiCell {
+.japanameTable__kanjiCell, .japanameTable--vertical__kanjiCell {
   padding: 0;
   font-family: "ro-nikkatsu-sei-kai-std", serif;
   font-size: 10rem;
@@ -1383,7 +1383,7 @@ input[type="search"].jnSearchBox__textbox {
 .japanameTable__meaningRow {
   vertical-align: top; }
 
-.japanameTable__meaningCell {
+.japanameTable__meaningCell, .japanameTable--vertical__meaningCell {
   vertical-align: top; }
 
 .japanameTable__original {
@@ -1393,6 +1393,15 @@ input[type="search"].jnSearchBox__textbox {
   text-transform: capitalize;
   text-align: left;
   font-size: 1.4rem; }
+
+.japanameTable--vertical {
+  text-align: left; }
+  .japanameTable--vertical td {
+    padding: 0.1em;
+    vertical-align: top; }
+
+.japanameTable--vertical__kanaCell {
+  font-size: 2em; }
 
 .charsTable__cell {
   font-size: 20px; }
@@ -1700,7 +1709,7 @@ input[type="search"].jnSearchBox__textbox {
   margin: 2em auto;
   width: 20rem; }
 
-.horizonScroller {
+.horizonScroller, .japanameTableVerticalContainer {
   width: 100%;
   overflow-x: auto; }
 
@@ -1914,6 +1923,11 @@ a.kanjiDetail__productButton {
   right: 0; }
   .kanjiDetail__closeButton:hover {
     opacity: 0.8; }
+
+@media screen and (min-width: 900px) {
+  .japanameTableVerticalContainer {
+    width: 60%;
+    margin: 0 auto; } }
 
 html {
   box-sizing: border-box; }

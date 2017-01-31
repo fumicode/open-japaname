@@ -15,7 +15,6 @@ block append head-end
 
 block sub-content
   article.text-center
-    include /include/ateji_box
     h1.h4 The japaname of 
       wbr
       strong(style="text-transform:capitalize;color:red;") #{japaname.original}
@@ -23,7 +22,13 @@ block sub-content
     p The japaname code : 
       input.inline(type="text" value="#{japaname.code}") 
 
-    mixin ateji_box(japaname.names)
+    if japaname.hasComment()
+      include /include/ateji_box_vertical
+      mixin ateji_box_vertical(japaname.names)
+
+    else
+      include /include/ateji_box
+      mixin ateji_box(japaname.names)
 
     p.text-center Click each kanji and see detail!<br>
 

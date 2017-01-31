@@ -30,6 +30,18 @@ var AtejiSchema = module.exports = new mongoose.Schema({
   }
 });
 
+AtejiSchema.methods.hasComment = function(){
+  //!!!!
+  var has = _(this.atemojis).reduce((memo, atemoji)=>{
+    return memo || !!atemoji.comment;
+
+  },false );
+
+  console.log("ateji has comment ? " + has);
+
+  return !!has;
+}
+
 AtejiSchema.virtual('string').get(function () {
   var this_ateji = this;
 

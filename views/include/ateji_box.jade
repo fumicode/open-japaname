@@ -2,12 +2,6 @@ mixin ateji_box(names)
   div#ateji-scroller
     div#ateji-block
 
-
-      //
-        th.japanameTable__heading Sound
-        th.japanameTable__heading Kanji
-        th.japanameTable__heading Meanings
-
     ul.namesContainer
       each name in names
         - var atejis = name.ateji.populated_atemojis;
