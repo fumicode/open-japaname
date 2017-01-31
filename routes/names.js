@@ -69,7 +69,8 @@ names_router.post('/', function(req, res, next) {
     //var original_name = req.body.original_name;
     //var ateji         = JSON.parse(req.body.ateji_json);
     var names = JSON.parse(req.body.names);
-
+      console.log(names[0].atejis);
+      
     var newJapaname = yield Japaname.createNew(names);
     var url_id = Japaname.japanameEncode(newJapaname._id);
 
