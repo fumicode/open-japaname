@@ -5,6 +5,8 @@ riot.tag2('kanji-detail', '<div class="kanjiDetail {opened ? \'kanjiDetail--open
     this.favoriteKanjis = opts.favoriteKanjis;
 
     this.kanji = this.atejiSelector.getCurrentKanjiInSyllable(this.currentSyllable)
+    this.opened = false;
+    this.romaji_sounds = [];
 
     var this_tag = this;
 
