@@ -1,8 +1,9 @@
 
-riot.tag2('kanji-detail', '<div class="kanjiDetail {opened ? \'kanjiDetail--opened\':\'\'}"> <div class="kanjiDetail__inner"> <div class="kanjiDetail__leftColumn"> <div class="kanjiDetail__bigKanji"> <span class="kanjiDetail__bigKanjiInner">{thekanji} </span></div> </div> <div class="kanjiDetail__centerColumn"> <div class="kanjiDetail__sounds"> <virtual each="{sound in romaji_sounds}">[{sound}]</virtual> </div> <div class="kanjiDetail__meaning">{meaning}</div> <p>{kanji.comment}</p> </div> <div class="kanjiDetail__rightColumn"> <form onsubmit="{addComment}"> <textarea class="comment-textarea" rows="3" style="width:80%"></textarea> <input type="submit" value="コ メ ン ト を 追 加"> </form> </div> </div> </div>', '', '', function(opts) {
+riot.tag2('kanji-detail', '<div class="kanjiDetail {opened ? \'kanjiDetail--opened\':\'\'}"> <div class="kanjiDetail__inner"> <div class="kanjiDetail__leftColumn"> <div class="kanjiDetail__bigKanji"> <span class="kanjiDetail__bigKanjiInner">{thekanji} </span></div> </div> <div class="kanjiDetail__centerColumn"> <div class="kanjiDetail__sounds"> <virtual each="{sound in romaji_sounds}">[{sound}]</virtual> </div> <div class="kanjiDetail__meaning">{meaning}</div> <p>{kanji.comment}</p> </div> <div class="kanjiDetail__rightColumn"> <form onsubmit="{addComment}"> <textarea class="comment-textarea" rows="3" style="width:80%"></textarea> <input type="submit" value="コメントを追加"> </form> </div> </div> </div>', '', '', function(opts) {
     this.atejiSelector = opts.ateji_selector;
     this.currentSyllable = opts.current_syllable;
     this.favoriteKanjis = opts.favoriteKanjis;
+    this.show_comment = opts.show_comment;
 
     this.kanji = this.atejiSelector.getCurrentKanjiInSyllable(this.currentSyllable)
     this.opened = false;

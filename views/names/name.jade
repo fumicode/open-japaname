@@ -22,7 +22,7 @@ block sub-content
     p The japaname code : 
       input.inline(type="text" value="#{japaname.code}") 
 
-    if japaname.hasComment()
+    if true
       include /include/ateji_box_vertical
       mixin ateji_box_vertical(japaname.names)
 

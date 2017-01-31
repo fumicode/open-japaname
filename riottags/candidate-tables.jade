@@ -1,7 +1,11 @@
 candidate-tables
   virtual(each="{name in opts.names_selector}")
     h2 {name.original_name}
-    candidate-table(ateji_selector="{name.atejiSelector}" syllable_changer="{parent.opts.syllable_changer}")
+    candidate-table(ateji_selector="{name.atejiSelector}" syllable_changer="{parent.opts.syllable_changer}" show_comment="{show_comment}")
+
+  script.
+
+    this.show_comment = opts.show_comment;
 
 
 

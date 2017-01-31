@@ -13,20 +13,19 @@ candidate-table
               div.otherSyllableCell(onclick="{openSepButton}")
                 ul
                   li.otherSyllableCell__part(each="{other_syllable in other_syllable_path}") {other_syllable.romaji}
-
-
             td.kanjisList__item(each="{kanji in syllable.atejis}" ) 
               div.kanjiCell(class="{kanji == syllable.usingKanji ? 'kanjiCell--using':''}" 
                 onclick="{parent.parent.kanjiSelected}")
                 div.kanjiCell__char {kanji.kanji}
                 div.kanjiCell__meanings {kanji.meanings.join("\n")}
       div.syllablesTable__kanjiDetail(class="{syllable == usingSyllable ? 'syllablesTable__kanjiDetail--display':''}")
-        kanji-detail(ateji_selector="{atejiSelector}" current_syllable="{syllable}")
+        kanji-detail(ateji_selector="{atejiSelector}" current_syllable="{syllable}" show_comment="{show_comment}")
 
   script.
     var this_tag = this;
     this.atejiSelector = opts.ateji_selector;
     this.syllableChanger = opts.syllable_changer;
+    this.show_comment = opts.show_comment;
 
     this.selectedSyllables = this.atejiSelector.getSelectedSyllables();
     this.usingSyllable = this.atejiSelector.getUsingSyllable();

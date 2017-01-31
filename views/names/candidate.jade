@@ -68,8 +68,20 @@ block append body-end-scripts
 
     var candidateTables = riot.mount("candidate-tables", {
       names_selector:namesSelector,
-      syllable_changer:syllableChanger
+      syllable_changer:syllableChanger,
+      show_comment: #{user && user.haveRight("kanji-house")}
     })[0] ;
+
+    /*
+      !{JSON.stringify(user)}
+
+
+
+      !{user.haveRight}
+
+
+      !{JSON.stringify(user.haveRight("kanji-house"))}
+    */
 
 
     var gonextButton = riot.mount("#goNextButtonCenter", "gonext-button", {

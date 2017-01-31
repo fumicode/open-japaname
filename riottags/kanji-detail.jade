@@ -10,13 +10,14 @@ kanji-detail
         div.kanjiDetail__meaning {meaning}
         p {kanji.comment}
       div.kanjiDetail__rightColumn
-        form(onsubmit="{addComment}")
+        form(onsubmit="{addComment}" )
           textarea.comment-textarea(rows="3" style="width:80%;")
-          input(type="submit" value="コ メ ン ト を 追 加")
+          input(type="submit" value="コメントを追加")
   script.
     this.atejiSelector = opts.ateji_selector;
     this.currentSyllable = opts.current_syllable;
     this.favoriteKanjis = opts.favoriteKanjis;
+    this.show_comment = opts.show_comment;
 
     this.kanji = this.atejiSelector.getCurrentKanjiInSyllable(this.currentSyllable)
     this.opened = false;
