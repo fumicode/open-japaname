@@ -62,6 +62,7 @@ AtejiSchema.virtual('populated_atemojis').get(function () {
     return {
       kanji: atemoji.kanji,
       kana:  atemoji.kana,
+      comment: atemoji.comment,  
       meanings:atejilib.meaningsOfKanji(atemoji.kanji).meanings,
       romaji_kana:atejilib.hiraganaToRomaji(atemoji.kana)
     }

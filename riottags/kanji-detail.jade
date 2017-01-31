@@ -8,11 +8,11 @@ kanji-detail
         div.kanjiDetail__sounds 
           virtual(each="{sound in romaji_sounds}") [{sound}]
         div.kanjiDetail__meaning {meaning}
-
+        p {kanji.comment}
       div.kanjiDetail__rightColumn
         form(onsubmit="{addComment}")
-          input(type="text" ref="comment_input" value="{kanji.comment}")
-          input(type="submit" ref="コ メ ン ト を 追 加")
+          textarea(rows="3" style="width:80%;" ref="comment_input")
+          input(type="submit" value="コ メ ン ト を 追 加")
   script.
     this.atejiSelector = opts.ateji_selector;
     this.currentSyllable = opts.current_syllable;
@@ -42,7 +42,9 @@ kanji-detail
     
     addComment(e){
       var comment_text = this.refs.comment_input.value;
-      this.kanji.comment = comment_text;
+      this.atejiSelector.addCommentToKanji(this.currentSyllable, comment_text);
+      this.refs.comment_input.value = "";
+      this.update();
       e.preventDefault();
     }
 
