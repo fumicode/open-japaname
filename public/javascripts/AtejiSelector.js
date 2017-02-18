@@ -59,6 +59,15 @@ class AtejiSelector{
     });
   }
 
+  getCurrentKanjiInSyllable(syllable){
+    var syllable_exists = this.selectedSyllables.indexOf(syllable) != -1;
+    if(syllable_exists){
+      return syllable.usingKanji;
+    }
+    else{
+      throw new Error("no syllable exist");
+    }
+  }
 
   changeSyllable(needed_syllable){
     this.selectedSyllables = AtejiSelector._changeSyllable(this.selectedSyllables, needed_syllable, this.index2Sylls)

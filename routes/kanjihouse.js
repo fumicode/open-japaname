@@ -60,7 +60,13 @@ kanjihouse_router.post("/japanames/new",(req,res,next)=>{
     console.log(req.body.names)
     var names = JSON.parse(req.body.names);
 
-    var newJapaname = yield Japaname.createNew(names);
+    if(req.user){
+      var newJapaname = yield Japaname.createNew(names, req.user._id);
+    }
+    else{
+      var newJapaname = yield Japaname.createNew(names);
+    }
+
 
 
     if(req.user && req.user._id){

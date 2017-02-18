@@ -1531,6 +1531,15 @@ input[type="search"].jnSearchBox__textbox {
   .syllablesTable__kanjis--using {
     color: #000; }
 
+.syllablesTable__kanjiDetail {
+  max-height: 0px;
+  transition-property: max-height;
+  transition-duration: 0.3s; }
+  .syllablesTable__kanjiDetail--display {
+    max-height: 300px;
+    transition-property: max-height;
+    transition-duration: 0.3s; }
+
 .kanjisList {
   margin: 0 auto;
   padding: 0;

@@ -70,8 +70,15 @@ names_router.post('/', function(req, res, next) {
     //var ateji         = JSON.parse(req.body.ateji_json);
     var names = JSON.parse(req.body.names);
       console.log(names[0].atejis);
-      
-    var newJapaname = yield Japaname.createNew(names);
+
+    console.log(req.user);
+    if(req.user){
+      var newJapaname = yield Japaname.createNew(names, req.user._id);
+    }
+    else{
+      var newJapaname = yield Japaname.createNew(names);
+    }
+
     var url_id = Japaname.japanameEncode(newJapaname._id);
 
     //超危険！ どこからでもアクセスを許しちゃう。

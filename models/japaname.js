@@ -12,12 +12,13 @@ var NamePointerSchema = new Schema({
   original:String, //"catherine" など
   ateji: {type:Schema.Types.ObjectId, ref:"Ateji"}, //どちらかが設定される
   kana:  {type:Schema.Types.ObjectId, ref:"Kana"},  //どちらかが設定される 
-  namer: {type:Schema.Types.ObjectId, ref:"User"}   // 
 },{_id:false});
 
 var JapanameSchema = module.exports = new Schema({
   // _id : ObjectId
-  names:[NamePointerSchema] //配列であることによって、たとえば自営無頭 グリーン ができる。
+  names:[NamePointerSchema], //配列であることによって、たとえば自営無頭 グリーン ができる。
+
+  namer: {type:Schema.Types.ObjectId, ref:"User", default:null}   // 
 },{
   //オブジェクトやJSONに変換するときに、virtualも変換するように設定
   toObject:{ 
@@ -123,9 +124,11 @@ JapanameSchema.pre("save", function(next){
 //なかなかふくざつだなあ。
 //とりあえず、名字か名前ひとつだけで、Atejiのつもりで。
 
-JapanameSchema.statics.createNew = function(names){
+JapanameSchema.statics.createNew = function(names, namer_id){
   var Japaname = this;
   return co(function*(){
+    console.log("namer_id")
+    console.log(namer_id)
 
     // yield [promise]  == [ateji]
     var atejis = yield _(names).map((name)=>{
@@ -167,7 +170,8 @@ JapanameSchema.statics.createNew = function(names){
 
     var newJapaname = new Japaname({
       //_id:auto increment
-      names:japaname_params
+      names:japaname_params,
+      namer:namer_id || null
     });
 
     return newJapaname.save();
