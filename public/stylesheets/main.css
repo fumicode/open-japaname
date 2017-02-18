@@ -1899,6 +1899,133 @@ body {
   box-sizing: border-box;
   width: 90%; }
 
+.kanjiDetail {
+  background: white;
+  border: 1px solid #000;
+  border-width: 1px 0;
+  display: none; }
+  .kanjiDetail--opened {
+    display: block; }
+
+.kanjiDetail__inner {
+  position: relative;
+  box-sizing: content-box;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 200px;
+  padding: 30px 0px; }
+  .kanjiDetail__inner::after {
+    clear: both;
+    content: "";
+    display: table; }
+
+.kanjiDetail__leftColumn {
+  float: left;
+  display: block;
+  margin-right: 0.93458%;
+  width: 24.29907%; }
+  .kanjiDetail__leftColumn:last-child {
+    margin-right: 0; }
+
+.kanjiDetail__centerColumn {
+  float: left;
+  display: block;
+  margin-right: 0.93458%;
+  width: 41.1215%; }
+  .kanjiDetail__centerColumn:last-child {
+    margin-right: 0; }
+
+.kanjiDetail__rightColumn {
+  float: left;
+  display: block;
+  margin-right: 0.93458%;
+  width: 32.71028%;
+  margin-right: 0;
+  height: 100%;
+  position: relative; }
+  .kanjiDetail__rightColumn:last-child {
+    margin-right: 0; }
+
+@media screen and (max-width: 600px) {
+  .kanjiDetail__leftColumn {
+    float: left;
+    display: block;
+    margin-right: 0.93458%;
+    width: 49.53271%; }
+    .kanjiDetail__leftColumn:last-child {
+      margin-right: 0; }
+  .kanjiDetail__centerColumn {
+    float: left;
+    display: block;
+    margin-right: 0.93458%;
+    width: 49.53271%;
+    margin-right: 0; }
+    .kanjiDetail__centerColumn:last-child {
+      margin-right: 0; }
+  .kanjiDetail__rightColumn {
+    float: left;
+    display: block;
+    margin-right: 0.93458%;
+    width: 100%;
+    margin-right: 0;
+    margin-top: 30px;
+    height: auto;
+    position: relative; }
+    .kanjiDetail__rightColumn:last-child {
+      margin-right: 0; }
+    .kanjiDetail__rightColumn .kanjiDetailButton, .kanjiDetail__rightColumn .kanjiDetail__likeButton, .kanjiDetail__rightColumn a.kanjiDetail__productButton {
+      position: relative;
+      margin-bottom: 1em; } }
+
+.kanjiDetail__bigKanji {
+  font-size: 200px;
+  font-family: "ro-nikkatsu-sei-kai-std";
+  line-height: 1; }
+
+.kanjiDetail__bigKanjiInner {
+  line-height: 1;
+  vertical-align: top; }
+
+.kanjiDetail__meaning {
+  font-weight: bold;
+  font-size: 1.2em; }
+
+.kanjiDetailButton, .kanjiDetail__likeButton, a.kanjiDetail__productButton {
+  display: block;
+  padding: 10px;
+  color: white;
+  background: #d4371c;
+  text-align: center;
+  font-size: 1.2em;
+  border: 3px #d4371c solid;
+  position: absolute;
+  right: 0;
+  left: 0; }
+  .kanjiDetailButton:hover, .kanjiDetail__likeButton:hover, a.kanjiDetail__productButton:hover {
+    opacity: 0.8; }
+
+.kanjiDetail__likeButton {
+  top: 0; }
+  .kanjiDetail__likeButton--favorited {
+    color: #d4371c;
+    background: white; }
+
+a.kanjiDetail__productButton {
+  bottom: 0;
+  color: white;
+  text-decoration: none; }
+  a.kanjiDetail__productButton:hover {
+    color: white;
+    text-decoration: none; }
+
+.kanjiDetail__closeButton {
+  position: absolute;
+  top: 0;
+  right: 0; }
+  .kanjiDetail__closeButton:hover {
+    opacity: 0.8; }
+
 @media screen and (min-width: 900px) {
   .japanameTableVerticalContainer {
     width: 60%;
