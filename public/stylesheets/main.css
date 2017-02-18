@@ -1781,6 +1781,8 @@ body {
 
 .certMailMake {
   width: 100%; }
+  .certMailMake td, .certMailMake th {
+    vertical-align: top; }
 
 .certMailMake__headCell {
   width: 10%; }
@@ -1791,9 +1793,82 @@ body {
 .certMailMake__name {
   width: 100%; }
 
+.certMailMake__input--title {
+  width: 100%; }
+
+.certMailMake__input--content {
+  width: 100%;
+  height: 20em; }
+
 .certMailTable {
   width: 100%;
   table-layout: fixed; }
+
+.latestJapanames__item {
+  display: inline-block;
+  padding: 0.3em;
+  margin: 0.1em;
+  border-radius: 3px;
+  border: 2px solid #d4371c; }
+
+.japanamePicker {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto; }
+  .japanamePicker::after {
+    clear: both;
+    content: "";
+    display: table; }
+
+.japanamePicker__picked {
+  float: left;
+  display: block;
+  margin-right: 2.85714%;
+  width: 48.57143%;
+  min-height: 1em; }
+  .japanamePicker__picked:last-child {
+    margin-right: 0; }
+
+.japanamePicker__candidate {
+  float: left;
+  display: block;
+  margin-right: 2.85714%;
+  width: 48.57143%;
+  margin-right: 0; }
+  .japanamePicker__candidate:last-child {
+    margin-right: 0; }
+
+.kanjihouseMailBox {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto; }
+  .kanjihouseMailBox::after {
+    clear: both;
+    content: "";
+    display: table; }
+
+.kanjihouseMailBox__drafts {
+  float: left;
+  display: block;
+  margin-right: 2.85714%;
+  width: 48.57143%; }
+  .kanjihouseMailBox__drafts:last-child {
+    margin-right: 0; }
+
+.kanjihouseMailBox__sentMails {
+  float: left;
+  display: block;
+  margin-right: 2.85714%;
+  width: 48.57143%;
+  margin-right: 0; }
+  .kanjihouseMailBox__sentMails:last-child {
+    margin-right: 0; }
+
+.kanjihouseNamer {
+  width: 100%; }
+
+.kanjihouseNamer__headCell {
+  width: 10%; }
 
 html {
   box-sizing: border-box; }

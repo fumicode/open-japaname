@@ -10,7 +10,8 @@ autoIncrement.initialize(mongoose.connection);
 var NamePointerSchema = new Schema({
   original:String, //"catherine" など
   ateji: {type:Schema.Types.ObjectId, ref:"Ateji"}, //どちらかが設定される
-  kana:  {type:Schema.Types.ObjectId, ref:"Kana"},  //どちらかが設定される
+  kana:  {type:Schema.Types.ObjectId, ref:"Kana"},  //どちらかが設定される 
+  namer: {type:Schema.Types.ObjectId, ref:"User"}   // 
 },{_id:false});
 
 var JapanameSchema = module.exports = new Schema({
@@ -183,7 +184,19 @@ JapanameSchema.statics.getLatestNames = function (num){
   return Japaname.find()
         .sort({"_id":-1})
         .limit(num || 5)
-        .populate("names.ateji")
+        .populate("names.kana")
+        .populate("names.ateji");
+};
+
+JapanameSchema.statics.findLatestNames = JapanameSchema.statics.getLatestNames;
+
+JapanameSchema.statics.findLatestNamesOfNamer= function (num, user_id){
+  var Japaname = this;
+  
+  return Japaname.find({namer:user_id})
+        .sort({"_id":-1})
+        .limit(num || 5)
+        .populate("names.kana")
         .populate("names.ateji");
 };
 

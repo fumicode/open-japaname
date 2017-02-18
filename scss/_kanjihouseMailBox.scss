@@ -1,0 +1,13 @@
+.kanjihouseMailBox{
+  @include outer-container;
+
+}
+.kanjihouseMailBox__drafts{
+  @include span-columns(2 of 4);
+}
+
+.kanjihouseMailBox__sentMails{
+  @include span-columns(2 of 4);
+  @include omega;
+}
+

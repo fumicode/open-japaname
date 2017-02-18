@@ -1,6 +1,10 @@
 .certMailMake{
   width:100%;
 
+  td,th{
+    vertical-align:top;
+  }
+
 }
 
 .certMailMake__headCell{
@@ -26,3 +30,12 @@
 
 }
 
+.certMailMake__input--title{
+  width:100%;
+
+}
+
+.certMailMake__input--content{
+  width:100%;
+  height:20em;
+}

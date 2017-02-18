@@ -35,27 +35,36 @@ block sub-content
       tr
         td.certMailMake__headCell 題名
         td.certMailMake__contentCell
-          input.certMailMake__(type="text" name="title" value="#{mail.title}")
+          input.certMailMake__input--title(type="text" name="title" value="#{mail.title}")
       tr
         td.certMailMake__headCell 本文
         td.certMailMake__contentCell
-          input.certMailMake__(type="text" name="content" value="#{mail.content}")
+          textarea.certMailMake__input--content(name="content") #{mail.content}
       tr
         td.certMailMake__headCell Japaname
         td.certMailMake__contentCell
 
-          //riotかなあ
-          input(type="hidden" name="japanames")
-
-          ul 
-            each japaname in mail.japanames
-              li= japaname
-
+          japaname-picker
 
       tr
         td(colspan="2").certMailMake__contentCell.certMailMake__contentCell--long
           button.certMailMake__submit(name="action" value="save")保存
           | -
           button.certMailMake__submit(name="action" value="send")送信
+
+    
+block append body-end-scripts
+  script(type="text/javascript" src="/javascripts/underscore-min.js")
+  script(type="text/javascript" src="/riotjs/japaname-picker.js")
+  script.
+    riot.mount("japaname-picker",{
+      picked_japanames:!{JSON.stringify(mail.japanames)},
+      candidate_japanames:!{JSON.stringify(latest_japanames)}
+    });
+    console.log("hello");
+    
+
+
+
 
 

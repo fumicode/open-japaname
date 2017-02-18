@@ -1,0 +1,65 @@
+japaname-picker
+  div.japanamePicker
+    input(type="hidden" name="japanames" value="{japaname_ids_json}")
+    div.japanamePicker__picked
+      h3 このメールに添付
+
+      table(style="width:100%")
+
+        tr(each="{japaname,index in picked_japanames}")
+          td {japaname.code}
+          td {japaname.original}
+          td {japaname.string}
+          td
+            a.button(onclick="{parent.deleteFromPicked}") 削除
+          
+
+    div.japanamePicker__candidate
+      h3 最近作った
+
+      table(style="width:100%")
+        tr(each="{japaname,index in candidate_japanames}")
+          td {japaname.code}
+          td {japaname.original}
+          td {japaname.string}
+          td
+            a.button(onclick="{parent.addToPicked}") 追加
+
+  script.
+    this.candidate_japanames = opts.candidate_japanames || [];
+    this.picked_japanames = opts.picked_japanames || [];
+
+    console.log(this.candidate_japanames)
+    console.log(this.candidate_japanames)
+
+    this.japaname_ids_json =
+        JSON.stringify( _(this.picked_japanames).map(jn=>jn._id || jn) );
+
+    this.on("update",function(){
+
+      this.japaname_ids_json =
+          JSON.stringify( _(this.picked_japanames).map(jn=>jn._id || jn) );
+    });
+
+
+    addToPicked(e){
+
+      var japaname = e.item.japaname;
+
+      //存在したら、何もしない
+      if(this.picked_japanames.indexOf(japaname) != -1){
+        //本当はidで比較するべき。同一オブジェクトとは限らない
+        console.log("already exist");
+        return;
+      }
+
+      this.picked_japanames.push(japaname);
+    }
+
+    deleteFromPicked(e){
+      e.preventDefault();
+
+      console.log("delete");
+      var deleting_index = e.item.index;
+      this.picked_japanames.splice(deleting_index,1);
+    }

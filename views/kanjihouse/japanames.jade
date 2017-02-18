@@ -1,0 +1,26 @@
+extends /template/sub_layout
+
+
+block variables
+  - title = "Japaname made in Kanji House"
+  - description = 'page' 
+  - body_id= 'bg-plane'
+
+block sub-content
+  ul
+    li
+      a(href="/kanjihouse/") 漢字ハウス管理ページに戻る
+
+  p
+    a.button(href="/kanjihouse/japanames/new") Japanameを作る
+  h1 漢字ハウスで作られたJapaname一覧
+
+
+  table(style="width:100%")
+    each japaname,index in japanames
+      tr
+        td #{japaname.code}
+        td #{japaname.original}
+        td #{japaname.string}
+        td
+          a.button(href="/#{japaname.code}") 見る

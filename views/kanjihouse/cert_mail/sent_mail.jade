@@ -23,7 +23,7 @@ block sub-content
       td.certMailMake__contentCell #{mail.content}
     tr
       td.certMailMake__headCell Japaname
-      td.certMailMake__contentCell #{_(mail.japanames).map(j=>j._id).join(", ")}
+      td.certMailMake__contentCell #{mail.japanames.join(", ")}
 
     //
       tr

@@ -1,0 +1,36 @@
+kanjihouse-namer
+  form(action="#{action_url}" method="post")
+
+    table.kanjihouseNamer
+      tr
+        th.kanjihouseNamer__headCell オリジナル
+        td
+          input(type="text" name="original_name")
+
+      tr
+        th.kanjihouseNamer__headCell カナ
+        td
+          input(type="text" name="kana")
+      tr
+        th.kanjihouseNamer__headCell 当て字
+
+        td
+          table
+            tr
+              th カナ
+              th 漢字
+              th 意味
+              th コメント
+            tr
+              td=
+              td=
+              td=
+              td=
+
+  script.    
+    this.atemojis = [
+      {kana:"", kanji:"", meanings:"", comment"",},
+
+    ]
+
+

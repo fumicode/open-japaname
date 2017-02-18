@@ -11,31 +11,49 @@ block sub-content
   div 
     a.button(href="/kanjihouse/cert_mail/make") 新しいメールを作る
 
+  div.kanjihouseMailBox
+    div.kanjihouseMailBox__drafts
+      h2 
+        a(href="/kanjihouse/cert_mail/drafts") 下書きメール一覧>>
+
+
+
+      include cert_mail/mailTable
+      if drafts && drafts.length
+        +mailTable("drafts",drafts)
+      else
+        p メールが存在しません
+
+    div.kanjihouseMailBox__sentMails
+
+      h2 
+        a(href="/kanjihouse/cert_mail/sent_mails") 送信済み>>
+
+      if sent_mails && sent_mails.length
+        +mailTable("sent_mails",sent_mails)
+      else
+        p メールが存在しません
+
+
+
+  hr
+  p
+    a.button(href="/kanjihouse/japanames/new") Japanameを作る
   h2 
-    a(href="/kanjihouse/cert_mail/drafts") 下書きメール一覧
+    a(href="/kanjihouse/japanames") 最近KanjiHouseで作った当て字
 
-
-
-  include cert_mail/mailTable
-  +mailTable("drafts",drafts)
-
-  h2 
-    a(href="/kanjihouse/cert_mail/sent_mails") 送信済み
-  +mailTable("sent_mails",sent_mails)
-
-
-  h2 最近KanjiHouseで作った当て字
-
-
-  table
+  table(style="width:100%")
     tr
       th Japaname Code 
       th オリジナル
       th Japaname
+      th リンク
 
     each japaname in japanames
       tr
         td=japaname.code
         td=japaname.original
         td=japaname.string
+        td
+          a.button(href="/#{japaname.code}") japanameページへ
 

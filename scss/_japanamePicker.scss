@@ -1,0 +1,15 @@
+.japanamePicker{
+  @include outer-container;
+
+
+}
+
+.japanamePicker__picked{
+  @include span-columns(2 of 4);
+  min-height:1em;
+}
+
+.japanamePicker__candidate{
+  @include span-columns(2 of 4);
+  @include omega;
+}

@@ -9,6 +9,6 @@ mixin mailTable(mailbox, mails)
       tr.certMailTable__row
         td.certMailTable__cell= mail.name
         td.certMailTable__cell= mail.tos.join(", ")
-        td.certMailTable__cell= _(mail.japanames).map(j=>j._id).join(", ")
+        td.certMailTable__cell= mail.japanames.join(", ")
         td.certMailTable__head.certMailTable__column--button 
           a.button(href="/kanjihouse/cert_mail/#{mailbox}/#{mail._id}") メール詳細

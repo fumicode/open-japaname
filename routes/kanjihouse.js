@@ -17,7 +17,7 @@ var co = require("co");
 
 kanjihouse_router.get("/",(req,res,next)=>{
   co(function*(){
-    var sent_mails = yield KanjihouseMail.find({sent:true}).limit(5).exec();
+    var sent_mails = yield KanjihouseMail.find({sent:true}).sort({_id:-1}).limit(5).exec();
     var drafts = yield KanjihouseMail.find({sent:false}).limit(5).exec();
 
     var japanames = yield Japaname.getLatestNames(5);
@@ -31,8 +31,29 @@ kanjihouse_router.get("/",(req,res,next)=>{
   }).catch(e=>next(e));
 });
 
+kanjihouse_router.get("/japanames/",(req,res,next)=>{
+  co(function*(){
+    //var japanames = yield Japaname.findLatestNamesOfNamer(5,req.user._id).exec();
+    var japanames = yield Japaname.findLatestNames(5).exec();
+
+    res.render("kanjihouse/japanames", {japanames});
+
+  }).catch(e=>next(e));
+
+});
+
+kanjihouse_router.get("/japanames/new",(req,res,next)=>{
 
 
+  var action_url = path.join(req.baseUrl, req.url);
+
+  res.render("kanjihouse/new_japaname",{action_url});
+});
+
+kanjihouse_router.post("/japanames/new",(req,res,next)=>{
+
+  res.redirect(path.join(req.baseUrl,"japaname"));
+});
 
 kanjihouse_router.post("/cert_mail/make",(req,res,next)=>{
   co(function*(){
@@ -45,9 +66,16 @@ kanjihouse_router.post("/cert_mail/make",(req,res,next)=>{
     console.log(tos_array);
     console.log(name);
 
+    var template = {
+      title:"Name certification by Kanji House!",
+      content:"Dear ____\n \n Thank you for visiting us! We published the name certification url!"
+    }
+
     var newMail = new KanjihouseMail({
       tos:tos_array,
-      name:name
+      name:name,
+      title:template.title,
+      content:template.content,
     });
 
     var mailDoc = yield newMail.save();
@@ -98,12 +126,27 @@ kanjihouse_router.get("/cert_mail/drafts",(req,res,next)=>{
 kanjihouse_router.get("/cert_mail/drafts/:mail_id",(req,res,next)=>{
   co(function*(){
     var mail_id = req.params.mail_id;
+    var mail = yield KanjihouseMail.findById(mail_id)
+      .populate({
+        path:"japanames",
+        populate:{
+          path:"names.ateji names.kana"
+        }
+      })
+      .exec();
 
-    var mail = yield KanjihouseMail.findById(mail_id).exec();
+    var latest_japanames = yield Japaname.getLatestNames(10).exec();
 
+    /*
+    var latest_japanames = 
+      yield Japaname.findLatestNamesOfNamer(10, req.user._id).exec();
+      */
+
+    
     res.render("kanjihouse/cert_mail/draft", {
       mail,
-      action_url:path.join(req.baseUrl, req.url)
+      action_url:path.join(req.baseUrl, req.url),
+      latest_japanames,
     });
 
   }).catch(e=>next(e));
@@ -124,27 +167,24 @@ kanjihouse_router.post("/cert_mail/drafts/:mail_id",(req,res,next)=>{
     var name =  req.body.name;
     var title =  req.body.title;
     var content =  req.body.content;
+
+    try{
+      console.log("parsing japanames ");
+      console.log(req.body.japanames);
+
+      var japanames = JSON.parse(req.body.japanames);
+    }catch(e){
+
+      var japanames = [];
+    }
+
     var action =  req.body.action;
-
-
-    /*
-          name: String, //staff memo用
-          title: String,
-          tos: [String],
-          japanames:[{type:Number, ref:"Japaname"}],
-          content: String,
-          photos:[String],
-          sent: Boolean
-    */
-
 
     the_mail.tos = tos_array;
     the_mail.name = name;
     the_mail.title = title;
     the_mail.content  = content;
-
-
-
+    the_mail.japanames = japanames;
 
     if(action == "save"){
       var saved_mail = yield the_mail.save();

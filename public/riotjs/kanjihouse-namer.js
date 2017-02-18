@@ -1,0 +1,3 @@
+
+riot.tag2('kanjihouse-namer', '<form action="#{action_url}" method="post"> <table class="kanjihouseNamer"> <tr> <th class="kanjihouseNamer__headCell">オリジナル</th> <td> <input type="text" name="original_name"> </td> </tr> <tr> <th class="kanjihouseNamer__headCell">カナ</th> <td> <input type="text" name="kana"> </td> </tr> <tr> <th class="kanjihouseNamer__headCell">当て字</th> <td> <table> <tr> <th>カナ</th> <th>漢字</th> <th>意味</th> <th>コメント</th> </tr> </table> </td> </tr> </table> </form>', '', '', function(opts) {
+});
