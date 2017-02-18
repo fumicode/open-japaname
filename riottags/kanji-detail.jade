@@ -10,7 +10,7 @@ kanji-detail
         div.kanjiDetail__meaning {meaning}
         p {kanji.comment}
       div.kanjiDetail__rightColumn
-        form(onsubmit="{addComment}" )
+        form(if="{show_comment}" onsubmit="{addComment}" )
           textarea.comment-textarea(rows="3" style="width:80%;")
           input(type="submit" value="コメントを追加")
   script.

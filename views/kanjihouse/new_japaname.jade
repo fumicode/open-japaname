@@ -7,11 +7,16 @@ block variables
   - body_id= 'bg-plane'
 
 block sub-content
+
+  ul
+    li
+      a(href="/kanjihouse/") 漢字ハウス管理ページに戻る
+    li
+      a(href="/kanjihouse/japanames") Japaname一覧ページに戻る
+
   h1 当て字をつくる 
 
-
   kanjihouse-namer
-    
 
 block append body-end-scripts
   script(src="/riotjs/kanjihouse-namer.js")
