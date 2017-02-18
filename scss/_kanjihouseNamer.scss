@@ -8,3 +8,37 @@
   width:10%;
 }
 
+
+.kanjihouseNamer__table{
+  width:100%;
+
+  table-layout:auto;
+
+  td{
+    vertical-align:top;
+  }
+
+}
+
+.kanjihouseNamer__kanaBox{
+  width:5em;
+
+}
+
+.kanjihouseNamer__kanjiBox{
+
+  width:3em;
+}
+
+.kanjihouseNamer__meaningsBox{
+  box-sizing:border-box;
+  width:90%;
+
+
+}
+
+.kanjihouseNamer__commentBox{
+  box-sizing:border-box;
+  width:90%;
+}
+

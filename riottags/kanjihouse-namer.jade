@@ -5,32 +5,87 @@ kanjihouse-namer
       tr
         th.kanjihouseNamer__headCell オリジナル
         td
-          input(type="text" name="original_name")
+          input(type="text" name="original_name" value="{name.original}" onchange="{changeOriginal}")
 
       tr
         th.kanjihouseNamer__headCell カナ
         td
           input(type="text" name="kana")
-      tr
-        th.kanjihouseNamer__headCell 当て字
 
-        td
-          table
+      tr
+        td(colspan="2")
+          h5 当て字
+          table.kanjihouseNamer__table
             tr
               th カナ
               th 漢字
               th 意味
               th コメント
-            tr
-              td=
-              td=
-              td=
-              td=
+              th 削除ボタン
 
-  script.    
-    this.atemojis = [
-      {kana:"", kanji:"", meanings:"", comment"",},
+            tr(each="{atemoji,index in name.atejis}")
+              td 
+                input.kanjihouseNamer__kanaBox(name="kana" type="text" value="{atemoji.kana}" onchange="{changeAtemoji}")
+              td 
+                input.kanjihouseNamer__kanjiBox(name="kanji" type="text" value="{atemoji.kanji}" onchange="{changeAtemoji}")
+              td 
+                textarea.kanjihouseNamer__meaningsBox(name="meanings" onchange="{changeAtemoji}") {atemoji.meanings}
+              td 
+                textarea.kanjihouseNamer__commentBox(name="comment" onchange="{changeAtemoji}") {atemoji.changeAtemoji}
+              td
+                a.button(onclick="{deleteRow}") 削除
 
-    ]
+          a.button(onclick="{addRow}") 文字を追加
 
+      tr
+        td(colspan="2")
+          input(type="hidden" name="names" value="{names_str}")
+          input(type="submit" value="Japanameをつくる")
+
+  script.
+    
+    function Atemoji(kana,kanji,meanings,comment){
+      this.kana = kana;
+      this.kanji = kanji;
+      this.meanings = meanings;
+      this.comment = comment;
+    }
+
+    this.name = {
+      original:"",
+      atejis:[
+        new Atemoji("", "", [""], ""),
+        new Atemoji("", "", [""], ""),
+        new Atemoji("", "", [""], ""),
+      ]
+    };
+
+
+    this.names_str = JSON.stringify([ this.name ]);
+
+    this.on("update",function(){
+      this.names_str = JSON.stringify([ this.name ]);
+    });
+
+    changeOriginal(e){
+      var original_name = e.target.value;
+
+      this.name.original = original_name;
+
+    }
+
+    changeAtemoji(e){
+      var atemoji = e.item.atemoji;
+      var index = e.item.index;
+      this.name.atejis[index][e.target.name] = e.target.value;
+
+    }
+
+    addRow(e){
+      this.name.atejis.push(new Atemoji("","",[""],""))
+    }
+
+    deleteRow(e){
+      this.name.atejis.splice(e.item.index, 1);
+    }
 

@@ -44,16 +44,41 @@ kanjihouse_router.get("/japanames/",(req,res,next)=>{
 
 kanjihouse_router.get("/japanames/new",(req,res,next)=>{
 
-
   var action_url = path.join(req.baseUrl, req.url);
 
   res.render("kanjihouse/new_japaname",{action_url});
 });
 
-kanjihouse_router.post("/japanames/new",(req,res,next)=>{
 
-  res.redirect(path.join(req.baseUrl,"japaname"));
+kanjihouse_router.post("/japanames/new",(req,res,next)=>{
+  co(function*(){
+
+    console.log("req.body")
+    console.log(req.body)
+
+    console.log("req.body.names")
+    console.log(req.body.names)
+    var names = JSON.parse(req.body.names);
+
+    var newJapaname = yield Japaname.createNew(names);
+
+
+    if(req.user && req.user._id){
+      newJapaname.namer = req.user._id;
+
+      yield newJapaname.save();
+    }
+
+    var url_id = Japaname.japanameEncode(newJapaname._id);
+
+    //超危険！ どこからでもアクセスを許しちゃう。
+    //res.set("Access-Control-Allow-Origin","*");
+    res.redirect(path.join(req.baseUrl , "japanames")); //短縮URL
+
+  }).catch(e=>next(e));
+
 });
+
 
 kanjihouse_router.post("/cert_mail/make",(req,res,next)=>{
   co(function*(){

@@ -4,6 +4,7 @@ var co = require("co");
 var _ = require("underscore");
 var autoIncrement = require("mongoose-auto-increment");
 
+var atejilib= require("../core/atejilib.js");
 
 autoIncrement.initialize(mongoose.connection);
 
@@ -111,14 +112,27 @@ JapanameSchema.statics.createNew = function(names){
 
     // yield [promise]  == [ateji]
     var atejis = yield _(names).map((name)=>{
-        var atemojis = name.atejis;
+      var atemojis = name.atejis;
+      //ateji->atemoji変えたい！でもクライアントに依存するからかえられない！TypeScriptにしたら、変える！
 
-        var Ateji = mongoose.model("Ateji");
 
-        //!!!! atemojis のバリデーション
-        var newAteji = new Ateji({atemojis});
+      atemojis = _(atemojis).reject(function(atemoji){
+        return !atemoji.kana || !atemoji.kanji
+      }).map(function(atemoji){
 
-        return newAteji.save();//returns promise
+        //カタカナはひらがなにへんかんする。
+        if(atejilib.isKatakanas(atemoji.kana)){
+          atemoji.kana = atejilib.katakanasToHiraganas(atemoji.kana)
+        }
+        return atemoji;
+      });
+
+      var Ateji = mongoose.model("Ateji");
+
+      //!!!! atemojis のバリデーション
+      var newAteji = new Ateji({atemojis});
+
+      return newAteji.save();//returns promise
     });
 
 
@@ -141,39 +155,6 @@ JapanameSchema.statics.createNew = function(names){
 
     return newJapaname.save();
 
-    /*
-      else if(first_name.kana){
-        var text = atemojis_or_text;
-        var Kana = mongoose.model("Kana");
-
-        var newKana = new Kana({type:"hira",text:text});
-
-        try{
-          var savedKana = yield newKana.save();
-        }
-        catch(err){
-          console.error("couldn't save kana. ");
-          throw err;
-        }
-
-        var kana_id = savedKana._id;
-        var newJapaname = new Japaname({
-          //_id:auto increment
-          original_names,
-          names:[{
-            original:first_name.original,
-            ateji:null,
-            kana:kana_id
-          }]
-        });
-
-        var savedJapaname = yield newJapaname.save();
-        return savedJapaname;
-      }
-      else {
-        throw new Error("japaname data incorrect");
-      }
-    */
   });
 }
 
