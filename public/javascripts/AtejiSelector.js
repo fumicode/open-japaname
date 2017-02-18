@@ -17,7 +17,6 @@ class AtejiSelector{
     this.usingSyllable = route[0];
     this.selectedSyllables= route;
 
-
   }
 
   getOriginalName(){
@@ -34,19 +33,22 @@ class AtejiSelector{
 
   useSyllable(syllable) {
     this.usingSyllable = syllable;
-
     this.trigger("kanjichanged",this.getCurrentKanjis());
   }
 
   useKanji(syllable, kanji){
     syllable.usingKanji = kanji;
 
+
+    console.log("useKanji syllable kanji");
+    console.log(syllable);
+    console.log(kanji);
+
     this.trigger("kanjichanged",this.getCurrentKanjis());
   }
 
   getCurrentKanjis(){
-      return  _(this.selectedSyllables).map((syllable)=>{
-          console.log(syllable.usingKanji);
+    return _(this.selectedSyllables).map((syllable)=>{
       return {
         kanji: syllable.usingKanji.kanji,
         romaji: syllable.romaji,
@@ -64,8 +66,8 @@ class AtejiSelector{
   }
 
   getSubmitKanjis(e){
-      var kanjis = _(this.getCurrentKanjis()).map(function(kanji){
-          console.log(kanji);
+    var kanjis = _(this.getCurrentKanjis()).map(function(kanji){
+        console.log(kanji);
       return {
         kana: kanji.kana ,
         kanji:kanji.kanji,
@@ -75,15 +77,15 @@ class AtejiSelector{
     return kanjis;
   }
 
-    addCommentToKanji(syllable, comment){
-        var syllable_exists = this.selectedSyllables.indexOf(syllable) != -1;
-        if(syllable_exists){
-          syllable.usingKanji.comment = comment ;
-        }
-        else{
-            throw new Error("no syllable exist");
-        }
+  addCommentToKanji(syllable, comment){
+    var syllable_exists = this.selectedSyllables.indexOf(syllable) != -1;
+    if(syllable_exists){
+      syllable.usingKanji.comment = comment ;
     }
+    else{
+        throw new Error("no syllable exist");
+    }
+  }
 
   static _changeSyllable(current_route, needed_syllable, index2Sylls){
     var needed_index = needed_syllable.index;

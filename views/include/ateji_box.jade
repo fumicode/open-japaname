@@ -2,12 +2,6 @@ mixin ateji_box(names)
   div#ateji-scroller
     div#ateji-block
 
-
-      //
-        th.japanameTable__heading Sound
-        th.japanameTable__heading Kanji
-        th.japanameTable__heading Meanings
-
     ul.namesContainer
       each name in names
         - var atejis = name.ateji.populated_atemojis;
@@ -28,4 +22,5 @@ mixin ateji_box(names)
                   each meaning in ateji.meanings
                     | #{meaning}
                     br
+
       img(src="/images/risumaru_jump_left.png" style="height:50mm;margin-right:-20mm")

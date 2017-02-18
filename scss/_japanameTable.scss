@@ -1,4 +1,5 @@
 $jt:".japanameTable";
+$jtv:".japanameTable--vertical";
 
 #{$jt}{
   width:auto;
@@ -62,6 +63,36 @@ $jt:".japanameTable";
 }
 
 
+
+#{$jtv}{
+  text-align:left;
+
+  td{
+    padding:0.1em;
+    vertical-align:top;
+  }
+
+
+
+}
+
+#{$jtv}__headRow{
+}
+
+#{$jtv}__kanaCell{
+  font-size:2em;
+}
+
+#{$jtv}__kanjiCell{
+  @extend #{$jt}__kanjiCell;
+}
+
+#{$jtv}__meaningCell{
+  @extend #{$jt}__meaningCell;
+}
+
+#{$jtv}__commentCell{
+}
 
 
 

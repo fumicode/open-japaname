@@ -50,7 +50,7 @@ names_router.get("/:japaname_id([0-9\-]+)", function(req, res, next){
     res.render("names/name", {
       japaname,
       artworks:artworks_list,
-    })
+    });
   }).catch((err)=>{
     next(err);
   });

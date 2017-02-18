@@ -1,0 +1,33 @@
+mixin ateji_box_vertical(names)
+
+  div.japanameTableVerticalContainer
+    p This japaname is made at <a href="http://kanji-house.com/">Kanji House</a>
+
+    each name in names
+      - var atemojis = name.ateji.populated_atemojis;
+
+      h4.japanameTable__original #{name.original} &raquo; 
+
+      table.japanameTable--vertical
+        tr.japanameTable--vertical__headRow
+          td.japanameTable--vertical__headCell
+            | Pronunciation
+          td.japanameTable--vertical__headCell
+            | Kanji
+          td.japanameTable--vertical__headCell
+            | Meanings
+          td.japanameTable--vertical__headCell
+            | Why I chose the kanji for #{name.original}
+        
+        each atemoji in atemojis
+          tr
+            td.japanameTable--vertical__kanaCell
+              |【#{atemoji.romaji_kana.replace(/\s+/g,"")}】
+            td.japanameTable--vertical__kanjiCell
+              a(href="/characters/kanjis/#{atemoji.kanji}")=atemoji.kanji
+            td.japanameTable--vertical__meaningCell
+              each meaning in atemoji.meanings
+                | #{meaning}
+                br
+            td.japanameTable--vertical__commentCell= atemoji.comment
+

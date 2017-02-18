@@ -30,6 +30,23 @@ var JapanameSchema = module.exports = new Schema({
 
 JapanameSchema.plugin(autoIncrement.plugin,{model:"Japaname"});
 
+JapanameSchema.methods.hasComment = function(){
+  //populated ならばだけど。。
+  /*
+  if(!(this.ateji && this.ateji._id)){
+    throw new Error("hasComment cannot be used when ateji is not populated");
+  }
+  */
+  var has = _(this.names).reduce((memo, name)=>{
+    return memo || !!name.ateji.hasComment()
+
+  },false );
+
+  console.log("japaname has comment ? " + has);
+
+  return !!has;
+};
+
 // 0 => 00-0000-0000
 JapanameSchema.virtual("code").get(function(){
   return sta.japanameEncode(this._id);
