@@ -45,11 +45,13 @@ class AtejiSelector{
   }
 
   getCurrentKanjis(){
-    return  _(this.selectedSyllables).map((syllable)=>{
+      return  _(this.selectedSyllables).map((syllable)=>{
+          console.log(syllable.usingKanji);
       return {
         kanji: syllable.usingKanji.kanji,
         romaji: syllable.romaji,
         kana: syllable.kana,
+        comment: syllable.usingKanji.comment,
         meanings: syllable.usingKanji.meanings,
       };
     });
@@ -62,14 +64,26 @@ class AtejiSelector{
   }
 
   getSubmitKanjis(e){
-    var kanjis = _(this.getCurrentKanjis()).map(function(kanji){
+      var kanjis = _(this.getCurrentKanjis()).map(function(kanji){
+          console.log(kanji);
       return {
         kana: kanji.kana ,
-        kanji:kanji.kanji
+        kanji:kanji.kanji,
+        comment:kanji.comment,
       }
     });
     return kanjis;
   }
+
+    addCommentToKanji(syllable, comment){
+        var syllable_exists = this.selectedSyllables.indexOf(syllable) != -1;
+        if(syllable_exists){
+          syllable.usingKanji.comment = comment ;
+        }
+        else{
+            throw new Error("no syllable exist");
+        }
+    }
 
   static _changeSyllable(current_route, needed_syllable, index2Sylls){
     var needed_index = needed_syllable.index;

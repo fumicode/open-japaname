@@ -1,0 +1,62 @@
+kanji-detail
+  div.kanjiDetail(class="{opened ? 'kanjiDetail--opened':''}")
+    div.kanjiDetail__inner
+      div.kanjiDetail__leftColumn
+        div.kanjiDetail__bigKanji 
+          span.kanjiDetail__bigKanjiInner {thekanji} 
+      div.kanjiDetail__centerColumn
+        div.kanjiDetail__sounds 
+          virtual(each="{sound in romaji_sounds}") [{sound}]
+        div.kanjiDetail__meaning {meaning}
+        p {kanji.comment}
+      div.kanjiDetail__rightColumn
+        form(onsubmit="{addComment}")
+          textarea(rows="3" style="width:80%;" ref="comment_input")
+          input(type="submit" value="コ メ ン ト を 追 加")
+  script.
+    this.atejiSelector = opts.ateji_selector;
+    this.currentSyllable = opts.current_syllable;
+    this.favoriteKanjis = opts.favoriteKanjis;
+
+    this.kanji = this.atejiSelector.getCurrentKanjiInSyllable(this.currentSyllable)
+
+    var this_tag = this;
+
+    this.atejiSelector.on("kanjichanged",function(){
+      this_tag.update();
+    });
+
+    this.on("update",function(){
+      this.kanji = this.atejiSelector.getCurrentKanjiInSyllable(this.currentSyllable)
+
+      if(this.kanji){
+        this.thekanji = this.kanji.kanji;
+        this.meaning = this.kanji.meanings[0];
+        this.romaji_sounds = this.kanji.romaji_sounds;
+        this.opened = true;
+      }
+      else{
+        this.opened = false;
+      }
+    });
+    
+    addComment(e){
+      var comment_text = this.refs.comment_input.value;
+      this.atejiSelector.addCommentToKanji(this.currentSyllable, comment_text);
+      this.refs.comment_input.value = "";
+      this.update();
+      e.preventDefault();
+    }
+
+    var this_tag = this;
+
+    this.selectKanji=function(kanji){
+      this.kanji = kanji;
+      this.update();
+    }
+
+
+    favorite(e){
+      this.favoriteKanjis.toggle();//this.selectedKanji.kanji.kanji);
+    }
+
