@@ -1,0 +1,33 @@
+extends /template/sub_layout
+
+block variables
+  - title = "Make New Mail"
+  - description = 'Make new mail' 
+  - body_id= 'bg-plane'
+
+block sub-content
+  h2 送信済みメール
+
+  h3 メールの名前 "#{mail.name}"
+  
+
+  table.certMailMake
+    tr
+      th.certMailMake__headCell 送信先
+      td.certMailMake__contentCell #{mail.tos.join(',')}
+    tr
+      td.certMailMake__headCell 題名
+      td.certMailMake__contentCell #{mail.title}
+    tr
+      td.certMailMake__headCell 本文
+      td.certMailMake__contentCell #{mail.content}
+    tr
+      td.certMailMake__headCell Japaname
+      td.certMailMake__contentCell #{_(mail.japanames).map(j=>j._id).join(", ")}
+
+    //
+      tr
+        td(colspan="2").certMailMake__contentCell.certMailMake__contentCell--long
+          button.certMailMake__submit(name="action" value="save")保存
+          | -
+          button.certMailMake__submit(name="action" value="send")送信

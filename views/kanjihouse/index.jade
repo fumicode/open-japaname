@@ -1,0 +1,41 @@
+extends /template/sub_layout
+
+block variables
+  - title = "Kanji House Page"
+  - description = 'page' 
+  - body_id= 'bg-plane'
+
+block sub-content
+  h1 KanjiHouse用管理ページ
+
+  div 
+    a.button(href="/kanjihouse/cert_mail/make") 新しいメールを作る
+
+  h2 
+    a(href="/kanjihouse/cert_mail/drafts") 下書きメール一覧
+
+
+
+  include cert_mail/mailTable
+  +mailTable("drafts",drafts)
+
+  h2 
+    a(href="/kanjihouse/cert_mail/sent_mails") 送信済み
+  +mailTable("sent_mails",sent_mails)
+
+
+  h2 最近KanjiHouseで作った当て字
+
+
+  table
+    tr
+      th Japaname Code 
+      th オリジナル
+      th Japaname
+
+    each japaname in japanames
+      tr
+        td=japaname.code
+        td=japaname.original
+        td=japaname.string
+

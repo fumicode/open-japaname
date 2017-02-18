@@ -1,4 +1,5 @@
 var co = require("co");
+var _ =  require("underscore");
 var japaname_jp ="japana.me";
 
 //////////////////dbs//////////////////
@@ -182,6 +183,7 @@ var purchases_router = require('./routes/purchases');
 var payment_router = require('./routes/payment');
 var admin_router     = require('./routes/admin');
 var api_router = require("./routes/api");
+var kanjihouse_router = require("./routes/kanjihouse");
 
 //change keys by env param
 payment_router.setKeys(app);
@@ -227,6 +229,8 @@ app.all('*', function(req, res, next){
   res.locals.notice_message = req.flash('info');
   res.locals.success_message = req.flash('success');
 
+  res.locals._ = _; //underscore をjadeで使えるようにする
+
   next();
 }); 
 
@@ -246,6 +250,7 @@ app.use('/purchases', loginCheck, purchases_router); // loginCheck,
 app.use('/payment',  payment_router); // loginCheck,
 app.use('/admin', authorize(["admin"]),admin_router);
 app.use('/api', api_router);
+app.use('/kanjihouse', kanjihouse_router);
 
 
 

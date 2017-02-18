@@ -1,0 +1,14 @@
+mixin mailTable(mailbox, mails)
+  table.certMailTable
+    tr.certMailTable__row
+      th.certMailTable__head.certMailTable__column--name メール名
+      th.certMailTable__head.certMailTable__column--tos 宛先
+      th.certMailTable__head.certMailTable__column--japanames Japanames
+      th.certMailTable__head.certMailTable__column--button Button
+    each mail in mails 
+      tr.certMailTable__row
+        td.certMailTable__cell= mail.name
+        td.certMailTable__cell= mail.tos.join(", ")
+        td.certMailTable__cell= _(mail.japanames).map(j=>j._id).join(", ")
+        td.certMailTable__head.certMailTable__column--button 
+          a.button(href="/kanjihouse/cert_mail/#{mailbox}/#{mail._id}") メール詳細

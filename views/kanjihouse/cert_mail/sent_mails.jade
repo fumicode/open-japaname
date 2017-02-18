@@ -1,0 +1,17 @@
+
+extends /template/sub_layout
+
+block variables
+  - title = "Kanji House Page"
+  - description = 'page' 
+  - body_id= 'bg-plane'
+
+block sub-content
+  h1 KanjiHouse用管理ページ
+
+  h2 送信済みメール一覧
+
+  include mailTable
+
+  +mailTable("sent_mails", mails)
+

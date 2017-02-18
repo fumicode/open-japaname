@@ -29,6 +29,7 @@ var KanaSchema = require("./kana.js");
 var KanjiSchema = require("./kanji.js");
 var WordSchema  = require("./word.js");
 var PurchaseSchema  = require("./purchase.js");
+var KanjihouseMailSchema  = require("./kanjihouse_mail.js");
 
 mongoose.model("User",UserSchema);
 mongoose.model("Japaname",JapanameSchema);
@@ -37,6 +38,7 @@ mongoose.model("Kana",KanaSchema);
 mongoose.model("Kanji",KanjiSchema);
 mongoose.model("Word",WordSchema);
 mongoose.model("Purchase",PurchaseSchema);
+mongoose.model("KanjihouseMail",KanjihouseMailSchema);
 
 db_obj.db_loaded_promise = Promise.resolve("loaded DB");
 

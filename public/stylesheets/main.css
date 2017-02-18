@@ -1779,6 +1779,22 @@ body {
     transition-duration: 1s;
     opacity: 0.7; }
 
+.certMailMake {
+  width: 100%; }
+
+.certMailMake__headCell {
+  width: 10%; }
+
+.certMailMake__tos {
+  width: 100%; }
+
+.certMailMake__name {
+  width: 100%; }
+
+.certMailTable {
+  width: 100%;
+  table-layout: fixed; }
+
 html {
   box-sizing: border-box; }
 

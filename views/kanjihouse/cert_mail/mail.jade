@@ -1,0 +1,31 @@
+extends /template/sub_layout
+
+block variables
+  - title = "Make New Mail"
+  - description = 'Make new mail' 
+  - body_id= 'bg-plane'
+
+block sub-content
+  h2 メールを作成する
+
+  form(action="/kanjihouse/cert_mail/make" method="post")
+
+    table.certMailMake
+      tr
+        th.certMailMake__headCell 送信先
+        td.certMailMake__contentCell
+          input.certMailMake__tos(type="text" name="tos")
+          p カンマ区切りで複数のメールアドレスを入力
+
+      tr
+        td.certMailMake__headCell メールの名前
+        td.certMailMake__contentCell
+          input.certMailMake__name(type="text" name="name")
+          p メモのために名前をつける
+
+      tr
+        td(colspan="2").certMailMake__contentCell.certMailMake__contentCell--long
+          input.certMailMake__submit(type="submit" value="保存")
+
+          p 送信はされません
+

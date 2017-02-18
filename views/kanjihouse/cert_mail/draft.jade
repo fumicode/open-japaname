@@ -1,0 +1,61 @@
+extends /template/sub_layout
+
+block variables
+  - title = "Make New Mail"
+  - description = 'Make new mail' 
+  - body_id= 'bg-plane'
+
+block sub-content
+  h2 下書きメールを編集する
+
+
+  form(action="#{action_url}" method="post")
+
+    p
+      | メールの名前
+      input(type="text" name="name" value="#{mail.name}")
+      | これは送信されません
+    
+    table.certMailMake
+      tr
+        th.certMailMake__headCell 送信先
+        td.certMailMake__contentCell
+          input.certMailMake__tos(type="text" name="tos" value="#{mail.tos.join(',')}")
+          p カンマ区切りで複数のメールアドレスを入力
+
+        //
+          name: String, //staff memo用
+          title: String,
+          tos: [String],
+          japanames:[{type:Number, ref:"Japaname"}],
+          content: String,
+          photos:[String],
+          sent: Boolean
+
+      tr
+        td.certMailMake__headCell 題名
+        td.certMailMake__contentCell
+          input.certMailMake__(type="text" name="title" value="#{mail.title}")
+      tr
+        td.certMailMake__headCell 本文
+        td.certMailMake__contentCell
+          input.certMailMake__(type="text" name="content" value="#{mail.content}")
+      tr
+        td.certMailMake__headCell Japaname
+        td.certMailMake__contentCell
+
+          //riotかなあ
+          input(type="hidden" name="japanames")
+
+          ul 
+            each japaname in mail.japanames
+              li= japaname
+
+
+      tr
+        td(colspan="2").certMailMake__contentCell.certMailMake__contentCell--long
+          button.certMailMake__submit(name="action" value="save")保存
+          | -
+          button.certMailMake__submit(name="action" value="send")送信
+
+
