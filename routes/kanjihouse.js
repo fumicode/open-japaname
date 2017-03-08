@@ -13,7 +13,7 @@ var path = require("path");
 
 var co = require("co");
 
-
+var nodemailer = require('nodemailer');
 
 kanjihouse_router.get("/",(req,res,next)=>{
   co(function*(){
@@ -212,6 +212,30 @@ kanjihouse_router.post("/cert_mail/drafts/:mail_id",(req,res,next)=>{
       return res.redirect(red_url)
     }
     else if(action == "send"){
+
+      let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: '',
+          pass: ''
+        }
+      });
+
+      let mailOptions = {
+        from: '"Fred Foo 👻" <foo@blurdybloop.com>', // sender address
+        to: the_mail.tos, // list of receivers
+        subject: the_mail.title, // Subject line
+        text: the_mail.content, // plain text body
+        html: the_mail.content // html body
+      };
+
+      // send mail with defined transport object
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return console.log(error);
+        }
+        console.log('Message %s sent: %s', info.messageId, info.response);
+      });
       //メール送信しょり
       console.log("メールを送信しています");
 
