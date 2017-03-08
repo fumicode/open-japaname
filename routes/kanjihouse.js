@@ -31,21 +31,19 @@ kanjihouse_router.get("/",(req,res,next)=>{
   }).catch(e=>next(e));
 });
 
+
 kanjihouse_router.get("/japanames/",(req,res,next)=>{
   co(function*(){
     //var japanames = yield Japaname.findLatestNamesOfNamer(5,req.user._id).exec();
     var japanames = yield Japaname.findLatestNames(5).exec();
-
     res.render("kanjihouse/japanames", {japanames});
-
   }).catch(e=>next(e));
 
 });
 
+
 kanjihouse_router.get("/japanames/new",(req,res,next)=>{
-
   var action_url = path.join(req.baseUrl, req.url);
-
   res.render("kanjihouse/new_japaname",{action_url});
 });
 
@@ -66,7 +64,6 @@ kanjihouse_router.post("/japanames/new",(req,res,next)=>{
     else{
       var newJapaname = yield Japaname.createNew(names);
     }
-
 
 
     if(req.user && req.user._id){
@@ -117,21 +114,9 @@ kanjihouse_router.post("/cert_mail/make",(req,res,next)=>{
     console.log("redirecting to " + red_url);
 
     res.redirect( red_url);
-      
-
-
 
 
   }).catch(e=>next(e));
-
-
-
-  //toをわける
-  //名前はそのまま保存
-  //mailをnewする。
-  //todo モデル作成
-  //出来上がったページにいく
-
 
 
 });
@@ -254,8 +239,6 @@ kanjihouse_router.get("/cert_mail/sent_mails",(req,res,next)=>{
 
 });
 
-
-
 kanjihouse_router.get("/cert_mail/sent_mails/:mail_id",(req,res,next)=>{
   co(function*(){
     var mail_id = req.params.mail_id;
@@ -268,5 +251,3 @@ kanjihouse_router.get("/cert_mail/sent_mails/:mail_id",(req,res,next)=>{
 
   }).catch(e=>next(e));
 });
-  
-
