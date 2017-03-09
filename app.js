@@ -250,7 +250,7 @@ app.use('/purchases', loginCheck, purchases_router); // loginCheck,
 app.use('/payment',  payment_router); // loginCheck,
 app.use('/admin', authorize(["admin"]),admin_router);
 app.use('/api', api_router);
-app.use('/kanjihouse', kanjihouse_router);
+app.use('/kanjihouse', authorize(["kanjihouse"]), kanjihouse_router);
 
 
 

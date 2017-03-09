@@ -84,6 +84,7 @@ kanjihouse_router.post("/japanames/new",(req,res,next)=>{
 
 
 var mail_template = require("../special/kanjihouse/mail_template.json");
+var mail_info = require("../special/kanjihouse/mail_info.json");
 
 kanjihouse_router.post("/cert_mail/make",(req,res,next)=>{
   co(function*(){
@@ -213,14 +214,14 @@ kanjihouse_router.post("/cert_mail/drafts/:mail_id",(req,res,next)=>{
       console.log("送信前処理中");
 
       //Japanameを送信するなど
-      yield beforeSend(the_mail);
+      the_mail = yield beforeSend(the_mail);
 
       console.log("the_mail.content");
       console.log(the_mail.content);
 
 
       let mailOptions = {
-        from: '"hoge fuga "<foo@blurdybloop.com>', // sender address
+        from: '"'+mail_info.name+'"<' + mail_info.mail + '>', // sender address
         to: the_mail.tos, // list of receivers
         subject: the_mail.title, // Subject line
         text: the_mail.content, // plain text body
@@ -228,10 +229,10 @@ kanjihouse_router.post("/cert_mail/drafts/:mail_id",(req,res,next)=>{
       };
 
       let transporter = nodemailer.createTransport({
-        host: 'smtp.lolipop.jp',
+        host: mail_info.host,
         auth: {
-          user: 'info@w-s.jp',
-          pass: 'test1234'
+          user: mail_info.mail,
+          pass: mail_info.pass
         }
       });
 
@@ -284,7 +285,7 @@ function beforeSend(the_mail){
 
     let japaname_url_lines = _(pop_mail.japanames).map((japaname)=>{
 
-      return "" + japaname.string + "\t"+ "https://japana.me/" + japaname.code
+      return japaname.original + "\t" + japaname.string + "\t"+ "https://japana.me/" + japaname.code
 
     }).join("\n");
 
