@@ -83,6 +83,8 @@ kanjihouse_router.post("/japanames/new",(req,res,next)=>{
 });
 
 
+var mail_template = require("../special/kanjihouse/mail_template.json");
+
 kanjihouse_router.post("/cert_mail/make",(req,res,next)=>{
   co(function*(){
 
@@ -94,16 +96,11 @@ kanjihouse_router.post("/cert_mail/make",(req,res,next)=>{
     console.log(tos_array);
     console.log(name);
 
-    var template = {
-      title:"Name certification by Kanji House!",
-      content:"Dear ____\n \n Thank you for visiting us! We published the name certification url!"
-    }
-
     var newMail = new KanjihouseMail({
       tos:tos_array,
       name:name,
-      title:template.title,
-      content:template.content,
+      title:mail_template.title,
+      content:mail_template.content,
     });
 
     var mailDoc = yield newMail.save();
@@ -212,38 +209,42 @@ kanjihouse_router.post("/cert_mail/drafts/:mail_id",(req,res,next)=>{
       return res.redirect(red_url)
     }
     else if(action == "send"){
+      //メール送信前しょり
+      console.log("送信前処理中");
 
-      let transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: '',
-          pass: ''
-        }
-      });
+      //Japanameを送信するなど
+      yield beforeSend(the_mail);
+
+      console.log("the_mail.content");
+      console.log(the_mail.content);
+
 
       let mailOptions = {
-        from: '"Fred Foo 👻" <foo@blurdybloop.com>', // sender address
+        from: '"hoge fuga "<foo@blurdybloop.com>', // sender address
         to: the_mail.tos, // list of receivers
         subject: the_mail.title, // Subject line
         text: the_mail.content, // plain text body
-        html: the_mail.content // html body
+        //html: the_mail.content // html body
       };
 
-      // send mail with defined transport object
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          return console.log(error);
+      let transporter = nodemailer.createTransport({
+        host: 'smtp.lolipop.jp',
+        auth: {
+          user: 'info@w-s.jp',
+          pass: 'test1234'
         }
-        console.log('Message %s sent: %s', info.messageId, info.response);
       });
+
       //メール送信しょり
       console.log("メールを送信しています");
 
-      the_mail.title;
+      let info = yield sendMailPromise(transporter, mailOptions);
 
+      console.log('Message %s sent: %s', info.messageId, info.response);
+      the_mail.title;
       the_mail.sent = true;
       var saved_mail = yield the_mail.save();
-      //
+
       return res.render("kanjihouse/cert_mail/sent");
     }
     else{
@@ -251,6 +252,51 @@ kanjihouse_router.post("/cert_mail/drafts/:mail_id",(req,res,next)=>{
     }
   }).catch(e=>next(e));
 });
+
+
+function sendMailPromise(transporter, mailOptions){
+  return new Promise(function(resolve, reject){
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        reject(error);
+      }
+
+      resolve(info);
+    });
+  });
+}
+
+
+function beforeSend(the_mail){
+  return co(function*(){
+
+    let pop_mail = yield the_mail
+      .populate({
+        path:"japanames",
+        populate:{
+          path:"names.ateji names.kana"
+        }
+      })
+      .execPopulate();
+
+    console.log(pop_mail.japanames);
+
+    let japaname_url_lines = _(pop_mail.japanames).map((japaname)=>{
+
+      return "" + japaname.string + "\t"+ "https://japana.me/" + japaname.code
+
+    }).join("\n");
+
+    console.log("japaname_url_lines");
+    console.log(japaname_url_lines);
+
+    pop_mail.content = 
+      pop_mail.content.replace(/\[japaname_url_lines\]/, japaname_url_lines);
+
+    return pop_mail;
+  });
+}
 
 
 kanjihouse_router.get("/cert_mail/sent_mails",(req,res,next)=>{
