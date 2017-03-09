@@ -229,10 +229,10 @@ kanjihouse_router.post("/cert_mail/drafts/:mail_id",(req,res,next)=>{
     else if(action == "send"){
 
       let transporter = nodemailer.createTransport({
-        service: 'gmail',
+        host: 'smtp.lolipop.jp',
         auth: {
-          user: '',
-          pass: ''
+          user: 'info@w-s.jp',
+          pass: 'test1234'
         }
       });
 
@@ -249,17 +249,20 @@ kanjihouse_router.post("/cert_mail/drafts/:mail_id",(req,res,next)=>{
         if (error) {
           return console.log(error);
         }
-        console.log('Message %s sent: %s', info.messageId, info.response);
+
+        
       });
       //メール送信しょり
-      console.log("メールを送信しています");
+        console.log("メールを送信しています");
 
-      the_mail.title;
+        the_mail.title;
 
-      the_mail.sent = true;
-      var saved_mail = yield the_mail.save();
-      //
-      return res.render("kanjihouse/cert_mail/sent");
+        the_mail.sent = true;
+        var saved_mail = yield the_mail.save();
+        //
+        return res.render("kanjihouse/cert_mail/sent");
+        console.log('Message %s sent: %s', info.messageId, info.response);
+      
     }
     else{
       throw new Error("invalid action param");
