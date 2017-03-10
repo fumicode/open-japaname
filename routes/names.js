@@ -34,7 +34,11 @@ names_router.get("/:japaname_id([0-9\-]+)", function(req, res, next){
 
     try{
       var japaname = yield Japaname.findById(japaname_id)
-        .populate("names.ateji").populate("names.kana").exec();
+        .populate("names.ateji")
+        .populate("names.kana")
+        .populate("namer")
+    //namer のjapaname もとってきたい。ていうか、抽象化したいなあ
+        .exec();
 
       if(!japaname){
         return next();
