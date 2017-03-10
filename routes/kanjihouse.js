@@ -31,21 +31,19 @@ kanjihouse_router.get("/",(req,res,next)=>{
   }).catch(e=>next(e));
 });
 
+
 kanjihouse_router.get("/japanames/",(req,res,next)=>{
   co(function*(){
     //var japanames = yield Japaname.findLatestNamesOfNamer(5,req.user._id).exec();
     var japanames = yield Japaname.findLatestNames(5).exec();
-
     res.render("kanjihouse/japanames", {japanames});
-
   }).catch(e=>next(e));
 
 });
 
+
 kanjihouse_router.get("/japanames/new",(req,res,next)=>{
-
   var action_url = path.join(req.baseUrl, req.url);
-
   res.render("kanjihouse/new_japaname",{action_url});
 });
 
@@ -68,7 +66,6 @@ kanjihouse_router.post("/japanames/new",(req,res,next)=>{
     }
 
 
-
     if(req.user && req.user._id){
       newJapaname.namer = req.user._id;
 
@@ -86,6 +83,9 @@ kanjihouse_router.post("/japanames/new",(req,res,next)=>{
 });
 
 
+var mail_template = require("../special/kanjihouse/mail_template.json");
+var mail_info = require("../special/kanjihouse/mail_info.json");
+
 kanjihouse_router.post("/cert_mail/make",(req,res,next)=>{
   co(function*(){
 
@@ -97,16 +97,11 @@ kanjihouse_router.post("/cert_mail/make",(req,res,next)=>{
     console.log(tos_array);
     console.log(name);
 
-    var template = {
-      title:"Name certification by Kanji House!",
-      content:"Dear ____\n \n Thank you for visiting us! We published the name certification url!"
-    }
-
     var newMail = new KanjihouseMail({
       tos:tos_array,
       name:name,
-      title:template.title,
-      content:template.content,
+      title:mail_template.title,
+      content:mail_template.content,
     });
 
     var mailDoc = yield newMail.save();
@@ -117,21 +112,9 @@ kanjihouse_router.post("/cert_mail/make",(req,res,next)=>{
     console.log("redirecting to " + red_url);
 
     res.redirect( red_url);
-      
-
-
 
 
   }).catch(e=>next(e));
-
-
-
-  //toをわける
-  //名前はそのまま保存
-  //mailをnewする。
-  //todo モデル作成
-  //出来上がったページにいく
-
 
 
 });
@@ -227,48 +210,94 @@ kanjihouse_router.post("/cert_mail/drafts/:mail_id",(req,res,next)=>{
       return res.redirect(red_url)
     }
     else if(action == "send"){
+      //メール送信前しょり
+      console.log("送信前処理中");
 
-      let transporter = nodemailer.createTransport({
-        host: 'smtp.lolipop.jp',
-        auth: {
-          user: 'info@w-s.jp',
-          pass: 'test1234'
-        }
-      });
+      //Japanameを送信するなど
+      the_mail = yield beforeSend(the_mail);
+
+      console.log("the_mail.content");
+      console.log(the_mail.content);
 
       let mailOptions = {
-        from: '"Fred Foo 👻" <foo@blurdybloop.com>', // sender address
+        from: '"'+mail_info.name+'"<' + mail_info.mail + '>', // sender address
         to: the_mail.tos, // list of receivers
         subject: the_mail.title, // Subject line
         text: the_mail.content, // plain text body
-        html: the_mail.content // html body
+        //html: the_mail.content // html body
       };
 
-      // send mail with defined transport object
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          return console.log(error);
+      let transporter = nodemailer.createTransport({
+        host: mail_info.host,
+        auth: {
+          user: mail_info.mail,
+          pass: mail_info.pass
         }
-
-        //メール送信しょり
-        console.log("メールを送信しています");
-
-        the_mail.title;
-
-        the_mail.sent = true;
-        var saved_mail = yield the_mail.save();
-        //
-        return res.render("kanjihouse/cert_mail/sent");
-        console.log('Message %s sent: %s', info.messageId, info.response);
       });
-      
-      
+
+      //メール送信しょり
+      console.log("メールを送信しています");
+
+      let info = yield sendMailPromise(transporter, mailOptions);
+
+      console.log('Message %s sent: %s', info.messageId, info.response);
+      the_mail.title;
+      the_mail.sent = true;
+      var saved_mail = yield the_mail.save();
+
+      return res.render("kanjihouse/cert_mail/sent");
+
     }
     else{
       throw new Error("invalid action param");
     }
   }).catch(e=>next(e));
 });
+
+
+function sendMailPromise(transporter, mailOptions){
+  return new Promise(function(resolve, reject){
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        reject(error);
+      }
+
+      resolve(info);
+    });
+  });
+}
+
+
+function beforeSend(the_mail){
+  return co(function*(){
+
+    let pop_mail = yield the_mail
+      .populate({
+        path:"japanames",
+        populate:{
+          path:"names.ateji names.kana"
+        }
+      })
+      .execPopulate();
+
+    console.log(pop_mail.japanames);
+
+    let japaname_url_lines = _(pop_mail.japanames).map((japaname)=>{
+
+      return japaname.original + "\t" + japaname.string + "\t"+ "https://japana.me/" + japaname.code
+
+    }).join("\n");
+
+    console.log("japaname_url_lines");
+    console.log(japaname_url_lines);
+
+    pop_mail.content = 
+      pop_mail.content.replace(/\[japaname_url_lines\]/, japaname_url_lines);
+
+    return pop_mail;
+  });
+}
 
 
 kanjihouse_router.get("/cert_mail/sent_mails",(req,res,next)=>{
@@ -280,8 +309,6 @@ kanjihouse_router.get("/cert_mail/sent_mails",(req,res,next)=>{
   }).catch(e=>next(e));
 
 });
-
-
 
 kanjihouse_router.get("/cert_mail/sent_mails/:mail_id",(req,res,next)=>{
   co(function*(){
@@ -295,5 +322,3 @@ kanjihouse_router.get("/cert_mail/sent_mails/:mail_id",(req,res,next)=>{
 
   }).catch(e=>next(e));
 });
-  
-
