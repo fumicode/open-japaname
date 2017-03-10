@@ -250,9 +250,7 @@ kanjihouse_router.post("/cert_mail/drafts/:mail_id",(req,res,next)=>{
           return console.log(error);
         }
 
-        
-      });
-      //メール送信しょり
+        //メール送信しょり
         console.log("メールを送信しています");
 
         the_mail.title;
@@ -262,6 +260,8 @@ kanjihouse_router.post("/cert_mail/drafts/:mail_id",(req,res,next)=>{
         //
         return res.render("kanjihouse/cert_mail/sent");
         console.log('Message %s sent: %s', info.messageId, info.response);
+      });
+      
       
     }
     else{
