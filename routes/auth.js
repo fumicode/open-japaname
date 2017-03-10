@@ -72,37 +72,4 @@ auth_router.get('/logout', function(req,res){
 });
 
 
-function authenticate_and_redirect_mypage(username,password,req,res,next){
 
-  console.log("Here1 " + username + " " + password);
-  User.authenticate()(username,password,function(err,user,options){
-    console.log("here2");
-    if (err) return next(err);
-    if (user === false) {
-      console.log("here");
-      //!!!! いずれいれる！！
-      //req.flash("error", "Enter same password twice.");
-      return res.redirect(req.baseUrl + "#signup");
-    } 
-    else {
-      console.log("here3");
-      req.login(user, function (err) {
-        if(err) return next(err);
-        return res.redirect("/mypage/");
-      });
-    }
-  });
-}
-
-
-/*
-router.get('/facebook/callback',
-    passport.authenticate('facebook',{
-      successRedirect: '/mypage',
-      failureRedirect: '/',
-    }));
-
-router.get('/facebook/login',
-    passport.authenticate('facebook',{scope:['email']}));
-
-*/
