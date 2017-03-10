@@ -6,7 +6,7 @@ var _ = require("underscore");
 authModule.loginCheck = function(req,res,next){
   if(!req.isAuthenticated()){
     req.flash("alert", "You have to log in.");
-    res.redirect("/auth/login");
+    res.redirect("/auth#login");
     return;
   }
   next();
