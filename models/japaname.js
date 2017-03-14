@@ -137,10 +137,11 @@ JapanameSchema.statics.createNew = function(names, namer_id){
 
 
       atemojis = _(atemojis).reject(function(atemoji){
+        //かなや漢字がないやつは拒否する。
         return !atemoji.kana || !atemoji.kanji
       }).map(function(atemoji){
 
-        //カタカナはひらがなにへんかんする。
+        //カタカナはひらがなにへんかんする!!
         if(atejilib.isKatakanas(atemoji.kana)){
           atemoji.kana = atejilib.katakanasToHiraganas(atemoji.kana)
         }

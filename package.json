@@ -35,6 +35,8 @@
     "passport-strategy": "^1.0.0",
     "serve-favicon": "~2.3.0",
     "stripe": "^4.15.0",
+    "superagent": "^3.5.0",
+    "superagent-jsonapify": "^1.4.4",
     "underscore": "^1.8.3"
   },
   "devDependencies": {

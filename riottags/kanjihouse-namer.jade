@@ -5,12 +5,15 @@ kanjihouse-namer
       tr
         th.kanjihouseNamer__headCell オリジナル
         td
-          input(type="text" name="original_name" value="{name.original}" onchange="{changeOriginal}")
+          input(type="text" name="original_name" ref="original_name" value="{name.original}" onchange="{changeOriginal}" style="display:inline")
+          
+          input(type="button" onclick="{estimateKana}" value="読みを推測")
 
       tr
         th.kanjihouseNamer__headCell カナ
         td
-          input(type="text" name="kana")
+          input(type="text" name="name_kana" ref="name_kana" style="display:inline" onchange="{kanaChanged}")
+          input(type="button" onclick="{kanaChangedForce}" value="下に挿入")
 
       tr
         td(colspan="2")
@@ -23,32 +26,30 @@ kanjihouse-namer
               th コメント
               th 削除ボタン
 
-            tr(each="{atemoji,index in name.atejis}")
-              td 
-                input.kanjihouseNamer__kanaBox(name="kana" type="text" value="{atemoji.kana}" onchange="{changeAtemoji}")
-              td 
-                input.kanjihouseNamer__kanjiBox(name="kanji" type="text" value="{atemoji.kanji}" onchange="{changeAtemoji}")
-              td 
-                textarea.kanjihouseNamer__meaningsBox(name="meanings" onchange="{changeAtemoji}") {atemoji.meanings}
-              td 
-                textarea.kanjihouseNamer__commentBox(name="comment" onchange="{changeAtemoji}") {atemoji.changeAtemoji}
-              td
-                a.button(onclick="{deleteRow}") 削除
+            tr(data-is="kanjihouse-ateji-row" atemoji="{atemoji}" index="{index}" 
+              each="{atemoji,index in name.atejis}" 
+              ondelete="{parent.deleteRow}" onchange="{parent.changeAtemoji}")
+
 
           a.button(onclick="{addRow}") 文字を追加
 
       tr
         td(colspan="2")
           input(type="hidden" name="names" value="{names_str}")
-          input(type="submit" value="Japanameをつくる")
+          input(type="button" onclick="submit()" value="Japanameをつくる")
 
   script.
-    
+    var this_tag = this;
+
     function Atemoji(kana,kanji,meanings,comment){
       this.kana = kana;
       this.kanji = kanji;
       this.meanings = meanings;
       this.comment = comment;
+    }
+
+    Atemoji.prototype.isEmpty =function(){
+      return !this.kana && !this.kanji;
     }
 
     this.name = {
@@ -57,7 +58,15 @@ kanjihouse-namer
         new Atemoji("", "", [""], ""),
         new Atemoji("", "", [""], ""),
         new Atemoji("", "", [""], ""),
-      ]
+      ],
+
+      isEmpty:function(){
+        var allEmpty = _(this.atejis).reduce(function(empty, ateji){
+          return empty && ateji.isEmpty()
+        },true);
+
+        return allEmpty
+      }
     };
 
 
@@ -78,7 +87,56 @@ kanjihouse-namer
       var atemoji = e.item.atemoji;
       var index = e.item.index;
       this.name.atejis[index][e.target.name] = e.target.value;
+    }
 
+    estimateKana(e){
+
+      var original_name_input = this_tag.refs.original_name;
+      var original_name = original_name_input.value;
+
+      //ajaxで取得
+
+      request
+        .get("/api/core/names/kana_translation/" + original_name )
+        .end(function(err, res){
+
+          var res_json = JSON.parse(res.text);
+          console.log(res_json);
+
+          //1番目を次のフィールドに入れる
+          this_tag.refs.name_kana.value = res_json.katakana;
+
+          this_tag.kanaChanged(e);
+          this_tag.update();
+        });
+
+    }
+
+    kanaChanged(e){
+      var kana_string = this.refs.name_kana.value;
+
+      if(!this.name.isEmpty()){
+        return ; //do nothing
+      }
+
+      var new_atejis= [];
+      _(kana_string).each(function(kana){
+        new_atejis.push(new Atemoji(kana, "", [""], ""));
+      });
+
+      this.name.atejis = new_atejis;
+    }
+
+    kanaChangedForce(e){
+      var kana_string = this.refs.name_kana.value;
+
+      console.log(kana_string);
+
+      var new_atejis = _(kana_string).map(function(kana){
+        return new Atemoji(kana, "", [""], "");
+      });
+
+      this.name.atejis = new_atejis;
     }
 
     addRow(e){
@@ -86,6 +144,42 @@ kanjihouse-namer
     }
 
     deleteRow(e){
+        console.log("deleting");
+
+      console.log(e.item)
       this.name.atejis.splice(e.item.index, 1);
+      this.update();
+    }
+
+
+kanjihouse-ateji-row
+  td 
+    input.kanjihouseNamer__kanaBox(name="kana" type="text" value="{atemoji.kana}" onchange="{changeAtemoji}")
+  td 
+    input.kanjihouseNamer__kanjiBox(name="kanji" type="text" value="{atemoji.kanji}" onchange="{changeAtemoji}")
+  td 
+    textarea.kanjihouseNamer__meaningsBox(name="meanings" onchange="{changeAtemoji}") {atemoji.meanings}
+  td 
+    textarea.kanjihouseNamer__commentBox(name="comment" onchange="{changeAtemoji}") {atemoji.changeAtemoji}
+  td
+    a.button(onclick="{ondeleteFunc}") 削除
+
+  script.
+    this.atemoji = opts.atemoji;
+    this.index = opts.index;
+    this.ondelete = opts.ondelete;
+    this.onchange = opts.onchange;
+
+
+    ondeleteFunc(e){
+      if(this.ondelete && typeof this.ondelete === "function"){
+        this.ondelete(e);
+      }
+    }
+
+    changeAtemoji(e){
+      if(this.onchange&& typeof this.onchange === "function"){
+        this.onchange(e);
+      }
     }
 

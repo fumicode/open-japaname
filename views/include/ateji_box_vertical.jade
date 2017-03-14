@@ -1,7 +1,14 @@
-mixin ateji_box_vertical(names)
+mixin ateji_box_vertical(japaname)
+  - var names = japaname.names
 
   div.japanameTableVerticalContainer
-    p This japaname is made at <a href="http://kanji-house.com/">Kanji House</a>
+
+    if japaname.namer.username == "info@w-s.jp"
+      p This japaname is made at <a href="http://kanji-house.com/">Kanji House</a>
+    else
+      p This japaname is made by  #{japaname.namer._id}
+    
+
 
     each name in names
       - var atemojis = name.ateji.populated_atemojis;
