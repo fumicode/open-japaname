@@ -19,6 +19,10 @@ block sub-content
   kanjihouse-namer
 
 block append body-end-scripts
+  script(src="/javascripts/superagent.js")
+  script.
+    var request = window.superagent;
+  script(src="/javascripts/underscore-min.js")
   script(src="/riotjs/kanjihouse-namer.js")
   script.
     riot.mount("kanjihouse-namer");

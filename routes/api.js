@@ -34,6 +34,54 @@ api_router.get("/core",(req,res,next)=>{
 });
 
 
+api_router.get("/core/kanjis/select",(req,res,next)=>{
+  co(function*(){
+    var kanjis_str = req.query.kanjis;
+    var kanjis_array = kanjis_str.split("");
+
+    var kanjis = atejilib.kanjiDocsToArray(yield Kanji.find({_id:{$in:kanjis_array}}).exec());
+
+    return res.jsonp(kanjis);
+  }).catch(err=>next(err));
+});
+
+
+//!!! クライアントから使えるように
+api_router.get("/core/names/kana_translation/:original_name",(req,res,next)=>{
+
+  co(function*(){
+    var original_name = req.params.original_name;
+    var katakana_names = yield atejilib.toJapaneseSound(original_name);
+
+    return res.jsonp(katakana_names);
+
+  }).catch(e=>next(e));
+
+});
+
+
+//!!! クライアントから使えるように
+api_router.get("/core/kanjis/sounds/:sound",(req,res,next)=>{
+  co(function*(){
+
+    var kana = req.params.sound ;
+
+    if(atejilib.isKatakana(kana)){
+      kana = atejilib.katakanasToHiraganas(kana);
+    }
+
+    var kanjis_array = atejilib.syllableToKanjis(kana)
+
+    var kanjis_doc = yield Kanji.find({_id:{$in:kanjis_array}}).exec();
+
+    var kanjis = atejilib.kanjiDocsToArray(kanjis_doc);
+
+    return res.jsonp(kanjis);
+  }).catch(err=>next(err));
+});
+
+
+
 api_router.get("/core/names/:japaname_id([0-9\-]+)", function(req, res, next){
   co(function*(){
     console.log("kitemasu");
@@ -116,7 +164,7 @@ api_router.post('/core/names', function(req, res, next) {
 api_router.get("/crafti/japaname_frame.js", function(req, res, next) {
   var filepath =path.join(__dirname, "../public/crafti/", "japaname_frame.js");
   fs.readFile(filepath, "utf-8",function(error, text){
-    //japaname.jpへの依存を回避。どこにアクセスすればよいかおしえる。
+    //japana.meへの依存を回避。どこにアクセスすればよいかおしえる。
     res.send(text.replace(/japana\.me/,req.headers.host));
     return res.end();
   });
