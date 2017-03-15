@@ -13,6 +13,7 @@ block sub-content
 
   p
     a.button(href="/kanjihouse/japanames/new") Japanameを作る
+
   h1 漢字ハウスで作られたJapaname一覧
 
 
@@ -23,4 +24,4 @@ block sub-content
         td #{japaname.original}
         td #{japaname.string}
         td
-          a.button(href="/#{japaname.code}") 見る
+          a.button(href="#{path}/#{japaname.code}") 見る

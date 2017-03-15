@@ -1,6 +1,7 @@
 
-riot.tag2('kanjihouse-namer', '<form action="#{action_url}" method="post"> <table class="kanjihouseNamer"> <tr> <th class="kanjihouseNamer__headCell">オリジナル</th> <td> <input type="text" name="original_name" ref="original_name" riot-value="{name.original}" onchange="{changeOriginal}" style="display:inline"> <input type="button" onclick="{estimateKana}" value="読みを推測"> </td> </tr> <tr> <th class="kanjihouseNamer__headCell">カナ</th> <td> <input type="text" name="name_kana" ref="name_kana" style="display:inline" onchange="{kanaChanged}"> <input type="button" onclick="{kanaChangedForce}" value="下に挿入"> </td> </tr> <tr> <td colspan="2"> <h5>当て字</h5> <table class="kanjihouseNamer__table"> <tr> <th>カナ</th> <th>漢字</th> <th>意味</th> <th>コメント</th> <th>削除ボタン</th> </tr> <tr data-is="kanjihouse-ateji-row" atemoji="{atemoji}" index="{index}" each="{atemoji,index in name.atejis}" ondelete="{parent.deleteRow}" onchange="{parent.changeAtemoji}"></tr> </table><a class="button" onclick="{addRow}">文字を追加</a> </td> </tr> <tr> <td colspan="2"> <input type="hidden" name="names" riot-value="{names_str}"> <input type="button" onclick="submit()" value="Japanameをつくる"> </td> </tr> </table> </form>', '', '', function(opts) {
+riot.tag2('kanjihouse-namer', '<form action="#{action_url}" method="post"> <table class="kanjihouseNamer"> <tr> <th class="kanjihouseNamer__headCell">オリジナル</th> <td> <input type="text" name="original_name" ref="original_name" riot-value="{name.original}" onchange="{changeOriginal}" style="display:inline"> <input type="button" onclick="{estimateKana}" value="読みを推測"> </td> </tr> <tr> <th class="kanjihouseNamer__headCell">カナ</th> <td> <input type="text" name="name_kana" ref="name_kana" style="display:inline" onchange="{kanaChanged}"> <input type="button" onclick="{kanaChangedForce}" value="下に挿入">データベースにはされません。空欄でも可。 </td> </tr> <tr> <td colspan="2"> <h5>当て字</h5> <table class="kanjihouseNamer__table"> <tr> <th>カナ</th> <th>漢字</th> <th>意味 <p style="font-weight:normal;font-size:small">辞書にある場合は補完されます。</p> </th> <th>コメント</th> <th>削除ボタン</th> </tr> <tr data-is="kanjihouse-ateji-row" atemoji="{atemoji}" index="{index}" each="{atemoji,index in name.atejis}" ondelete="{parent.deleteRow}" onchange="{parent.changeAtemoji}"></tr> </table><a class="button" onclick="{addRow}">文字を追加</a> </td> </tr> <tr> <td colspan="2"> <input type="hidden" name="names" riot-value="{names_str}"> <input type="button" onclick="submit()" value="Japanameを保存"> </td> </tr> </table> </form>', '', '', function(opts) {
     var this_tag = this;
+    this.japaname = opts.japaname || null;
 
     function Atemoji(kana,kanji,meanings,comment){
       this.kana = kana;
@@ -13,22 +14,48 @@ riot.tag2('kanjihouse-namer', '<form action="#{action_url}" method="post"> <tabl
       return !this.kana && !this.kanji;
     }
 
-    this.name = {
-      original:"",
-      atejis:[
-        new Atemoji("", "", [""], ""),
-        new Atemoji("", "", [""], ""),
-        new Atemoji("", "", [""], ""),
-      ],
+    function Name(original, kana, atejis){
+      this.original = original;
+      this.kana = kana;
+      this.atejis = atejis;
+    }
 
-      isEmpty:function(){
-        var allEmpty = _(this.atejis).reduce(function(empty, ateji){
-          return empty && ateji.isEmpty()
-        },true);
+    Name.prototype.isEmpty = function(){
+      var allEmpty = _(this.atejis).reduce(function(empty, ateji){
+        return empty && ateji.isEmpty()
+      },true);
 
-        return allEmpty
-      }
-    };
+      return allEmpty
+    }
+
+    if(this.japaname){
+      let name = this.japaname.names[0];
+
+      console.log("name");
+      console.log(name);
+
+      let atemojis = _(name.ateji.atemojis).map(atemoji=>{
+        return new Atemoji(atemoji.kana, atemoji.kanji, [""], atemoji.comment)
+      });
+
+      console.log("atemojis");
+      console.log(atemojis);
+
+      let kana = _(name.atemojis).reduce((str, atemoji)=>{
+        return str + atemoji.kana
+      },"");
+      console.log("kana");
+      console.log(kana);
+
+      this.name = new Name(name.original, "",atemojis);
+    }
+    else{
+      this.name = new Name("","", [
+        new Atemoji("", "", [""], ""),
+        new Atemoji("", "", [""], ""),
+        new Atemoji("", "", [""], ""),
+      ]);
+    }
 
     this.names_str = JSON.stringify([ this.name ]);
 

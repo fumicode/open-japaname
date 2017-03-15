@@ -111,7 +111,9 @@ JapanameSchema.statics.isJapanameCode = function (url_str){
 JapanameSchema.statics.findByCode = function(japaname_code){
   var japaname_id = sta.japanameDecode(japaname_code);
 
-  return this.findById(japaname_id);
+  return this.findById(japaname_id)
+    .populate("names.ateji")
+    .populate("names.kana");
 }
 
 

@@ -14,6 +14,7 @@ kanjihouse-namer
         td
           input(type="text" name="name_kana" ref="name_kana" style="display:inline" onchange="{kanaChanged}")
           input(type="button" onclick="{kanaChangedForce}" value="下に挿入")
+          | データベースにはされません。空欄でも可。
 
       tr
         td(colspan="2")
@@ -23,6 +24,7 @@ kanjihouse-namer
               th カナ
               th 漢字
               th 意味
+                p(style="font-weight:normal;font-size:small") 辞書にある場合は補完されます。
               th コメント
               th 削除ボタン
 
@@ -36,10 +38,12 @@ kanjihouse-namer
       tr
         td(colspan="2")
           input(type="hidden" name="names" value="{names_str}")
-          input(type="button" onclick="submit()" value="Japanameをつくる")
+          input(type="button" onclick="submit()" value="Japanameを保存")
 
   script.
+    
     var this_tag = this;
+    this.japaname = opts.japaname || null;
 
     function Atemoji(kana,kanji,meanings,comment){
       this.kana = kana;
@@ -52,22 +56,50 @@ kanjihouse-namer
       return !this.kana && !this.kanji;
     }
 
-    this.name = {
-      original:"",
-      atejis:[
-        new Atemoji("", "", [""], ""),
-        new Atemoji("", "", [""], ""),
-        new Atemoji("", "", [""], ""),
-      ],
+    function Name(original, kana, atejis){
+      this.original = original;
+      this.kana = kana;
+      this.atejis = atejis;
+    }
 
-      isEmpty:function(){
-        var allEmpty = _(this.atejis).reduce(function(empty, ateji){
-          return empty && ateji.isEmpty()
-        },true);
+    Name.prototype.isEmpty = function(){
+      var allEmpty = _(this.atejis).reduce(function(empty, ateji){
+        return empty && ateji.isEmpty()
+      },true);
 
-        return allEmpty
-      }
-    };
+      return allEmpty
+    }
+
+
+    if(this.japaname){
+      let name = this.japaname.names[0];
+
+      console.log("name");
+      console.log(name);
+
+      let atemojis = _(name.ateji.atemojis).map(atemoji=>{
+        return new Atemoji(atemoji.kana, atemoji.kanji, [""], atemoji.comment)
+      });
+
+      console.log("atemojis");
+      console.log(atemojis);
+
+      let kana = _(name.atemojis).reduce((str, atemoji)=>{
+        return str + atemoji.kana
+      },"");
+      console.log("kana");
+      console.log(kana);
+
+      this.name = new Name(name.original, "",atemojis);
+    }
+    else{ //japaname が与えられてない場合は、1からつくる
+      this.name = new Name("","", [ //original, kana, atejis
+        new Atemoji("", "", [""], ""),
+        new Atemoji("", "", [""], ""),
+        new Atemoji("", "", [""], ""),
+      ]);
+    }
+
 
     this.names_str = JSON.stringify([ this.name ]);
 

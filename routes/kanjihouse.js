@@ -53,23 +53,33 @@ kanjihouse_router.get("/japanames/new",(req,res,next)=>{
 kanjihouse_router.post("/japanames/new",(req,res,next)=>{
   co(function*(){
 
-    console.log("req.body")
-    console.log(req.body)
-
-    console.log("req.body.names")
-    console.log(req.body.names)
     var names = JSON.parse(req.body.names);
 
-    console.log(names);
+    yield registerKanjisOfNames(names);
 
-    console.log("kanjikanjikanjikanji");
+    //japaname を作る
+    if(req.user && req.user._id){
+      var newJapaname = yield Japaname.createNew(names, req.user._id);
+    }
+    else{
+      var newJapaname = yield Japaname.createNew(names);
+    }
 
+    req.flash("success", "Japaname が保存されました");
+    res.redirect(path.join(req.baseUrl , "japanames", newJapaname.code)); //短縮URL
+
+  }).catch(e=>next(e));
+
+});
+
+
+function registerKanjisOfNames(names){
+  return co(function*(){
+    //漢字を辞書に登録する  
 
     for(let index in names){
       let name = names[index];
-
       console.log(name);
-
       for(let atemoji_index in name.atejis){
         let atemoji = name.atejis[atemoji_index];
         let kanji = atemoji.kanji;
@@ -83,22 +93,8 @@ kanjihouse_router.post("/japanames/new",(req,res,next)=>{
         yield registerKanji(kanji,[kana], meanings);
       }
     }
-
-    //japaname を作る
-    if(req.user && req.user._id){
-      var newJapaname = yield Japaname.createNew(names, req.user._id);
-    }
-    else{
-      var newJapaname = yield Japaname.createNew(names);
-    }
-
-    var url_id = Japaname.japanameEncode(newJapaname._id);
-
-    res.redirect(path.join(req.baseUrl , "japanames")); //短縮URL
-
-  }).catch(e=>next(e));
-
-});
+  });
+}
 
 
 function registerKanji(kanji, sounds, meanings){
@@ -131,6 +127,37 @@ function registerKanji(kanji, sounds, meanings){
     return result;
   });
 }
+
+
+kanjihouse_router.get("/japanames/:japaname_code",(req,res,next)=>{
+  co(function*(){
+    var japaname_code = req.params.japaname_code;
+
+    var japaname = yield Japaname.findByCode(japaname_code).exec();
+
+    var action_url = path.join(req.baseUrl, req.url);
+
+    res.render("kanjihouse/japaname", {action_url, japaname});
+  }).catch(e=>next(e));
+});
+
+
+kanjihouse_router.post("/japanames/:japaname_code",(req,res,next)=>{
+  co(function*(){
+    var names = JSON.parse(req.body.names);
+
+    yield registerKanjisOfNames(names);
+
+    //!!! Databaseの編集昨日をJapaname側につける！！
+    var newJapaname = yield Japaname.createNew(names, req.user._id);
+
+    req.flash("success", "Japaname が保存されました");
+    res.redirect(path.join(req.baseUrl , "japanames", newJapaname.code)); 
+
+  }).catch(e=>next(e));
+
+})
+
 
 var mail_template = require("../special/kanjihouse/mail_template.json");
 var mail_info = require("../special/kanjihouse/mail_info.json");
