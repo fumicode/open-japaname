@@ -33,20 +33,30 @@ riot.tag2('kanjihouse-namer', '<form action="#{action_url}" method="post"> <tabl
     this.names_str = JSON.stringify([ this.name ]);
 
     this.on("update",function(){
-      this.names_str = JSON.stringify([ this.name ]);
+      this_tag.names_str = JSON.stringify([ this.name ]);
     });
 
     this.changeOriginal = function(e){
       var original_name = e.target.value;
 
-      this.name.original = original_name;
+      this_tag.name.original = original_name;
 
     }.bind(this)
 
     this.changeAtemoji = function(e){
       var atemoji = e.item.atemoji;
       var index = e.item.index;
-      this.name.atejis[index][e.target.name] = e.target.value;
+
+      if(e.target.name == "meanings"){
+        this_tag.name.atejis[index][e.target.name]
+          = e.target.value.split("\n");
+      }
+      else{
+        this_tag.name.atejis[index][e.target.name]
+          = e.target.value;
+      }
+
+      this_tag.update();
     }.bind(this)
 
     this.estimateKana = function(e){
@@ -81,7 +91,7 @@ riot.tag2('kanjihouse-namer', '<form action="#{action_url}" method="post"> <tabl
         new_atejis.push(new Atemoji(kana, "", [""], ""));
       });
 
-      this.name.atejis = new_atejis;
+      this_tag.name.atejis = new_atejis;
     }.bind(this)
 
     this.kanaChangedForce = function(e){
@@ -93,23 +103,24 @@ riot.tag2('kanjihouse-namer', '<form action="#{action_url}" method="post"> <tabl
         return new Atemoji(kana, "", [""], "");
       });
 
-      this.name.atejis = new_atejis;
+      this_tag.name.atejis = new_atejis;
     }.bind(this)
 
     this.addRow = function(e){
-      this.name.atejis.push(new Atemoji("","",[""],""))
+      this_tag.name.atejis.push(new Atemoji("","",[""],""))
     }.bind(this)
 
     this.deleteRow = function(e){
-        console.log("deleting");
+
+      console.log("deleting");
 
       console.log(e.item)
-      this.name.atejis.splice(e.item.index, 1);
-      this.update();
+      this_tag.name.atejis.splice(e.item.index, 1);
+      this_tag.update();
     }.bind(this)
 
 });
-riot.tag2('kanjihouse-ateji-row', '<td> <input class="kanjihouseNamer__kanaBox" name="kana" type="text" riot-value="{atemoji.kana}" onchange="{changeAtemoji}"> </td> <td> <input class="kanjihouseNamer__kanjiBox" name="kanji" type="text" riot-value="{atemoji.kanji}" onchange="{changeAtemoji}"> </td> <td> <textarea class="kanjihouseNamer__meaningsBox" name="meanings" onchange="{changeAtemoji}">{atemoji.meanings}</textarea> </td> <td> <textarea class="kanjihouseNamer__commentBox" name="comment" onchange="{changeAtemoji}">{atemoji.changeAtemoji}</textarea> </td> <td><a class="button" onclick="{ondeleteFunc}">削除</a></td>', '', '', function(opts) {
+riot.tag2('kanjihouse-ateji-row', '<td> <input class="kanjihouseNamer__kanaBox" name="kana" type="text" riot-value="{atemoji.kana}" onchange="{changeAtemoji}"> </td> <td> <input class="kanjihouseNamer__kanjiBox" name="kanji" type="text" riot-value="{atemoji.kanji}" onchange="{changeAtemoji}"> </td> <td> <textarea class="kanjihouseNamer__meaningsBox" name="meanings" riot-value="{atemoji.meanings.join(\' \')}" onchange="{changeAtemoji}">{atemoji.meanings.join(\'\\n\')}</textarea> </td> <td> <textarea class="kanjihouseNamer__commentBox" name="comment" riot-value="{atemoji.comment}" onchange="{changeAtemoji}">{atemoji.changeAtemoji}</textarea> </td> <td><a class="button" onclick="{ondeleteFunc}">削除</a></td>', '', '', function(opts) {
     this.atemoji = opts.atemoji;
     this.index = opts.index;
     this.ondelete = opts.ondelete;
@@ -117,6 +128,7 @@ riot.tag2('kanjihouse-ateji-row', '<td> <input class="kanjihouseNamer__kanaBox" 
 
     this.ondeleteFunc = function(e){
       if(this.ondelete && typeof this.ondelete === "function"){
+
         this.ondelete(e);
       }
     }.bind(this)
