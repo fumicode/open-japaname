@@ -4,6 +4,8 @@ var kanjihouse_router = module.exports = express.Router();
 var mongoose = require('mongoose');
 var KanjihouseMail = mongoose.model("KanjihouseMail");
 var Japaname = mongoose.model("Japaname");
+var Kanji = mongoose.model("Kanji");
+var atejilib = require("../core/atejilib");
 
 
 //mongoose
@@ -58,30 +60,77 @@ kanjihouse_router.post("/japanames/new",(req,res,next)=>{
     console.log(req.body.names)
     var names = JSON.parse(req.body.names);
 
-    if(req.user){
+    console.log(names);
+
+    console.log("kanjikanjikanjikanji");
+
+
+    for(let index in names){
+      let name = names[index];
+
+      console.log(name);
+
+      for(let atemoji_index in name.atejis){
+        let atemoji = name.atejis[atemoji_index];
+        let kanji = atemoji.kanji;
+        let meanings = atemoji.meanings;
+        let kana = atemoji.kana;
+
+        if(atejilib.isKatakanas(kana)){
+          kana = atejilib.katakanasToHiraganas(kana);
+        }
+
+        yield registerKanji(kanji,[kana], meanings);
+      }
+    }
+
+    //japaname を作る
+    if(req.user && req.user._id){
       var newJapaname = yield Japaname.createNew(names, req.user._id);
     }
     else{
       var newJapaname = yield Japaname.createNew(names);
     }
 
-
-    if(req.user && req.user._id){
-      newJapaname.namer = req.user._id;
-
-      yield newJapaname.save();
-    }
-
     var url_id = Japaname.japanameEncode(newJapaname._id);
 
-    //超危険！ どこからでもアクセスを許しちゃう。
-    //res.set("Access-Control-Allow-Origin","*");
     res.redirect(path.join(req.baseUrl , "japanames")); //短縮URL
 
   }).catch(e=>next(e));
 
 });
 
+
+function registerKanji(kanji, sounds, meanings){
+  return co(function*(){
+    var kanji_obj = yield Kanji.findById(kanji);
+
+    //存在する場合は、当たらしい音と意味を追加する
+    if(kanji_obj){
+      console.log(kanji + " found");
+      console.log("updating kanji sounds and meanings");
+      kanji_obj.sounds  = _.union(kanji_obj.sounds,sounds);
+      kanji_obj.meanings= _.union(kanji_obj.meanings,meanings);
+
+    }
+    else{
+      console.log(kanji + " not found");
+      console.log("creating kanji ");
+
+      kanji_obj = new Kanji({
+        _id:kanji,
+        sounds:sounds,
+        meanings:meanings
+      });
+    }
+
+
+    var result = yield kanji_obj.save();
+
+
+    return result;
+  });
+}
 
 var mail_template = require("../special/kanjihouse/mail_template.json");
 var mail_info = require("../special/kanjihouse/mail_info.json");
