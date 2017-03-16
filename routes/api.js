@@ -34,6 +34,29 @@ api_router.get("/core",(req,res,next)=>{
 });
 
 
+api_router.get("/core/kanjis/:kanji",(req,res,next)=>{
+  co(function*(){
+    var kanji =req.params.kanji;
+
+    console.log(kanji);
+    var kanji_doc = yield Kanji.findById({_id:kanji}).exec();
+
+    if(!kanji_doc){
+      return res.jsonp({status:404, error:"kanji not found"});
+    }
+
+    console.log(kanji_doc);
+
+    
+    var kanji_obj = atejilib.kanjiDocToObj(kanji_doc);
+
+    console.log(kanji_obj);
+
+    return res.jsonp(kanji_obj);
+  }).catch(e=>next(e));
+});
+
+
 api_router.get("/core/kanjis/select",(req,res,next)=>{
   co(function*(){
     var kanjis_str = req.query.kanjis;
@@ -42,7 +65,7 @@ api_router.get("/core/kanjis/select",(req,res,next)=>{
     var kanjis = atejilib.kanjiDocsToArray(yield Kanji.find({_id:{$in:kanjis_array}}).exec());
 
     return res.jsonp(kanjis);
-  }).catch(err=>next(err));
+  }).catch(e=>next(e));
 });
 
 

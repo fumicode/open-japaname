@@ -1,10 +1,10 @@
 extends /template/sub_layout
 
-
 block variables
   - title = "Japaname made in Kanji House"
   - description = 'page' 
   - body_id= 'bg-plane'
+
 
 block sub-content
   ul
@@ -13,7 +13,13 @@ block sub-content
     li
       a(href="/kanjihouse/japanames") Japaname一覧ページに戻る
 
-  h1 当て字をつくる 
+  h1 #{japaname.original} さんのjapanameを編集する
+
+  include /include/ateji_box_vertical
+
+  +ateji_box_vertical(japaname, false)
+
+
 
   kanjihouse-namer
 
@@ -23,5 +29,9 @@ block append body-end-scripts
     var request = window.superagent;
   script(src="/javascripts/underscore-min.js")
   script(src="/riotjs/kanjihouse-namer.js")
+
   script.
-    riot.mount("kanjihouse-namer");
+    riot.mount("kanjihouse-namer",{
+      japaname:!{JSON.stringify(japaname)}
+    });
+

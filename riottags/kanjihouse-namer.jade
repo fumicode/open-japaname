@@ -1,5 +1,5 @@
 kanjihouse-namer
-  form(action="#{action_url}" method="post")
+  form(ref="kanjihouse_namer_form" action="#{action_url}" method="post")
 
     table.kanjihouseNamer
       tr
@@ -14,6 +14,7 @@ kanjihouse-namer
         td
           input(type="text" name="name_kana" ref="name_kana" style="display:inline" onchange="{kanaChanged}")
           input(type="button" onclick="{kanaChangedForce}" value="下に挿入")
+          | データベースには保存されません。空欄でも可。
 
       tr
         td(colspan="2")
@@ -23,6 +24,7 @@ kanjihouse-namer
               th カナ
               th 漢字
               th 意味
+                p(style="font-weight:normal;font-size:small") 辞書にある場合は補完されます。
               th コメント
               th 削除ボタン
 
@@ -36,12 +38,14 @@ kanjihouse-namer
       tr
         td(colspan="2")
           input(type="hidden" name="names" value="{names_str}")
-          input(type="button" onclick="submit()" value="Japanameをつくる")
+          input(type="button" onclick="{submit}" value="Japanameを保存")
 
   script.
+    
     var this_tag = this;
+    this.japaname = opts.japaname || null;
 
-    function Atemoji(kana,kanji,meanings,comment){
+    function Atemoji(kana, kanji, meanings, comment){
       this.kana = kana;
       this.kanji = kanji;
       this.meanings = meanings;
@@ -52,22 +56,54 @@ kanjihouse-namer
       return !this.kana && !this.kanji;
     }
 
-    this.name = {
-      original:"",
-      atejis:[
-        new Atemoji("", "", [""], ""),
-        new Atemoji("", "", [""], ""),
-        new Atemoji("", "", [""], ""),
-      ],
+    function Name(original, kana, atejis){
+      this.original = original;
+      this.kana = kana;
+      this.atejis = atejis;
+    }
 
-      isEmpty:function(){
-        var allEmpty = _(this.atejis).reduce(function(empty, ateji){
-          return empty && ateji.isEmpty()
-        },true);
+    Name.prototype.isEmpty = function(){
+      var allEmpty = _(this.atejis).reduce(function(empty, ateji){
+        return empty && ateji.isEmpty()
+      },true);
 
-        return allEmpty
-      }
+      return allEmpty
+    }
+
+    //ページから簡単に離れられないようにする
+    this_tag.beforeunload = function(e){
+      var message = "このページを離れてもよろしいですか？";
+      e.returnValue = message;
+      return message;
     };
+
+    window.addEventListener("beforeunload", this_tag.beforeunload);
+
+
+    //japanameの初期値があったらそれをセットする
+    if(this.japaname){
+      let name = this.japaname.names[0];
+
+
+      let atemojis = _(name.ateji.atemojis).map( atemoji =>{
+        return new Atemoji(atemoji.kana, atemoji.kanji, [""], atemoji.comment)
+      });
+
+
+      let kana = _(name.atemojis).reduce((str, atemoji)=>{
+        return str + atemoji.kana
+      },"");
+
+      this.name = new Name(name.original, "",atemojis);
+    }
+    else{ //japaname が与えられてない場合は、1からつくる
+      this.name = new Name("","", [ //original, kana, atejis
+        new Atemoji("", "", [""], ""),
+        new Atemoji("", "", [""], ""),
+        new Atemoji("", "", [""], ""),
+      ]);
+    }
+
 
     this.names_str = JSON.stringify([ this.name ]);
 
@@ -154,39 +190,104 @@ kanjihouse-namer
     }
 
     deleteRow(e){
-
       console.log("deleting");
-
       console.log(e.item)
       this_tag.name.atejis.splice(e.item.index, 1);
       this_tag.update();
     }
+
+    submit(e){
+      window.removeEventListener("beforeunload", this_tag.beforeunload);
+      this.refs.kanjihouse_namer_form.submit();
+    }
+
 
 
 kanjihouse-ateji-row
   td 
     input.kanjihouseNamer__kanaBox(name="kana" type="text" value="{atemoji.kana}" onchange="{changeAtemoji}")
   td 
-    input.kanjihouseNamer__kanjiBox(name="kanji" type="text" value="{atemoji.kanji}" onchange="{changeAtemoji}")
+    input.kanjihouseNamer__kanjiBox(name="kanji" type="text" value="{atemoji.kanji}" onchange="{changeKanji}")
   td 
-    textarea.kanjihouseNamer__meaningsBox(name="meanings" value="{atemoji.meanings.join('\n')}" onchange="{changeAtemoji}") {atemoji.meanings.join('\n')}
+    textarea.kanjihouseNamer__meaningsBox(name="meanings" onchange="{changeAtemoji}") {atemoji.meanings.join('\n')}
   td 
-    textarea.kanjihouseNamer__commentBox(name="comment" value="{atemoji.comment}" onchange="{changeAtemoji}") {atemoji.changeAtemoji}
+    textarea.kanjihouseNamer__commentBox(name="comment" onchange="{changeAtemoji}") {atemoji.comment}
   td
     a.button(onclick="{ondeleteFunc}") 削除
 
   script.
+    var this_tag = this;
     this.atemoji = opts.atemoji;
     this.index = opts.index;
     this.ondelete = opts.ondelete;
     this.onchange = opts.onchange;
 
+    this.on("mount",function(){
+      console.log("mount");
+      console.log(this.atemoji);
+
+      var meanings = this.atemoji.meanings;
+      if(this.atemoji.kanji && (!meanings || meanings.length==0 || meanings[0] == "")){
+        
+        fetchKanjiMeanings(this_tag.atemoji.kanji).then((meanings)=>{
+          console.log("meaning wakatta");
+          console.log(this_tag);
+
+          this_tag.atemoji.meanings = meanings;
+          this_tag.update();
+        });
+      }
+
+    });
 
     ondeleteFunc(e){
       if(this.ondelete && typeof this.ondelete === "function"){
         //デリートボタンが押されたという情報だけでいい
         this.ondelete(e);
       }
+    }
+
+    changeKanji(e){
+      var kanji = e.target.value;
+
+      fetchKanjiMeanings(kanji).then((meanings)=>{
+        this_tag.atemoji.meanings = meanings;
+        this_tag.update();
+        return ;
+      }).then(()=>{
+        this_tag.changeAtemoji(e);
+      }).catch((err)=>{
+        console.error(err);
+      });
+
+    }
+
+    function fetchKanjiMeanings(kanji){
+      return new Promise((resolve,reject)=>{
+        if(!kanji){
+          return reject(new Error( kanji + " is empty"));
+        }
+
+        request
+          .get("/api/core/kanjis/" + kanji)
+          .end(function(err, res){
+            if(err){
+              reject(err);
+            }
+            var kanji = JSON.parse(res.text);
+
+            if(!kanji.kanji){
+              return resolve([]);
+            }
+
+            var meanings = kanji.meanings;
+            if(!meanings || meanings.length == 0){
+              return resolve([]);
+            }
+
+            return resolve(meanings);
+          });
+      });
     }
 
     changeAtemoji(e){
