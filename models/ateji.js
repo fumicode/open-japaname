@@ -2,6 +2,7 @@ var atejilib = require("../core/atejilib.js");
 var mongoose = require('mongoose');
 var _ = require("underscore");
 
+var co = require("co");
 
 ///////////////////////////////////////////////////////////////
 //                        Ateji Schema
@@ -83,4 +84,30 @@ AtejiSchema.virtual('populated_atemojis').get(function () {
   return populated_atemojis;
 });
 
+
+AtejiSchema.statics.createNew = function(atemojis){
+  var Ateji = this;
+  return co(function*(){
+    
+    atemojis = _(atemojis).reject(function(atemoji){
+      //かなや漢字がないやつは拒否する。
+
+      return !atemoji.kana || !atemoji.kanji
+
+    }).map(function(atemoji){
+
+      //カタカナはひらがなにへんかんする!!
+      if(atejilib.isKatakanas(atemoji.kana)){
+        atemoji.kana = atejilib.katakanasToHiraganas(atemoji.kana)
+      }
+      return atemoji;
+    });
+
+
+    //!!!! atemojis のバリデーション
+    var newAteji = new Ateji({atemojis});
+
+    return newAteji.save();
+  });
+}
 

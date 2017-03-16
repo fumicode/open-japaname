@@ -1,12 +1,14 @@
-mixin ateji_box_vertical(japaname)
+mixin ateji_box_vertical(japaname, show_namer)
   - var names = japaname.names
+  - show_namer = show_namer == undefined ? true: false;
 
   div.japanameTableVerticalContainer
 
-    if japaname.namer.username == "info@w-s.jp"
-      p This japaname is made at <a href="http://kanji-house.com/">Kanji House</a>
-    else
-      p This japaname is made by  #{japaname.namer._id}
+    if show_namer
+      if japaname.namer.username == "info@w-s.jp"
+        p This japaname is made at <a href="http://kanji-house.com/">Kanji House</a>
+      else
+        p This japaname is made by  #{japaname.namer._id || japaname.namer}
     
 
 

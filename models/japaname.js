@@ -111,7 +111,9 @@ JapanameSchema.statics.isJapanameCode = function (url_str){
 JapanameSchema.statics.findByCode = function(japaname_code){
   var japaname_id = sta.japanameDecode(japaname_code);
 
-  return this.findById(japaname_id);
+  return this.findById(japaname_id)
+    .populate("names.ateji")
+    .populate("names.kana");
 }
 
 
@@ -127,37 +129,11 @@ JapanameSchema.pre("save", function(next){
 JapanameSchema.statics.createNew = function(names, namer_id){
   var Japaname = this;
   return co(function*(){
-    console.log("namer_id")
-    console.log(namer_id)
+
+    var Ateji = mongoose.model("Ateji");
 
     // yield [promise]  == [ateji]
-    var atejis = yield _(names).map((name)=>{
-      var atemojis = name.atejis;
-      //ateji->atemoji変えたい！でもクライアントに依存するからかえられない！TypeScriptにしたら、変える！
-
-
-      atemojis = _(atemojis).reject(function(atemoji){
-        //かなや漢字がないやつは拒否する。
-        return !atemoji.kana || !atemoji.kanji
-      }).map(function(atemoji){
-
-        //カタカナはひらがなにへんかんする!!
-        if(atejilib.isKatakanas(atemoji.kana)){
-          atemoji.kana = atejilib.katakanasToHiraganas(atemoji.kana)
-        }
-        return atemoji;
-      });
-
-      var Ateji = mongoose.model("Ateji");
-
-      //!!!! atemojis のバリデーション
-      var newAteji = new Ateji({atemojis});
-
-      return newAteji.save();//returns promise
-    });
-
-
-
+    var atejis = yield _(names).map((name)=>Ateji.createNew(name.atejis));
 
     var japaname_params = _(atejis).map((ateji, index)=>{
       var name = names[index]
@@ -167,7 +143,6 @@ JapanameSchema.statics.createNew = function(names, namer_id){
         kana:null
       }
     });
-
 
     var newJapaname = new Japaname({
       //_id:auto increment

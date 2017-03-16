@@ -4,6 +4,7 @@ var kanjihouse_router = module.exports = express.Router();
 var mongoose = require('mongoose');
 var KanjihouseMail = mongoose.model("KanjihouseMail");
 var Japaname = mongoose.model("Japaname");
+var Ateji = mongoose.model("Ateji");
 var Kanji = mongoose.model("Kanji");
 var atejilib = require("../core/atejilib");
 
@@ -53,23 +54,33 @@ kanjihouse_router.get("/japanames/new",(req,res,next)=>{
 kanjihouse_router.post("/japanames/new",(req,res,next)=>{
   co(function*(){
 
-    console.log("req.body")
-    console.log(req.body)
-
-    console.log("req.body.names")
-    console.log(req.body.names)
     var names = JSON.parse(req.body.names);
 
-    console.log(names);
+    yield registerKanjisOfNames(names);
 
-    console.log("kanjikanjikanjikanji");
+    //japaname を作る
+    if(req.user && req.user._id){
+      var newJapaname = yield Japaname.createNew(names, req.user._id);
+    }
+    else{
+      var newJapaname = yield Japaname.createNew(names);
+    }
 
+    req.flash("success", "Japaname が保存されました");
+    res.redirect(path.join(req.baseUrl , "japanames", newJapaname.code)); //短縮URL
+
+  }).catch(e=>next(e));
+
+});
+
+
+function registerKanjisOfNames(names){
+  return co(function*(){
+    //漢字を辞書に登録する  
 
     for(let index in names){
       let name = names[index];
-
       console.log(name);
-
       for(let atemoji_index in name.atejis){
         let atemoji = name.atejis[atemoji_index];
         let kanji = atemoji.kanji;
@@ -83,22 +94,8 @@ kanjihouse_router.post("/japanames/new",(req,res,next)=>{
         yield registerKanji(kanji,[kana], meanings);
       }
     }
-
-    //japaname を作る
-    if(req.user && req.user._id){
-      var newJapaname = yield Japaname.createNew(names, req.user._id);
-    }
-    else{
-      var newJapaname = yield Japaname.createNew(names);
-    }
-
-    var url_id = Japaname.japanameEncode(newJapaname._id);
-
-    res.redirect(path.join(req.baseUrl , "japanames")); //短縮URL
-
-  }).catch(e=>next(e));
-
-});
+  });
+}
 
 
 function registerKanji(kanji, sounds, meanings){
@@ -132,6 +129,47 @@ function registerKanji(kanji, sounds, meanings){
   });
 }
 
+
+
+kanjihouse_router.get("/japanames/:japaname_code",(req,res,next)=>{
+  co(function*(){
+    var japaname_code = req.params.japaname_code;
+
+    var japaname = yield Japaname.findByCode(japaname_code).exec();
+
+    var action_url = path.join(req.baseUrl, req.url);
+
+    res.render("kanjihouse/japaname", {action_url, japaname});
+  }).catch(e=>next(e));
+});
+
+
+kanjihouse_router.post("/japanames/:japaname_code",(req,res,next)=>{
+  co(function*(){
+    let names = JSON.parse(req.body.names);
+    let japaname_code = req.params.japaname_code;
+
+    yield registerKanjisOfNames(names);
+
+    var japaname = yield Japaname.findByCode(japaname_code);
+
+    //!!!! 今は1個だけ！
+    var saved_ateji = yield Ateji.createNew( names[0].atejis);
+
+    japaname.names[0].original = names[0].original;
+    japaname.names[0].ateji    = saved_ateji._id;
+
+
+    yield japaname.save();
+
+    req.flash("success", "Japaname が保存されました");
+    res.redirect(path.join(req.baseUrl , "japanames", japaname.code)); 
+
+  }).catch(e=>next(e));
+
+})
+
+
 var mail_template = require("../special/kanjihouse/mail_template.json");
 var mail_info = require("../special/kanjihouse/mail_info.json");
 
@@ -159,32 +197,24 @@ kanjihouse_router.post("/cert_mail/make",(req,res,next)=>{
     var red_url = path.join(req.baseUrl, "cert_mail/drafts", mailDoc._id.toString())
 
     console.log("redirecting to " + red_url);
-
     res.redirect( red_url);
 
-
   }).catch(e=>next(e));
-
-
 });
 
 
 kanjihouse_router.get("/cert_mail/make",(req,res,next)=>{
   res.render("kanjihouse/cert_mail/make");
-
 });
 
 kanjihouse_router.get("/cert_mail/drafts",(req,res,next)=>{
+
   co(function*(){
-
     var mails = yield KanjihouseMail.find({sent:false}).exec();
-
     res.render("kanjihouse/cert_mail/drafts", {mails});
-
   }).catch(e=>next(e));
 
 });
-
 
 kanjihouse_router.get("/cert_mail/drafts/:mail_id",(req,res,next)=>{
   co(function*(){
