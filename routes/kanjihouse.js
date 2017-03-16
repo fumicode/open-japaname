@@ -4,6 +4,7 @@ var kanjihouse_router = module.exports = express.Router();
 var mongoose = require('mongoose');
 var KanjihouseMail = mongoose.model("KanjihouseMail");
 var Japaname = mongoose.model("Japaname");
+var Ateji = mongoose.model("Ateji");
 var Kanji = mongoose.model("Kanji");
 var atejilib = require("../core/atejilib");
 
@@ -129,6 +130,7 @@ function registerKanji(kanji, sounds, meanings){
 }
 
 
+
 kanjihouse_router.get("/japanames/:japaname_code",(req,res,next)=>{
   co(function*(){
     var japaname_code = req.params.japaname_code;
@@ -144,15 +146,24 @@ kanjihouse_router.get("/japanames/:japaname_code",(req,res,next)=>{
 
 kanjihouse_router.post("/japanames/:japaname_code",(req,res,next)=>{
   co(function*(){
-    var names = JSON.parse(req.body.names);
+    let names = JSON.parse(req.body.names);
+    let japaname_code = req.params.japaname_code;
 
     yield registerKanjisOfNames(names);
 
-    //!!! Databaseの編集昨日をJapaname側につける！！
-    var newJapaname = yield Japaname.createNew(names, req.user._id);
+    var japaname = yield Japaname.findByCode(japaname_code);
+
+    //!!!! 今は1個だけ！
+    var saved_ateji = yield Ateji.createNew( names[0].atejis);
+
+    japaname.names[0].original = names[0].original;
+    japaname.names[0].ateji    = saved_ateji._id;
+
+
+    yield japaname.save();
 
     req.flash("success", "Japaname が保存されました");
-    res.redirect(path.join(req.baseUrl , "japanames", newJapaname.code)); 
+    res.redirect(path.join(req.baseUrl , "japanames", japaname.code)); 
 
   }).catch(e=>next(e));
 
@@ -186,32 +197,24 @@ kanjihouse_router.post("/cert_mail/make",(req,res,next)=>{
     var red_url = path.join(req.baseUrl, "cert_mail/drafts", mailDoc._id.toString())
 
     console.log("redirecting to " + red_url);
-
     res.redirect( red_url);
 
-
   }).catch(e=>next(e));
-
-
 });
 
 
 kanjihouse_router.get("/cert_mail/make",(req,res,next)=>{
   res.render("kanjihouse/cert_mail/make");
-
 });
 
 kanjihouse_router.get("/cert_mail/drafts",(req,res,next)=>{
+
   co(function*(){
-
     var mails = yield KanjihouseMail.find({sent:false}).exec();
-
     res.render("kanjihouse/cert_mail/drafts", {mails});
-
   }).catch(e=>next(e));
 
 });
-
 
 kanjihouse_router.get("/cert_mail/drafts/:mail_id",(req,res,next)=>{
   co(function*(){

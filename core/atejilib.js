@@ -32,29 +32,25 @@ var atejilib = module.exports = {};
 //returns array of hiragana
 atejilib.translateAsRomaji = romajisToHiraganas;
 
-//Kanji
-//Hiragana
-//Hiragana_nosmall
-
-//Kdatakana
-//Katakana_nosmall
 
 
 atejilib.kanjiDocsToArray = function(kanjis){
-  return _(kanjis).map((kanji)=>{
-    return {
-      _id:kanji._id,
-      kanji:kanji._id,
-      sounds: kanji.sounds,
-      meanings:kanji.meanings,
-      meanings_fr:kanji.meanings_fr,
-      romaji_sounds: _(kanji.sounds).map((sound)=>{
-        var romaji_str = atejilib.hiraganasToRomajis(sound);
-        return romaji_str;
-      }),
-    };
-  });
+  return _(kanjis).map( atejilib.kanjiDocToObj );
 }
+
+atejilib.kanjiDocToObj = function(kanji){//doc
+  return {
+    _id:kanji._id,
+    kanji:kanji._id,
+    sounds: kanji.sounds,
+    meanings:kanji.meanings,
+    meanings_fr:kanji.meanings_fr,
+    romaji_sounds: _(kanji.sounds).map((sound)=>{
+      var romaji_str = atejilib.hiraganasToRomajis(sound);
+      return romaji_str;
+    }),
+  };
+};
 
 
 // 漢字を変更したらこれを読まなきゃいけない という規約

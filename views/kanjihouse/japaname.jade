@@ -13,8 +13,13 @@ block sub-content
     li
       a(href="/kanjihouse/japanames") Japaname一覧ページに戻る
 
-  h1 当て字を編集する
-  p #{japaname.original}
+  h1 #{japaname.original} さんのjapanameを編集する
+
+  include /include/ateji_box_vertical
+
+  +ateji_box_vertical(japaname, false)
+
+
 
   kanjihouse-namer
 
@@ -24,7 +29,9 @@ block append body-end-scripts
     var request = window.superagent;
   script(src="/javascripts/underscore-min.js")
   script(src="/riotjs/kanjihouse-namer.js")
+
   script.
     riot.mount("kanjihouse-namer",{
       japaname:!{JSON.stringify(japaname)}
     });
+
