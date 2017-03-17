@@ -12,13 +12,15 @@ block sub-content
       a(href="/kanjihouse/") 漢字ハウス管理ページに戻る
 
 
-  h1 KanjiHouse用管理ページ
 
+  h2 下書きメール一覧
   div 
     a.button(href="/kanjihouse/cert_mail/make") 新しいメールを作る
 
+  div(style="height:3em;")
 
-  h2 下書きメール一覧
+
+  p 最近作成されたメールが一番上に表示されます。
 
   include mailTable
   +mailTable("drafts", mails)

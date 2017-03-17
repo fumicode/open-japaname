@@ -21,7 +21,7 @@ var nodemailer = require('nodemailer');
 kanjihouse_router.get("/",(req,res,next)=>{
   co(function*(){
     var sent_mails = yield KanjihouseMail.find({sent:true}).sort({_id:-1}).limit(5).exec();
-    var drafts = yield KanjihouseMail.find({sent:false}).limit(5).exec();
+    var drafts = yield KanjihouseMail.find({sent:false}).sort({_id:-1}).limit(5).exec();
 
     //var japanames = yield Japaname.getLatestNames(5);
     var japanames = yield Japaname.findLatestNamesOfNamer(20, req.user._id).exec();
@@ -212,7 +212,7 @@ kanjihouse_router.get("/cert_mail/make",(req,res,next)=>{
 kanjihouse_router.get("/cert_mail/drafts",(req,res,next)=>{
 
   co(function*(){
-    var mails = yield KanjihouseMail.find({sent:false}).exec();
+    var mails = yield KanjihouseMail.find({sent:false}).sort({_id:-1}).exec();
     res.render("kanjihouse/cert_mail/drafts", {mails});
   }).catch(e=>next(e));
 
@@ -384,7 +384,7 @@ function beforeSend(the_mail){
 
 kanjihouse_router.get("/cert_mail/sent_mails",(req,res,next)=>{
   co(function*(){
-    var mails = yield KanjihouseMail.find({sent:true}).exec();
+    var mails = yield KanjihouseMail.find({sent:true}).sort({_id:-1}).exec();
 
     res.render("kanjihouse/cert_mail/sent_mails", {mails});
 
