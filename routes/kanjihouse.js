@@ -23,7 +23,8 @@ kanjihouse_router.get("/",(req,res,next)=>{
     var sent_mails = yield KanjihouseMail.find({sent:true}).sort({_id:-1}).limit(5).exec();
     var drafts = yield KanjihouseMail.find({sent:false}).limit(5).exec();
 
-    var japanames = yield Japaname.getLatestNames(5);
+    //var japanames = yield Japaname.getLatestNames(5);
+    var japanames = yield Japaname.findLatestNamesOfNamer(20, req.user._id).exec();
 
     res.render("kanjihouse/index", {
       drafts,
@@ -38,7 +39,8 @@ kanjihouse_router.get("/",(req,res,next)=>{
 kanjihouse_router.get("/japanames/",(req,res,next)=>{
   co(function*(){
     //var japanames = yield Japaname.findLatestNamesOfNamer(5,req.user._id).exec();
-    var japanames = yield Japaname.findLatestNames(5).exec();
+
+    var japanames = yield Japaname.findLatestNamesOfNamer(20, req.user._id).exec();
     res.render("kanjihouse/japanames", {japanames});
   }).catch(e=>next(e));
 
@@ -228,8 +230,9 @@ kanjihouse_router.get("/cert_mail/drafts/:mail_id",(req,res,next)=>{
       })
       .exec();
 
-    var latest_japanames = yield Japaname.getLatestNames(10).exec();
+    //var latest_japanames = yield Japaname.getLatestNames(10).exec();
 
+    var latest_japanames = yield Japaname.findLatestNamesOfNamer(20, req.user._id).exec();
     /*
     var latest_japanames = 
       yield Japaname.findLatestNamesOfNamer(10, req.user._id).exec();
