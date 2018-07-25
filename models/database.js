@@ -8,7 +8,7 @@ if(process.env.DB == "local"){
   var url = db_obj.db_url = "mongodb://localhost/ateji";
 }
 else{
-  var url = db_obj.db_url = 'mongodb://japaname:japaname13579@db.japaname.jp/ateji';
+  var url = db_obj.db_url = 'mongodb://japaname:japaname13579@db.japana.me/ateji';
 }
 
 
