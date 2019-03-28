@@ -17,6 +17,17 @@ var Japaname = mongoose.model("Japaname");
 var fs = require("fs");
 
 
+// Cross-Origin Resource Sharingを有効にする記述（HTTPレスポンスヘッダの追加）
+api_router.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', "*"); //誰でも許しちゃう
+  next();
+});
+
+// OPTIONSメソッドの実装
+api_router.options('*', function (req, res) {
+  res.sendStatus(200);
+});
+
 api_router.get("/",(req,res,next)=>{
 
   var obj = {
@@ -134,13 +145,13 @@ api_router.get("/core/names/:japaname_id([0-9\-]+)", function(req, res, next){
         ateji:{
           string:japaname.names[0].ateji.string,
           atemojis:
-          
+
 
         }
       }];
     };
     _(japaname).map((prop)=>{
-      
+
     });
     */
     res.json(japaname.toObject());
@@ -200,7 +211,7 @@ api_router.get("/crafti/japaname_frame.css", function(req, res, next) {
 
 api_router.get("/crafti/names/",(req,res,next)=>{
   var original_name = req.query.original_name;
-  
+
   if(!original_name){
     return res.render("api/crafti_not_found",{
       original_name
@@ -222,7 +233,7 @@ api_router.get("/crafti/names/:original_name", function(req, res, next) {
     }
 
     var original_names = original_name.split(/[ ,　,\,,\|,\\,\/]+/);
-    var nullify = err => Promise.resolve(null); 
+    var nullify = err => Promise.resolve(null);
     var translated_names = yield _(original_names).map(function(original_name){
       return atejilib.toJapaneseSound(original_name).catch(nullify);
     });
@@ -243,10 +254,10 @@ api_router.get("/crafti/names/:original_name", function(req, res, next) {
 
       //ローマ字
       name_obj.romajis_array = _(name_obj.hiragana_nosmall).map(atejilib.hiraganasToRomajis);
-      
+
       var obj = atejilib.atejiSyllables(name_obj.hiragana);
       // obj =   length syllables hiragana_str_nosmall
-    
+
       var syllables = name_obj.syllables = obj.syllables;
 
       //美しくないな
@@ -286,13 +297,13 @@ api_router.get("/crafti/kanjis/random",(req,res,next)=>{
   if(N > kanjis.length){
     return res.jsonp(kanjis);
   }
-  
+
   var indexes = getRandomIndexes(kanjis.length, N);
   console.log(indexes);
 
   var selected_kanjis = _(indexes).reduce((memo, index)=>{
     memo.push(kanjis[index])
-    
+
     return memo;
   },[]);
 
@@ -318,7 +329,7 @@ function getRandomIndexes(n,m){
   if(!(n >= m)){
     throw new Error("n should be bigger than m");
   }
-  var numbers = []; 
+  var numbers = [];
 
   for(var i = 0; i < n; i++)
   {
@@ -344,10 +355,3 @@ function switchInArray(array, i, j){
   array[i] = array[j];
   array[j] = tmp;
 }
-
-
-
-
-
-
-
